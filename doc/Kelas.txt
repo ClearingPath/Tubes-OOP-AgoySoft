@@ -1,0 +1,58 @@
+Kelas :
+1. Tile 
+	attribut : jenis 
+				bool boundaries[4] -> boolean atas bawah kanan kiri mana yang ada tembok
+	method : void update(long elapsed time)
+		     void draw()
+		     void updateJenis(jenis_baru)
+
+2. Owner
+	attribut : deque of kegiatan -> urutan kegiatan (dan tempatnya) yg dilakuin owner selama game, bisa di interrupt makanya pake deque
+				int waktu sisa -> buat kalo ntar si owner melakukan kegiatan dan perlu nunggu(diem di suatu tempat)
+				queue of posisi -> urutan posisi (path) dari posisi dia sekarang ke posisi kegiatan selanjutnya, dihasilkan dari caripath
+	method :	queue CariPath(tujuan) -> mencari jalur dari posisi awal dia sampe ke tujuan kegiatan selanjutnya, keluarannya queue
+				void draw()
+				void update (long elapsed time)
+
+3. Item 
+	attrinut : float waktu -> waktu buat masang dia kalo dia jebakan
+			   int (enum) jenis -> misal lemari, sabun
+			   vector 2i posisi -> posisi dia sekarang
+				ukuran <vector 2i> -> panjang dan lebar item, karena mungkin ngga nempati 1 tile doang
+	method : void Update() -> lebih ke ability dia, dia akan melakukan sesuatu kalo dapet event (misal anjing gonggong)
+
+4. Player
+	attribut : bool masang -> status dia lagi masang jebakan atau tidak
+				bool statusJalan -> dia jalannya ngendap-endap apa biasa, jadi kalo ada anjing lg tidur dia harus jalan ngendap biar ga ketahuan, kemungkinan bakal pake kombinasi key ctrl atau apa gt
+				bool sembunyi -> dia lg sembunyi apa ngga
+				vector posisi
+				int sisawaktu -> buat masang jebakan
+				array of kode item -> buat inventory, apa yg udah dia dapetin, bisa jebakan atau kunci kalo mau
+	method : void move (atas/bawah/kanan/kiri)
+			void setjenisJalan(bool)
+			void update (long elapsed time)
+			void draw()
+
+5. GameObjectManager -> nanti itu semua class kita extends ke sini, dia yg ngurusi semua object
+	atribut : map <string, object> -> ini kaya hash table, jadi nanti manggil objectnya gampang bisa langsung pake string
+				clock
+	method : add (string objek)
+				drawAll()
+				updateAll()
+				Get(string objek)
+				Remove (string objek)
+
+6. VisibleGameObject
+	atribut : picturebox sprite 
+			 string Filename
+	method : Load()
+			 Draw()
+			 Update()
+			 SetPosition(vector posisi)
+	  		 GetPosition(string objek)
+
+7. Main
+	atribut : matriks of kodeTile
+				GameObjectManager
+	method : run()
+			IsKeyPressed()

@@ -1,4 +1,4 @@
-Kelas :
+Kelas AgoySoft :
 1. Tile 
 	attribut : jenis 
 				bool boundaries[4] -> boolean atas bawah kanan kiri mana yang ada tembok

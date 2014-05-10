@@ -14,9 +14,9 @@ public class item {
 	
 	private enum jenis {lemari,sabun,jebakan,anjing}
 	
-	private Vector<i2> posisi; 
+	public Vector<i2> posisi; 
 	
-	private Vector<i2> ukuran;
+	public Vector<i2> ukuran;
 	
 	/* Constructor */
 	item()
@@ -29,5 +29,16 @@ public class item {
 	{
 		
 	}
+        
+        public void setWaktu(float _waktu)
+        {
+            waktu = _waktu;
+        }
+        
+        public float getWaktu()
+        {
+            return waktu;
+        }
+        
 }
 

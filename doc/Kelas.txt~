@@ -1,7 +1,7 @@
 Kelas AgoySoft :
 1. Tile 
 	attribut : jenis 
-				bool boundaries[4] -> boolean (urutan) atas kanan bawah kiri mana yang ada tembok 
+				bool boundaries[4] -> boolean atas kanan bawah kiri mana yang ada tembok 
 	method : void update(long elapsed time)
 		     void draw()
 		     void updateJenis(jenis_baru)

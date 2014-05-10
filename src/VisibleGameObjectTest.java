@@ -1,60 +1,74 @@
-class VisibleGameObject
+package test;
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.xml.transform.Transformer;
+
+abstract class VisibleGameObject
 {
+	protected Rectangle _sprite;
+	protected Image _texture;
+	private String _filename;
+	private boolean _isLoaded;
+	
+	protected Rectangle GetSprite(){
+		return _sprite;
+	}
 	public VisibleGameObject(){
 		_isLoaded=false;
 	}
-	public virtual ~VisibleGameObject(){
-		
-	}
 	
-	public virtual void Load(std::string filename){
-		if(_image.loadFromFile(filename) == false){
-			_filename = "";
-			_isLoaded = false;
-		} else {
+	public void Load(String filename){
+		try{
+			_texture=ImageIO.read(getClass().getResource(filename));
 			_filename = filename;
-			_sprite.setTexture(_image);
 			_isLoaded = true;
+		} catch (IOException e){
+			_filename = "";
+			_isLoaded=false;
 		}
 	}
-	public virtual void Draw(sf::RenderWindow & window){
+	public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
-			renderWindow.draw(_sprite);
+			g.drawImage(_texture, _sprite.x, _sprite.y, _sprite.x + _sprite.width, _sprite.y+_sprite.height,
+					0, 0, _texture.getWidth(null), _texture.getHeight(null), IO);
+			//g.drawImage(_texture, new AffineTran, IO)
 		}
 	}
-	public virtual void Update(float elapsedTime){
-		
-	}
+	public abstract void Update(double elapsedTime);
 
-	public virtual void SetPosition(float x, float y){
+	public void SetPosition(float x, float y){
 		if(_isLoaded){
-			_sprite.setPosition(x,y);
+			Point p =new Point();
+			p.setLocation(x, y);
+			_sprite.setLocation(p);
 		}
 	}
-	public virtual sf::Vector2f GetPosition() const{
+	public Point GetPosition() {
 		if(_isLoaded) {
-			return _sprite.getPosition();
+			return _sprite.getLocation();
 		}
-		return sf::Vector2f();
+		return new Point();
 	}
-	public virtual float GetWidth() const{
-		return _sprite.getLocalBounds().width;
+	public float GetWidth(){
+		return _texture.getWidth(null);
 	}
-	public virtual float GetHeight() const{
-		return _sprite.getLocalBounds().height;
+	public float GetHeight(){
+		return _texture.getHeight(null);
 	}
 
-	public virtual sf::Rect<float> GetBoundingRect() const{
-		return _sprite.getGlobalBounds();
+	public Rectangle GetBoundingRect(){
+		return _sprite.getBounds();
+		//return _sprite.getGlobalBounds();
 	}
-	public virtual bool IsLoaded() const{
+	public boolean IsLoaded(){
 		return _isLoaded;
 	}
-
-	protected sf::Sprite& GetSprite();
-
-	private sf::Sprite  _sprite;
-	private sf::Texture _image;
-	private std::string _filename;
-	private bool _isLoaded;
-};
+}

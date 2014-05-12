@@ -6,8 +6,12 @@ Kelas :
   	 - boundaries[4] array of boolean (private) /* boolean atas bawah kanan kiri mana yang ada tembok */
 	method : 
 	 - ctor /* ItemOnTop jadi ItemKosong, jenis biasa */
-	 - getter setter
+	 - getter/setter
 	 - void putItem(Item _newItem) /* buat naroh item diatas tile tsb, kalo remove tinggal di put ItemKosong
+	 - IsMoveableRight()
+	 - IsMoveableLeft()
+	 - IsMoveableUp()
+	 -IsMovebaleDown()
 
 2. Owner
 	attribut : 
@@ -54,11 +58,15 @@ Kelas :
 	     AddAnimType(parameternya 5)
 	     ChangeAnimType(type animasi) */
 
-7. Main
+7. Game
 	atribut : 
-	  - Map typenya matriks of tile
+	  - Map typenya matriks of tile static
 	  - GameObjectManager
 	method : 
 	  - run()
 	  - /* Ngurusin event kaya is key pressed buat move player */
 	  - IsKeyPressed()
+
+8. Sprite
+
+9. Utilities /* Isinya enum item dan enum tile */

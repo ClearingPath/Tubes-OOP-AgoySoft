@@ -21,6 +21,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	//delay antar tiap pergerakan
 	private static final long BUTTON_DELAY_TIME = 500;
 	
+	private static final KeyEvent HideButton=KeyEvent.VK_CTRL;
+	
 	//ukuran asli peta
 	public static int MAP_ROW_COUNT=15;
 	public static int MAP_COL_COUNT=12;
@@ -175,7 +177,12 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
 				tmpTime=0;
 				//go down
+			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
+				tmpTime=0;
+				//go down
 			}
+		} else if (key.getKeyCode() == HideButton){
+			pl1.setSilent(true);
 		}
 	}
 
@@ -186,6 +193,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		*/||(key.getKeyCode() == KeyEvent.VK_RIGHT)/*
 		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
 			tmpTime=-1;
+		} else if (key.getKeyCode() == HideButton){
+			pl1.setSilent(false);
 		}
 	}
 

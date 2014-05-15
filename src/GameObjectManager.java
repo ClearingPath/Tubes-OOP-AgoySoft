@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Iterator;
 
 
-class GameObjectManager {
+public class GameObjectManager {
 	
 	private Map<String, VisibleGameObject> _gameObjects;
 	private long LastTime;
@@ -61,13 +61,18 @@ class GameObjectManager {
 	public void UpdateAll(){
 		long elapsedTime=System.currentTimeMillis()-LastTime;
 		LastTime=elapsedTime;
+		double elaps_ms=elapsedTime/1000;
 		
+		for (VisibleGameObject in : _gameObjects.values()){
+			in.Update(elaps_ms);
+			in.UpdateSprite(elaps_ms);
+		}
 		
-		Iterator<VisibleGameObject> i=_gameObjects.values().iterator();
+		/*Iterator<VisibleGameObject> i=_gameObjects.values().iterator();
 		while (i.hasNext()){
 			i.next().Update((double)elapsedTime/1000);
 		}
-		/*std::map<std::string,VisibleGameObject>::const_iterator itr = _gameObjects.begin();
+		std::map<std::string,VisibleGameObject>::const_iterator itr = _gameObjects.begin();
 		float timeDelta = clock.restart().asSeconds();
 		
 		while(itr != _gameObjects.end())

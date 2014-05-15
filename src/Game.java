@@ -18,11 +18,8 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable,MouseListener, MouseMotionListener,KeyListener{
-	private static long BUTTON_DELAY_TIME = 500;
-	private static long lastUpdate, elapsedTime;
-	private static long tmpTime;
-	private static JFrame frame;
-	private Graphics g;
+	//delay antar tiap pergerakan
+	private static final long BUTTON_DELAY_TIME = 500;
 	
 	//ukuran asli peta
 	public static int MAP_ROW_COUNT=15;
@@ -32,11 +29,20 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public static final int VIEW_ROW_COUNT=12;
 	public static final int VIEW_COL_COUNT=12;
 	
-	public ArrayList<ArrayList <Sprite> > peta;
-	public GameObjectManager _gameObjectManager;
+	//posisi ujung kiri atas peta
+	public static final int VIEW_POS_X=0;
+	public static final int VIEW_POS_Y=0;
 	
-	//buat posisi camera
-	public static int view_topleft_pos;
+	//ukuran tile
+	public static final int TILE_SIZE_X=10;
+	public static final int TILE_SIZE_Y=10;
+	
+	private long lastUpdate, elapsedTime;
+	private long tmpTime;
+	private static JFrame frame;
+	private Graphics g;
+	public ArrayList<ArrayList <VisibleGameObject> > peta;
+	public GameObjectManager _gameObjectManager;
 	
 	public Game() {
 		init();
@@ -49,13 +55,20 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
-		//frameRate = 0;
-		//timeToChange = BUTTON_DELAY_TIME;
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		addKeyListener(this);
 		setFocusable(true);
 		requestFocusInWindow();
+		// TODO create all object here
+		// contoh init
+		// ObjTest turunan dari VisibleGameObject
+		//ObjTest obj=new ObjTest(5);
+		//_gameObjectManager.Add("nama", obj);
+		// contoh panggil Object
+		// kalo salah kelas, exception keluar
+		//ObjTest bcd;
+		//bcd=(ObjTest)g.Get("nama");
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
@@ -87,8 +100,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		super.paintComponent(g);
 		this.g = g;
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		_gameObjectManager.DrawAll(g2d,this);
 		g2d.setColor(Color.white);
 	}
@@ -138,8 +150,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	@Override
 	public void run() {
 		while(true){
-			repaint();
 			update(g);
+			repaint();
 			try {
 				Thread.sleep(17);
 			} catch (InterruptedException e) {
@@ -181,5 +193,4 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public void keyTyped(KeyEvent key) {
 		
 	}
-
 }

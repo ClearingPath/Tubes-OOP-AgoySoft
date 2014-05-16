@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author Rakhmatullah Yoga Sutrisna - 13512053
@@ -14,16 +15,21 @@ public class Player extends VisibleGameObject {
     private static enum Hadap {
         Atas, Bawah, Kiri, Kanan
     }
+    public Date scoredate;
+    public String name;
+    public int score;
 
-    public Player() {
+    public Player(String Pname) {
         super();
         Attaching = false;
         SilentWalk = false;
         Hide = false;
         TimeRemaining = 60;
         Inventory = new ArrayList<>();
+        scoredate = new Date();
+        name = Pname;
+        score = 0;
         //super.Load("gambar");
-        
     }
     public boolean isAttaching() {
         return Attaching;

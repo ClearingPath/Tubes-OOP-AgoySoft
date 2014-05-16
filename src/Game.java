@@ -52,7 +52,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 
 	public void init(){
 		_gameObjectManager=new GameObjectManager();
-                P = new Player();
+                P = new Player("Agoy");
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;

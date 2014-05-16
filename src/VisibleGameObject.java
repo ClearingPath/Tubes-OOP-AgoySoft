@@ -1,9 +1,9 @@
 package test;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 
@@ -21,18 +21,17 @@ public abstract class VisibleGameObject
 		_isLoaded=false;
 		_sprite=new Sprite();
 	}
-	public abstract void Update(double elapsedTime);
+	public abstract void Update(long elapsedTime);
 	
 	public void Load(String filename){
 		try{
 			_sprite.Load(filename);
-			//_texture=ImageIO.read(getClass().getResource(filename));
 			_isLoaded = true;
 		} catch (IOException e){
 			_isLoaded=false;
 		}
 	}
-	public void Load(Image i){
+	public void Load(BufferedImage i){
 		try{
 			_sprite.Load(i);
 			_isLoaded = true;
@@ -49,8 +48,8 @@ public abstract class VisibleGameObject
 
 	public static Point TiletoReal(Point p){
 		Point p2=new Point();
-		p2.x=Game.VIEW_POS_X+p.x*Game.TILE_SIZE_X+Game.TILE_SIZE_X/2;
-		p2.y=Game.VIEW_POS_Y+p.y*Game.TILE_SIZE_Y+Game.TILE_SIZE_Y/2;
+		p2.x=Game.VIEW_POS_X+p.x*Game.TILE_SIZE_X;
+		p2.y=Game.VIEW_POS_Y+p.y*Game.TILE_SIZE_Y;
 		return p2;
 	}
 	public static Point RealToTile(Point p){
@@ -71,11 +70,10 @@ public abstract class VisibleGameObject
 	public Point GetPosition() {
 		if(_isLoaded) {
 			return new Point(tile_posx, tile_posy);
-			//return _sprite.GetPosition();
 		}
 		return new Point(0,0);
 	}
-	public void UpdateSprite(double elapsedTime){
+	public void UpdateSprite(long elapsedTime){
 		_sprite.UpdateDraw(elapsedTime);
 	}
 	public double GetWidth(){
@@ -87,7 +85,6 @@ public abstract class VisibleGameObject
 
 	public Rectangle GetBoundingRect(){
 		return _sprite.getBounds();
-		//return _sprite.getGlobalBounds();
 	}
 	public boolean IsLoaded(){
 		return _isLoaded;

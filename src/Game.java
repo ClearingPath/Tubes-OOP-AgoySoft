@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,9 +18,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable,MouseListener, MouseMotionListener,KeyListener{
 	//delay antar tiap pergerakan
-	private static final long BUTTON_DELAY_TIME = 500;
-	
-	private static final KeyEvent HideButton=KeyEvent.VK_CTRL;
+	private static final long BUTTON_DELAY_TIME = 1000;
 	
 	//ukuran asli peta
 	public static int MAP_ROW_COUNT=15;
@@ -36,14 +33,16 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public static final int VIEW_POS_Y=0;
 	
 	//ukuran tile
-	public static final int TILE_SIZE_X=10;
-	public static final int TILE_SIZE_Y=10;
+	public static final int TILE_SIZE_X=32;
+	public static final int TILE_SIZE_Y=32;
+	
+	// TODO ubah jadi array of tile
+	public VisibleGameObject[][] peta;
 	
 	private long lastUpdate, elapsedTime;
 	private long tmpTime;
 	private static JFrame frame;
 	private Graphics g;
-	public ArrayList<ArrayList <VisibleGameObject> > peta;
 	public GameObjectManager _gameObjectManager;
 	
 	public Game() {
@@ -67,6 +66,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		// ObjTest turunan dari VisibleGameObject
 		//ObjTest obj=new ObjTest(5);
 		//_gameObjectManager.Add("nama", obj);
+		Objv1 obj=new Objv1();
+		_gameObjectManager.Add("nama", obj);
 		// contoh panggil Object
 		// kalo salah kelas, exception keluar
 		//ObjTest bcd;
@@ -79,7 +80,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		frame.add(game);
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setUndecorated(true);
+        //frame.setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);
         frame.setVisible(true);
@@ -94,7 +95,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 				tmpTime=-1;
 			}
 		}
-		_gameObjectManager.UpdateAll();
+		_gameObjectManager.UpdateAll(elapsedTime);
 	}
 	
 	@Override
@@ -177,12 +178,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
 				tmpTime=0;
 				//go down
-			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
-				tmpTime=0;
-				//go down
 			}
-		} else if (key.getKeyCode() == HideButton){
-			pl1.setSilent(true);
 		}
 	}
 
@@ -193,8 +189,6 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		*/||(key.getKeyCode() == KeyEvent.VK_RIGHT)/*
 		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
 			tmpTime=-1;
-		} else if (key.getKeyCode() == HideButton){
-			pl1.setSilent(false);
 		}
 	}
 

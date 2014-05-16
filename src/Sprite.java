@@ -1,28 +1,26 @@
 package test;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-//import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
-//import java.awt.image.AffineTransformOp;
-//import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 public class Sprite{
-	private Image _texture;
-	//private Rectangle _rect;
-	private double Center_X;
-	private double Center_Y;
+	private BufferedImage _texture;
+	private double Pos_X;
+	private double Pos_Y;
 	private double _angle;
-	
 	private int Size_X;
 	private int Size_Y;
+	private AffineTransform transscl;
+	
 	private static class AnimType{
 		public int StartRow;
 		public int StartCol;
@@ -35,9 +33,7 @@ public class Sprite{
 	private int CurRow;
 	private int CurCol;
 	private double CurTime;
-	
 	private static AnimType DefAnim=DefAnim();
-	
 	private static AnimType DefAnim(){
 		AnimType a=new AnimType();
 		a.StartRow=0;
@@ -46,8 +42,6 @@ public class Sprite{
 		return a;
 	}
 	
-	private AffineTransform trans;
-	
 	public Sprite(){
 		_angle=0;
 		Size_X=-1;
@@ -55,18 +49,19 @@ public class Sprite{
 		CurTime=0;
 		CurAnim=DefAnim;
 		_anim_array=new HashMap<>();
-		trans=new AffineTransform();
+		transscl=new AffineTransform();
+		transscl.setToIdentity();
 	}
 	
 	public void Load(String filename) throws IOException{
 		try {
-			_texture = ImageIO.read(getClass().getResource(filename));
-		} catch (IOException e) {
+			_texture = ImageIO.read(new File(filename));
+		} catch (Exception e) {
 			throw e;
 		}
 	}
 	
-	public void Load (Image i) throws IOException{
+	public void Load (BufferedImage i) throws IOException{
 		// TODO cari cara cek image udah di load/belum
 		if (i.getHeight(null)<=0){
 			//kalo image belom di load
@@ -89,53 +84,52 @@ public class Sprite{
 		if (_anim_array.containsKey(Code)){
 			CurAnim=_anim_array.get(Code);
 			CurTime=0;
-			CurRow=0;
-			CurCol=0;
+			CurRow=CurAnim.StartRow;
+			CurCol=CurAnim.StartCol;
 		} else {
 			throw new IOException();
 		}
 	}
 	
-	public void UpdateDraw(double ElapsedTime){
+	public void UpdateDraw(long elapsedTime){
 		if (CurAnim.rate!=-1){
-			CurTime+=ElapsedTime;
+			CurTime+=elapsedTime;
 			if (CurTime>CurAnim.rate){
 				CurRow++;
 				if (CurRow>CurAnim.EndRow)CurRow=CurAnim.StartRow;
 				CurCol++;
 				if (CurCol>CurAnim.EndCol)CurCol=CurAnim.StartCol;
+				CurTime=0;
 			}
 		}
 	}
 	public void Draw(Graphics2D g, ImageObserver IO){
-		Rectangle rect=new Rectangle();
 		int s_x=Size_X;
 		int s_y=Size_Y;
 		if (s_x==-1)s_x=_texture.getWidth(null);
 		if (s_y==-1)s_y=_texture.getHeight(null);
-		rect.x=CurCol*s_x;
-		rect.y=CurRow*s_y;
-		rect.width=s_x;
-		rect.height=s_y;
-		//rect=bagian gambar yang ingin digambar
-		// TODO draw only necessary rectangle
-		g.drawImage(_texture, trans, IO);
-		//g.drawImage(trans.filter(_texture, null), Center_X, Center_Y, IO);
+		AffineTransform trans=new AffineTransform();
+		trans.setToIdentity();
+		trans.concatenate(AffineTransform.getRotateInstance(Math.toRadians(_angle),Pos_X+s_x/2,Pos_Y+s_y/2));
+		trans.concatenate(AffineTransform.getTranslateInstance(Pos_X, Pos_Y));
+		trans.concatenate(transscl);
+		BufferedImage tp=_texture.getSubimage(CurCol*s_x,CurRow*s_y,s_x,s_y);
+		g.drawImage(tp, trans, IO);
 	}
 
 	public Point GetPosition(){
 		Point ret=new Point();
-		ret.x=(int) Center_X;
-		ret.y=(int) Center_Y;
+		ret.x=(int) Pos_X;
+		ret.y=(int) Pos_Y;
 		return ret;
 	}
 	public void SetPosition(double x, double y){
-		Center_X=x;
-		Center_Y=y;
+		Pos_X=x;
+		Pos_Y=y;
 	}
 	public void SetPosition(Point p){
-		Center_X=p.x;
-		Center_Y=p.y;
+		Pos_X=p.x;
+		Pos_Y=p.y;
 	}
 	public void SetImageSize(int SizeX, int SizeY){
 		Size_X=SizeX;
@@ -144,29 +138,25 @@ public class Sprite{
 	public double GetAngle(){
 		return _angle;
 	}
-	public void SetRotation(float angle){
+	public void SetRotation(double angle){
 		_angle=angle;
 		if (_angle>=360)_angle=_angle%360;
-		// TODO Fix Rotation
-		// Rotation information
-		double rotationRequired = Math.toRadians(angle);
-		double locationX = _texture.getWidth(null) / 2;
-		double locationY = _texture.getHeight(null) / 2;
-		trans = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-		//trans = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+	}
+	public void SetScale(double ScaleX, double ScaleY){
+		transscl.setToScale(ScaleX, ScaleY);
 	}
 	public double getWidth(){
-		return _texture.getWidth(null);
+		return Size_X;
 	}
 	public double getHeight(){
-		return _texture.getHeight(null);
+		return Size_Y;
 	}
 	public Rectangle getBounds(){
 		Rectangle r=new Rectangle();
-		r.height=(int) getWidth();
-		r.width=(int) getHeight();
-		r.x=(int) (Center_X-r.height/2);
-		r.y=(int) (Center_Y-r.width/2);
+		r.height=Size_X;
+		r.width=Size_Y;
+		r.x=(int) (Pos_X);
+		r.y=(int) (Pos_Y);
 		return r;
 	}
 }

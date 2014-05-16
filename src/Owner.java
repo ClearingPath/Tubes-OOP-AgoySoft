@@ -112,4 +112,11 @@ public class Owner extends VisibleGameObject{
             }
         }
     }
+    
+//    public void InitOwnerLevel1() {
+//        act aktifitas = new act();
+//        aktifitas.ItemTerlibat = item.ItemKosong;
+//        aktifitas.actPos = new Point(3,7);
+//        aktifitas.actTime = 
+//    }
 }

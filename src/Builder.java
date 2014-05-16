@@ -17,11 +17,12 @@ public class Builder {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Builder.class.getName()).log(Level.SEVERE, null, ex);
         }
-       int N = input.nextInt(); 
+       int baris = input.nextInt();
+       int kolom = input.nextInt();
        int TileKode;
-       Tile[][] arr = new Tile[N][N];
-       for (int i=0; i<N; i++) {
-           for (int j=0; j<N; j++) {
+       Tile[][] arr = new Tile[baris][kolom];
+       for (int i=0; i<baris; i++) {
+           for (int j=0; j<kolom; j++) {
                TileKode = input.nextInt();
                if (TileKode==0)
                    arr[i][j].setJenis(Utilities.TileType.UnWalkable);
@@ -31,6 +32,8 @@ public class Builder {
                    arr[i][j].setJenis(Utilities.TileType.Hideable);
            }
        }
+       //init item dimana?
+       //init owner activities?
        return arr;
     }
 }

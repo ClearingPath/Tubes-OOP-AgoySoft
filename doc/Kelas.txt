@@ -3,7 +3,6 @@ Kelas :
 	attribut : 
 	 - jenis bertipe enum (atau string ?) (private) /* jenis lantai, yang udah kepikiran baru lantai kamar mandi sama lantai biasa, fungsinya buat bikin gambarnya beda, atau tanda apakah dia available untuk jebakan tertentu (misal : sabun hanya bisa di lantai kamar mandi) */
 	 - ItemOnTop bertipe item (public) /* menunjukkan di atas tile itu ada item apa, kalo ga ada apa2 bakal di assign ItemKosong*/
-  	 - boundaries[4] array of boolean (private) /* boolean atas bawah kanan kiri mana yang ada tembok */
 	method : 
 	 - ctor /* ItemOnTop jadi ItemKosong, jenis biasa */
 	 - getter/setter

@@ -1,3 +1,11 @@
+==================== Read level txt ====================
+jumlah baris; jumlah kolom
+array of tiletype (0==unwalkable, 1==walkable, 2==hideable)
+jumlah item
+itemtype; posisi (baris; kolom); ukuran(panjang(x); lebar(y))
+jumlah owner activities
+jenis aktifitas; posisi act(baris; kolom); waktu
+
 ==================== LEVEL 1 ===========================
 Jebakan :
 Lukisan = item on top dari wall, bisa dicoret2 pake spidol, kalo dicoret2 gambarnya ganti, spidol ambil di ruang pameran

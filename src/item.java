@@ -4,6 +4,8 @@
 import java.util.Vector;
 
 public class item {
+        public static item ItemKosong;
+        public boolean Status; /* udah dirusak / belum */
 	private class i2
 	{
 		public int X;
@@ -11,7 +13,6 @@ public class item {
 	}
 	/* Attribute */
 	private float waktu;
-	
 	private enum jenis {lemari,sabun,jebakan,anjing}
 	
 	public Vector<i2> posisi; 

@@ -7,26 +7,45 @@
 
 import java.util.*;
 import java.awt.Point;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Owner extends VisibleGameObject{
+    private static class act {
+        public static act Angry = new act();
+        public static void initAngry() {
+            Angry.actTime = 2000;
+        }
+        public item ItemTerlibat;
+        public long actTime;
+        public Point actPos;
+    }
     private boolean isWalking;
     private long sisaWaktu;
-    private Point position;
+    private act _actNow;
     private Queue<Point> path;
     private Deque<act> activities;
     
-    public void Owner() {
-        //Load("sesuatu.png");
-        //initSize();
-        //addAnimType();
-        path = new LinkedList<Point>();
-        activities = new LinkedList<act>();
+    public Owner() {
+        super();
+        Load("img/owner.png");
+        SetPosition(4,7);
+        GetSprite().SetImageSize(32, 32);
+        GetSprite().AddAnimType(1,0,0,2,0,500); //bawah
+        GetSprite().AddAnimType(2,0,1,2,1,500); //kiri
+        GetSprite().AddAnimType(3,0,2,2,2,500); //kanan
+        GetSprite().AddAnimType(4,0,3,2,3,500); //atas
+        try {
+                GetSprite().ChangeAnimType(1);
+        } catch (IOException e) {
+                // AnimType not found
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        
     }
     
-    public void setPosition(Point _pos) {
-        position.x = _pos.x;
-        position.y = _pos.y;
-    }
     public void setSisaWaktu(long sisaWaktu) {
         this.sisaWaktu = sisaWaktu;
     }
@@ -48,42 +67,46 @@ public class Owner extends VisibleGameObject{
     }
     
     public void Update(long elapsedTime){
-        Point posTemp = new Point();
-        sisaWaktu -=elapsedTime;
-        if (sisaWaktu==0) {
-            isWalking = true;
+        if (isWalking) {
             if (!path.isEmpty()){    
-                posTemp = path.remove();
-                if(posTemp.x>position.x) {
-                    //ChangeAnimType(kanan);
+                try{
+                    Point posTemp = new Point();
+                    posTemp = path.remove();
+                    if(posTemp.x>GetPosition().x) {
+                        GetSprite().ChangeAnimType(3);
+                    }
+                    if (GetPosition().x<posTemp.x) {
+                        GetSprite().ChangeAnimType(2);
+                    }
+                    if (posTemp.y>GetPosition().y){
+                        GetSprite().ChangeAnimType(4);
+                    }
+                    if (posTemp.y<GetPosition().y){
+                        GetSprite().ChangeAnimType(2);
+                    }
+                    SetPosition(posTemp.x, posTemp.y);
+                    
                 }
-                if (position.x<posTemp.x) {
-                    //ChangeAnimType(kiri);
+                catch(IOException e) {
+                    // AnimType not found
+                    e.printStackTrace();
                 }
-                if (posTemp.y>position.y){
-                    //ChangeAnimType(atas);
-                }
-                if (posTemp.y<position.y){
-                    //ChangeAnimType(bawah);
-                }
-                position = posTemp;
             }
             else {
                 isWalking = false;
-                act _actNow = new act();
-                _actNow = activities.remove();
-                position = _actNow.actPos; 
-                sisaWaktu = _actNow.actTime;
             }
         }
         else {
-            sisaWaktu -= elapsedTime;
+            sisaWaktu -=elapsedTime;
+            if (sisaWaktu==0) {
+                isWalking = true;
+                _actNow = activities.remove();
+                SetPosition(_actNow.actPos.x, _actNow.actPos.y);
+                sisaWaktu = _actNow.actTime;
+                if (_actNow.ItemTerlibat.Status) {
+                    _actNow = act.Angry;
+                }
+            }
         }
-    }
-
-    private static class act {
-        public long actTime;
-        public Point actPos;
-        public String actName;
     }
 }

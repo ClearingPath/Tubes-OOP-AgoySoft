@@ -8,10 +8,7 @@ Kelas :
 	 - ctor /* ItemOnTop jadi ItemKosong, jenis biasa */
 	 - getter/setter
 	 - void putItem(Item _newItem) /* buat naroh item diatas tile tsb, kalo remove tinggal di put ItemKosong
-	 - IsMoveableRight()
-	 - IsMoveableLeft()
-	 - IsMoveableUp()
-	 -IsMovebaleDown()
+	 - IsWalkable()
 
 2. Owner
 	attribut : 
@@ -26,10 +23,13 @@ Kelas :
 
 3. Item 
 	attribut : 
-	  - static item ItemKosong
-	  - jenis typenya enum (atau string?) (private) /* misal lemari, sabun */
+	  - bool Status /* udah dirusak /belum */
+	  - static item ItemKosong di init kosong
+	  - jenis typenya enum /* ada di utilities */
 	  - ukuran array int[2] (private) /* panjang dan lebar item, karena mungkin ngga nempati 1 tile doang*/
 	method : 
+	  - ctor /*init size nya dari tile kiriatas*/
+	  - InitItem();
 	  - getter setter
 	  - boolean IsWalkable() /* return true kalo item bisa dilewati, ntar tergantung item yang terdefinisi apa aja, di kategoriin mana yang bisa dilewati mana yg engga */
 	  
@@ -81,3 +81,5 @@ Item yang perlu digambar manual, kaya hiasan2 ga usah (maksudnya yang perlu diur
 tile (walkable, hideable, biasa)
 pintu, lemari buat sembunyi kaya pohon (layer 2)
 item sama player ntar layernya di antara background sama foreground, tp digambar sendiri
+
+Exception baru buat animtype

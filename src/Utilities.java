@@ -1,3 +1,5 @@
+package agoy;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,13 +10,15 @@
  *
  * @author Afik
  */
+
 public class Utilities {
     public enum TileType {
-       Normal, KamarMandi, 
+       Walkable, UnWalkable,  Hideable;
     }
     
     public enum ItemType {
-        Soap, Food, Chair, Lemari, Bed, Table;
+        Tissue, WC, Key, Knife, Painting1, Painting2, Manekin,
+        Door, Wall;
     }
     
 }

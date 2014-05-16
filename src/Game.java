@@ -43,6 +43,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private Graphics g;
 	public GameObjectManager _gameObjectManager;
         public Player P;
+        public Owner O;
 	
 	public Game() {
 		init();
@@ -53,6 +54,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public void init(){
 		_gameObjectManager=new GameObjectManager();
                 P = new Player("Agoy");
+                O = new Owner();
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
@@ -67,7 +69,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		//ObjTest obj=new ObjTest(5);
 		//_gameObjectManager.Add("nama", obj);
 		Objv1 obj=new Objv1();
-		_gameObjectManager.Add("nama", obj);
+                _gameObjectManager.Add("owner", O);
 		// contoh panggil Object
 		// kalo salah kelas, exception keluar
 		//ObjTest bcd;

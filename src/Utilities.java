@@ -1,5 +1,3 @@
-package agoy;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,8 +15,7 @@ public class Utilities {
     }
     
     public enum ItemType {
-        Tissue, WC, Key, Knife, Painting1, Painting2, Manekin,
-        Door, Wall;
+        Tissue, WC, Key, Knife, Painting, Manekin,
+        DoorClosed, Spidol;
     }
-    
 }

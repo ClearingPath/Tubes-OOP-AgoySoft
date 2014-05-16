@@ -1,5 +1,3 @@
-
-
 /**
  *
  * @author Afik
@@ -32,10 +30,10 @@ public class Owner extends VisibleGameObject{
         Load("img/owner.png");
         SetPosition(4,7);
         GetSprite().SetImageSize(32, 32);
-        GetSprite().AddAnimType(1,0,0,2,0,500); //bawah
-        GetSprite().AddAnimType(2,0,1,2,1,500); //kiri
-        GetSprite().AddAnimType(3,0,2,2,2,500); //kanan
-        GetSprite().AddAnimType(4,0,3,2,3,500); //atas
+        GetSprite().AddAnimType(1,0,0,0,2,500); //bawah
+        GetSprite().AddAnimType(2,1,0,1,2,500); //kiri
+        GetSprite().AddAnimType(3,2,0,2,2,500); //kanan
+        GetSprite().AddAnimType(4,3,0,3,2,500); //atas
         try {
                 GetSprite().ChangeAnimType(1);
         } catch (IOException e) {
@@ -63,7 +61,7 @@ public class Owner extends VisibleGameObject{
     }
     
     public void CariPath(Point tujuan) {
-         
+         //set path
     }
     
     public void Update(long elapsedTime){
@@ -100,11 +98,16 @@ public class Owner extends VisibleGameObject{
             sisaWaktu -=elapsedTime;
             if (sisaWaktu==0) {
                 isWalking = true;
+                activities.addLast(_actNow);
                 _actNow = activities.remove();
                 SetPosition(_actNow.actPos.x, _actNow.actPos.y);
                 sisaWaktu = _actNow.actTime;
+                Point tuj = new Point();
+                tuj = activities.peekFirst().actPos;
+                CariPath(tuj);
                 if (_actNow.ItemTerlibat.Status) {
                     _actNow = act.Angry;
+                    sisaWaktu = _actNow.actTime;
                 }
             }
         }

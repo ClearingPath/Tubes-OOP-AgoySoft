@@ -1,4 +1,4 @@
-package test;
+
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -35,7 +35,7 @@ public abstract class VisibleGameObject
 		try{
 			_sprite.Load(i);
 			_isLoaded = true;
-		} catch (IOException e){
+		} catch(IOException e){
 			_isLoaded=false;
 		}
 	}

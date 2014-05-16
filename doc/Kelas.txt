@@ -26,6 +26,7 @@ Kelas :
 
 3. Item 
 	attribut : 
+	  - static item ItemKosong
 	  - jenis typenya enum (atau string?) (private) /* misal lemari, sabun */
 	  - ukuran array int[2] (private) /* panjang dan lebar item, karena mungkin ngga nempati 1 tile doang*/
 	method : 
@@ -39,6 +40,7 @@ Kelas :
 	  - bool sembunyi /* dia lg sembunyi apa ngga */
 	  - int sisawaktu /* buat masang jebakan */
 	  - inventory bertipe array of item (typenya? atau ada kode item?)  /* buat inventory, apa yg udah dia dapetin, bisa jebakan atau kunci kalo mau */
+	  - ada hadap /*buat ambil item dan masang item */
 	method : 
 	  - Constructor /* ada load("gambar"), initSize(ukuran sprite (x,y)), addAnimType(type sprite, kolom awal, baris awal, kolom akhir, baris akhir) */	
 	  - getter setter
@@ -70,3 +72,12 @@ Kelas :
 8. Sprite
 
 9. Utilities /* Isinya enum item dan enum tile */
+
+
+=============================
+Tile ga perlu di draw, yang di draw background ada lantai sama tembok
+File eksternalnya 1/0 walkable atau ngga?
+Item yang perlu digambar manual, kaya hiasan2 ga usah (maksudnya yang perlu diurusin khusus / yang bakal ilang / lemari yang bisa sembunyi)
+tile (walkable, hideable, biasa)
+pintu, lemari buat sembunyi kaya pohon (layer 2)
+item sama player ntar layernya di antara background sama foreground, tp digambar sendiri

@@ -1,4 +1,3 @@
-package game;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class Player extends VisibleGameObject {
         y = 0;
         TimeRemaining = 60;
         Inventory = new ArrayList<>(5);
-        super.Load("gambar");
+        //super.Load("gambar");
         
     }
     public boolean isAttaching() {
@@ -57,19 +56,19 @@ public class Player extends VisibleGameObject {
     }
     public void MoveUp() {
         y--;
-        super.SetPosition(x, y);
+        SetPosition(x, y);
     }
     public void MoveDown() {
         y++;
-        super.SetPosition(x, y);
+        SetPosition(x, y);
     }
     public void MoveRight() {
         x++;
-        super.SetPosition(x, y);
+        SetPosition(x, y);
     }
     public void MoveLeft() {
         x--;
-        super.SetPosition(x, y);
+        SetPosition(x, y);
     }
     
     /*public void Move(KeyEvent k) {
@@ -137,8 +136,8 @@ public class Player extends VisibleGameObject {
         Update();
     }*/
 
-    @Override
-    public void Update(double elapsedTime) {
+   // @Override
+    public void Update(long elapsedTime) {
         //To change body of generated methods, choose Tools | Templates.
         System.out.println("Posisi = ["+x+","+y+"]");
         System.out.println("Silent mode = "+SilentWalk);

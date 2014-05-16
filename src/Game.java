@@ -1,3 +1,5 @@
+package test;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -42,6 +44,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private static JFrame frame;
 	private Graphics g;
 	public GameObjectManager _gameObjectManager;
+        public Player P;
 	
 	public Game() {
 		init();
@@ -51,6 +54,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 
 	public void init(){
 		_gameObjectManager=new GameObjectManager();
+                P = new Player();
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
@@ -166,16 +170,19 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		if (tmpTime==-1){
 			if (key.getKeyCode() == KeyEvent.VK_LEFT){
 				tmpTime=0;
-				//go left
+				P.MoveLeft();
 			} else if (key.getKeyCode() == KeyEvent.VK_UP){
 				tmpTime=0;
-				//go up
+				P.MoveUp();
 			} else if (key.getKeyCode() == KeyEvent.VK_RIGHT){
 				tmpTime=0;
-				//go right
+				P.MoveRight();
 			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
 				tmpTime=0;
-				//go down
+				P.MoveDown();
+			} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
+				tmpTime=0;
+				P.setSilent(true);
 			}
 		}
 	}
@@ -187,7 +194,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		*/||(key.getKeyCode() == KeyEvent.VK_RIGHT)/*
 		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
 			tmpTime=-1;
-		}
+		} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
+                        tmpTime=-1;
+                        P.setSilent(false);
+                }
 	}
 
 	@Override

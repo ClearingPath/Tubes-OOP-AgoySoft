@@ -1,0 +1,34 @@
+Nama Kelompok : AgoySoft
+Anggota :
+	Muntaha Ilmi 13512048
+	Diah Fauziah 13512049
+	Rakhmatullah Yoga S 13512053
+	Khoirunnisa Afifah 13512077
+	Jonathan Sudibya 13512093
+
+Topik : Game
+
+Desin Pattern yang digunakan :
+- Factory
+- Template
+- Null Object
+- Observer
+
+Jumlah kelas total : 9
+Yaitu :
+- Tile
+- Owner
+- Player
+- Item
+- Sprite
+- Utilities
+- GameObjectManager
+- VisibleGameObject
+- Game
+
+Exception sudah, assertion belum
+
+Persoalan :
+- Bingung memutar gambar / sprite
+- Tidak tahu assertion diimplementasikan dimana, karena game pada umumnya tidak ada assertion
+- 

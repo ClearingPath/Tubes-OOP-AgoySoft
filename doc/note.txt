@@ -1,0 +1,16 @@
+==================== LEVEL 1 ===========================
+Jebakan :
+Lukisan = item on top dari wall, bisa dicoret2 pake spidol, kalo dicoret2 gambarnya ganti, spidol ambil di ruang pameran
+pintu antara kamar sama ruang pameran awalnya nutup, ambil kunci di meja kamar
+manekin di ruang 2 bisa dirusak pake gunting (atau pisau di dapur?)
+tisu di kamar mandi
+
+CARI :
+Spidol, kunci, 
+
+Gambar :
+lukisan dicoret
+wc ditutup tisu
+
+672,5 384
+736 353

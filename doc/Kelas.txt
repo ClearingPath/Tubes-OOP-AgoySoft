@@ -1,0 +1,83 @@
+Kelas :
+1. Tile 
+	attribut : 
+	 - jenis bertipe enum (atau string ?) (private) /* jenis lantai, yang udah kepikiran baru lantai kamar mandi sama lantai biasa, fungsinya buat bikin gambarnya beda, atau tanda apakah dia available untuk jebakan tertentu (misal : sabun hanya bisa di lantai kamar mandi) */
+	 - ItemOnTop bertipe item (public) /* menunjukkan di atas tile itu ada item apa, kalo ga ada apa2 bakal di assign ItemKosong*/
+  	 - boundaries[4] array of boolean (private) /* boolean atas bawah kanan kiri mana yang ada tembok */
+	method : 
+	 - ctor /* ItemOnTop jadi ItemKosong, jenis biasa */
+	 - getter/setter
+	 - void putItem(Item _newItem) /* buat naroh item diatas tile tsb, kalo remove tinggal di put ItemKosong
+	 - IsMoveableRight()
+	 - IsMoveableLeft()
+	 - IsMoveableUp()
+	 -IsMovebaleDown()
+
+2. Owner
+	attribut : 
+	  - getter setter
+	  - deque of kegiatan /* urutan kegiatan (dan tempatnya) yg dilakuin owner selama game, bisa di interrupt makanya pake deque */
+	  - int waktu sisa /* buat kalo ntar si owner melakukan kegiatan dan perlu nunggu(diem di suatu tempat) */
+	  - queue of posisi /* urutan posisi (path) dari posisi dia sekarang ke posisi kegiatan selanjutnya, dihasilkan dari caripath*/
+	method :
+	  - Constructor /* ada load("gambar"), initSize(ukuran sprite (x,y)), addAnimType(type sprite, kolom awal, baris awal, kolom akhir, baris akhir) */	
+	  - queue CariPath(tujuan) /*  mencari jalur dari posisi awal dia sampe ke tujuan kegiatan selanjutnya, keluarannya queue */
+	  - void update (long elapsed time)
+
+3. Item 
+	attribut : 
+	  - static item ItemKosong
+	  - jenis typenya enum (atau string?) (private) /* misal lemari, sabun */
+	  - ukuran array int[2] (private) /* panjang dan lebar item, karena mungkin ngga nempati 1 tile doang*/
+	method : 
+	  - getter setter
+	  - boolean IsWalkable() /* return true kalo item bisa dilewati, ntar tergantung item yang terdefinisi apa aja, di kategoriin mana yang bisa dilewati mana yg engga */
+	  
+4. Player
+	attribut : 
+	  - bool masang /* status dia lagi masang jebakan atau tidak */
+	  - bool statusJalan /* dia jalannya ngendap-endap apa biasa, jadi kalo ada anjing lg tidur dia harus jalan ngendap biar ga ketahuan, kemungkinan bakal pake kombinasi key ctrl atau apa gt */
+	  - bool sembunyi /* dia lg sembunyi apa ngga */
+	  - int sisawaktu /* buat masang jebakan */
+	  - inventory bertipe array of item (typenya? atau ada kode item?)  /* buat inventory, apa yg udah dia dapetin, bisa jebakan atau kunci kalo mau */
+	  - ada hadap /*buat ambil item dan masang item */
+	method : 
+	  - Constructor /* ada load("gambar"), initSize(ukuran sprite (x,y)), addAnimType(type sprite, kolom awal, baris awal, kolom akhir, baris akhir) */	
+	  - getter setter
+	  - void moveUp()
+	  - void moveDown()
+	  - void moveLeft()
+	  - void moveRight()
+	  /* jangan lupa tiap move ada changeAnimType(jenis animasi) ini nani bergantung sama sprite */
+	  - void update (long elapsed time)
+		
+5. GameObjectManager /*seperti yang dibikin ilmi*/
+
+6. VisibleGameObject /*seperti yang dibikin ilmi*/
+	/* TAMBAHAN BUAT ILMI : 
+	     posisi tiap object ada di sini 
+	     InitSize(ukuran sprite)
+	     AddAnimType(parameternya 5)
+	     ChangeAnimType(type animasi) */
+
+7. Game
+	atribut : 
+	  - Map typenya matriks of tile static
+	  - GameObjectManager
+	method : 
+	  - run()
+	  - /* Ngurusin event kaya is key pressed buat move player */
+	  - IsKeyPressed()
+
+8. Sprite
+
+9. Utilities /* Isinya enum item dan enum tile */
+
+
+=============================
+Tile ga perlu di draw, yang di draw background ada lantai sama tembok
+File eksternalnya 1/0 walkable atau ngga?
+Item yang perlu digambar manual, kaya hiasan2 ga usah (maksudnya yang perlu diurusin khusus / yang bakal ilang / lemari yang bisa sembunyi)
+tile (walkable, hideable, biasa)
+pintu, lemari buat sembunyi kaya pohon (layer 2)
+item sama player ntar layernya di antara background sama foreground, tp digambar sendiri

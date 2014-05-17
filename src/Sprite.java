@@ -20,6 +20,8 @@ public class Sprite{
 	private int Size_X;
 	private int Size_Y;
 	private AffineTransform transscl;
+	private int Offset_X;
+	private int Offset_Y;
 	
 	private static class AnimType{
 		public int StartRow;
@@ -46,6 +48,8 @@ public class Sprite{
 		_angle=0;
 		Size_X=-1;
 		Size_Y=-1;
+		Offset_X=0;
+		Offset_Y=0;
 		CurTime=0;
 		CurAnim=DefAnim;
 		_anim_array=new HashMap<>();
@@ -113,7 +117,7 @@ public class Sprite{
 		trans.concatenate(AffineTransform.getRotateInstance(Math.toRadians(_angle),Pos_X+s_x/2,Pos_Y+s_y/2));
 		trans.concatenate(AffineTransform.getTranslateInstance(Pos_X, Pos_Y));
 		trans.concatenate(transscl);
-		BufferedImage tp=_texture.getSubimage(CurCol*s_x,CurRow*s_y,s_x,s_y);
+		BufferedImage tp=_texture.getSubimage(CurCol*s_x+Offset_X,CurRow*s_y+Offset_Y,s_x,s_y);
 		g.drawImage(tp, trans, IO);
 	}
 
@@ -144,6 +148,10 @@ public class Sprite{
 	}
 	public void SetScale(double ScaleX, double ScaleY){
 		transscl.setToScale(ScaleX, ScaleY);
+	}
+	public void SetOffset(int OffX, int OffY){
+		Offset_X=OffX;
+		Offset_Y=OffY;
 	}
 	public double getWidth(){
 		return Size_X;

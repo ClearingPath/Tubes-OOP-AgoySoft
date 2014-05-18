@@ -126,44 +126,29 @@ public class Player extends VisibleGameObject {
         Inventory.remove(i);
         return i;
     }
-    public void IsWalkable() {
-        
-    }
     @Override
     public void Update(long elapsedTime) {
-        switch(arah) {
-            case 1:
-                try {
-                    GetSprite().ChangeAnimType(5);
-                    SetPosition(GetPosition().x, GetPosition().y+1);
-                } catch (AnimTypeNotFoundException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case 2:
-                try {
-                    GetSprite().ChangeAnimType(6);
-                    SetPosition(GetPosition().x-1, GetPosition().y);
-                } catch (AnimTypeNotFoundException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case 3:
-                try {
-                    GetSprite().ChangeAnimType(7);
-                    SetPosition(GetPosition().x+1, GetPosition().y);
-                } catch (AnimTypeNotFoundException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case 4:
-                try {
-                    GetSprite().ChangeAnimType(8);
-                    SetPosition(GetPosition().x, GetPosition().y-1);
-                } catch (AnimTypeNotFoundException ex) {
-                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-        }
+    	try{
+	        switch(arah) {
+	            case 1:
+	                GetSprite().ChangeAnimType(5);
+	                SetPosition(GetPosition().x, GetPosition().y+1);
+	                break;
+	            case 2:
+	                GetSprite().ChangeAnimType(6);
+	                SetPosition(GetPosition().x-1, GetPosition().y);
+	                break;
+	            case 3:
+	                GetSprite().ChangeAnimType(7);
+	                SetPosition(GetPosition().x+1, GetPosition().y);
+	                break;
+	            case 4:
+	                GetSprite().ChangeAnimType(8);
+	                SetPosition(GetPosition().x, GetPosition().y-1);
+	                break;
+	        }
+    	} catch (AnimTypeNotFoundException e){
+    		System.out.println(e.getStackTrace());
+    	}
     }
 }

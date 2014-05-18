@@ -95,5 +95,6 @@ public class Builder {
            keg.actTime = time;
            OwnAct.add(keg);
        }
+       Game.peta=arr;
     }
 }

@@ -24,7 +24,8 @@ public class Owner extends VisibleGameObject{
     private act _actNow;
     private Queue<Point> path;
     private Deque<act> activities;
-    
+    private double tmpTime;
+    private final double walkSpeed=500;
     public Owner() {
         super();
         Load("img/owner.png");
@@ -41,7 +42,7 @@ public class Owner extends VisibleGameObject{
                 // TODO Auto-generated catch block
                 e.printStackTrace();
         }
-        
+        tmpTime=0;
     }
     
     public void setSisaWaktu(long sisaWaktu) {
@@ -150,12 +151,7 @@ public class Owner extends VisibleGameObject{
     			//cek dalam boundary/tidak
     			if (((0<=nex.x)&&(nex.x<Col_C))/*
     			*/&&((0<=nex.y)&&(nex.y<Row_C))){
-    				try {
-						stats=(Tile)Game.GetGameObjectManager().Get("tile"+nex.x+nex.y);
-					} catch (ObjectNameNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+    				stats=Game.peta[nex.x][nex.y];
     				if (stats.IsWalkable()){
     				//if (Stats[nex.x][nex.y]==0){//check bisa/tidak
     					if (arah[nex.x][nex.y]==-1){//cek udah dipake/blum

@@ -19,7 +19,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private static final long BUTTON_DELAY_TIME = 1000;
 	
 	// TODO ubah jadi array of tile
-	public static VisibleGameObject[][] peta;
+	public static Tile[][] peta;
 
 	// panel-panel mode persiapan
     public WelcomeScreen start;
@@ -73,8 +73,12 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
             	_game.active_panel=_game;
                 _game.P.setName(Utilities.mediator_string);
             	_game.setVisible(true);
-                frame.addKeyListener(_game);
                 frame.add(_game);
+                _game.addMouseListener(_game);
+            	_game.addMouseMotionListener(_game);
+        		_game.addKeyListener(_game);
+        		_game.setFocusable(true);
+        		_game.requestFocusInWindow();
             } else if (in==Utilities.StateType.Quit){
             	frame.dispose();
             }
@@ -94,11 +98,6 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		addKeyListener(this);
-		setFocusable(true);
-		requestFocusInWindow();
 		// TODO create all object here
 		// contoh init
 		// ObjTest turunan dari VisibleGameObject
@@ -127,7 +126,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		Game game = new Game();
 		_game=game;
 		//frame.add(game);
-        frame.add(_game.start);
+		frame.add(_game.start);
 		frame.setVisible(true);
 		_game.active_panel=_game.start;
 		_game.state_now=Utilities.StateType.WelcomeScreen;
@@ -222,6 +221,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	@Override
 	public void keyPressed(KeyEvent key) {
 		if (tmpTime==-1){
+			System.out.println("asdfghhgfds");
 			if (key.getKeyCode() == KeyEvent.VK_LEFT){
 				tmpTime=0;
 				P.MoveLeft();
@@ -249,10 +249,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
 			tmpTime=-1;
 		} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
-                        tmpTime=-1;
-                        P.setSilent(false);
-                }
-                P.arah = 0;
+			tmpTime=-1;
+			P.setSilent(false);
+        }
+        P.arah = 0;
 	}
 
 	@Override

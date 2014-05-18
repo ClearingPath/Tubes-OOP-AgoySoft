@@ -105,7 +105,8 @@ public class WelcomeScreen extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartButtonMouseClicked
-        Game.ChangeState(Utilities.StateType.StartScreen);
+    	Game.ChangeState(Utilities.StateType.StartScreen);
+    	//Game.ChangeState(Utilities.StateType.Playing);
         //setVisible(false);
         //Game.frame.remove(this);
         //Game.play.setVisible(true);

@@ -13,7 +13,7 @@ public class HighScore extends javax.swing.JPanel {
     public HighScore() {
         initComponents();
         XMLData temp = new XMLData();
-        temp.ReadFile("highscore.txt");
+        temp.ReadFile("highscore.xml");
         temp.ImportData();
         Stream = temp.ExportData();
         for (int i = 0;i < 20;i++){

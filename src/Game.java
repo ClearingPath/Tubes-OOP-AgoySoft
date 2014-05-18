@@ -42,16 +42,22 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private static JFrame frame;
 	private Graphics g;
 	public GameObjectManager _gameObjectManager;
-        public Player P;
-        public Owner O;
-	
-	public Game() {
+    public Player P;
+    public Owner O;
+    
+    private static Game _game;
+    
+    public static GameObjectManager GetGameObjectManager(){
+    	return _game._gameObjectManager;
+    }
+    
+	private Game() {
 		init();
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
-	public void init(){
+	private void init(){
 		_gameObjectManager=new GameObjectManager();
                 P = new Player("Agoy");
                 O = new Owner();
@@ -79,6 +85,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public static void main(String[] args) throws InterruptedException {
 		frame = new JFrame("Agoy Soft");
 		Game game = new Game();
+		_game=game;
 		frame.add(game);
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

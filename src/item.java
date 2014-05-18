@@ -1,45 +1,76 @@
 /*File : item.java */
 /*Author : 13512093 - Jonathan Sudibya */
 
+import java.awt.Point;
 import java.util.Vector;
 
-public class item {
-        public static item ItemKosong;
-        public boolean Status; /* udah dirusak / belum */
-	private class i2
-	{
-		public int X;
-		public int Y;
-	}
-	/* Attribute */
-	private float waktu;
-	private enum jenis {lemari,sabun,jebakan,anjing}
-	
-	public Vector<i2> posisi; 
-	
-	public Vector<i2> ukuran;
-	
-	/* Constructor */
-	item()
-	{
-		posisi = new Vector<i2>(4,2);//Initial size = 4; can be increased by 2
-		ukuran = new Vector<i2>(4,2);
-	}
-	/* method */
-	public void Update()
-	{
-		
-	}
+public class item extends VisibleGameObject{
+    public static item ItemKosong;
+    
+    /* Attribute */
+    public boolean Broken; /* udah dirusak / belum */
+    private long waktu;
+    private Utilities.ItemType jenis;
+    public Point posisi; 
+    public Point ukuran;
+
+    /* Constructor */
+    item()
+    {
+        waktu = 1000;
+    }
+    
+    public static void initItemKosong() {
+        Game.GetGameObjectManager().Add("ItemKosong", ItemKosong);
+    }
+    /* method */
+    
+    public void setBroken(boolean Broken) {
+        this.Broken = Broken;
+    }
+
+    public void setWaktu(long waktu) {
+        this.waktu = waktu;
+    }
+
+    public void setJenis(Utilities.ItemType jenis) {
+        this.jenis = jenis;
+    }
+
+    public void setPosisi(Point posisi) {
+        this.posisi = posisi;
+    }
+
+    public void setUkuran(Point ukuran) {
+        this.ukuran = ukuran;
+    }
+
+    public boolean isBroken() {
+        return Broken;
+    }
+
+    public float getWaktu() {
+        return waktu;
+    }
+
+    public Utilities.ItemType getJenis() {
+        return jenis;
+    }
+
+    public Point getPosisi() {
+        return posisi;
+    }
+
+    public Point getUkuran() {
+        return ukuran;
+    }
+    
+    public boolean isWalkable() {
+        return jenis.IsWalkable();
+    }
+
+    public void Update(long elapsedTime) {
         
-        public void setWaktu(float _waktu)
-        {
-            waktu = _waktu;
-        }
-        
-        public float getWaktu()
-        {
-            return waktu;
-        }
-        
+    }
 }
 

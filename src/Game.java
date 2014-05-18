@@ -19,7 +19,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private static final long BUTTON_DELAY_TIME = 1000;
 	
 	// TODO ubah jadi array of tile
-	public VisibleGameObject[][] peta;
+	public static VisibleGameObject[][] peta;
 
 	// panel-panel mode persiapan
     public WelcomeScreen start;

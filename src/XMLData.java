@@ -26,19 +26,6 @@ import java.util.logging.Logger;
  * @author jonathan
  */
 public class XMLData {
-    private class Data
-    {
-        public String Name;
-        public int Score;
-        public Date time;
-        public Data(){}
-        public Data(String nama,int nilai,Date waktu)
-        {
-            Name = nama;
-            Score = nilai;
-            time = waktu;
-        }
-    }/* data player di sini */
     private ArrayList<String> Buffer;
     private Queue<Data> Stream;
     public static Comparator<Data> ScoreComparator = new Comparator<Data>(){
@@ -114,6 +101,10 @@ public class XMLData {
     }
     public void AddData(String Name,int Score,Date time){
         Stream.add(new Data(Name,Score,time));
+    }
+    /* top data */
+    public Data ExportData(){
+        return Stream.poll();
     }
     public void WriteData(String FileName){
         try {

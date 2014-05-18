@@ -102,9 +102,19 @@ public class XMLData {
     public void AddData(String Name,int Score,Date time){
         Stream.add(new Data(Name,Score,time));
     }
+    public void AddData(ArrayList<Data> input){
+        while (!input.isEmpty()){
+            Stream.add(input.remove(0));
+        }
+    }
     /* top data */
-    public Data ExportData(){
-        return Stream.poll();
+    public ArrayList<Data> ExportData(){
+        ArrayList<Data> temp = new ArrayList<>();
+        while(!Stream.isEmpty())
+        {
+            temp.add(Stream.poll());
+        }
+        return temp;
     }
     public void WriteData(String FileName){
         try {

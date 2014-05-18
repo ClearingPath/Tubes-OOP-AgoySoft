@@ -36,24 +36,32 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	
 	// TODO ubah jadi array of tile
 	public VisibleGameObject[][] peta;
+        
+        // panel-panel mode persiapan
+        public static WelcomeScreen start;
+        public static PlayScreen play;
+        public static HighScore topplayer;
+        public static HowToPlay help;
+        public static Credits credits;
+
 	
 	private long lastUpdate, elapsedTime;
 	private long tmpTime;
-	private static JFrame frame;
+	public static JFrame frame;
 	private Graphics g;
 	public GameObjectManager _gameObjectManager;
-        public Player P;
+        public static Player P;
         public Owner O;
 	
-	public Game() {
-		init();
+	public Game(String Pname) {
+		init(Pname);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
-	public void init(){
+	public void init(String Pname){
 		_gameObjectManager=new GameObjectManager();
-                P = new Player("Agoy");
+                P = new Player(Pname);
                 O = new Owner();
 		setSize(700, 700);
 		setBackground(Color.white);
@@ -68,7 +76,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		// ObjTest turunan dari VisibleGameObject
 		//ObjTest obj=new ObjTest(5);
 		//_gameObjectManager.Add("nama", obj);
-		Objv1 obj=new Objv1();
+		//Objv1 obj=new Objv1();
                 _gameObjectManager.Add("player", P);
 		// contoh panggil Object
 		// kalo salah kelas, exception keluar
@@ -78,14 +86,24 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	
 	public static void main(String[] args) throws InterruptedException {
 		frame = new JFrame("Agoy Soft");
-		Game game = new Game();
+                // deklarasi user ketika permainan dijalankan
+                //P = new Player();
+                
+                // panel construction
+                start = new WelcomeScreen();
+                play = new PlayScreen();
+                topplayer = new HighScore();
+                help = new HowToPlay();
+                credits = new Credits();
+
+		Game game = new Game("Agoy");
 		frame.add(game);
+                frame.setVisible(true);
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setUndecorated(true);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);
-        frame.setVisible(true);
+                //frame.setUndecorated(true);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);
 	}
 	
 	public void update(Graphics g){

@@ -207,7 +207,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 
 	@Override
 	public void run() {
-		while(true){
+		while(state_now!=Utilities.StateType.Quit){
 			update(g);
 			repaint();
 			try {

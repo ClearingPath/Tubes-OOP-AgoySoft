@@ -1,11 +1,30 @@
 import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.Paint;
-import javax.swing.ImageIcon;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.RenderingHints.Key;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.text.AttributedCharacterIterator;
+import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -17,8 +36,12 @@ public class WelcomeScreen extends JPanel {
     /**
      * Creates new form WelcomeScreen
      */
+	SimplePic a;
     public WelcomeScreen() {
         initComponents();
+        a=new SimplePic();
+        a.Load("img/mainmenu.png");
+        a.SetPosition(1, 1);
         setSize(700, 700);
 	setBackground(Color.white);
     }
@@ -170,5 +193,13 @@ public class WelcomeScreen extends JPanel {
         graphics.drawImage(img, (getWidth() - imgX) / 2, (getHeight() - imgY) / 2, imgX, imgY, null);
       //  graphics.dispose();
     }*/
-
+    @Override
+    protected void paintComponent(Graphics g) {
+    	super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		//_gameObjectManager.DrawAll(g2d,this);
+		g2d.setColor(Color.white);
+		a.Draw(g2d, this);
+    }
 }

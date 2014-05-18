@@ -122,8 +122,10 @@ public class Sprite{
 	public void Draw(Graphics2D g, ImageObserver IO){
 		int s_x=Size_X;
 		int s_y=Size_Y;
+		System.out.println("qwertyuio");
 		if (s_x==-1)s_x=_texture.getWidth(null);
 		if (s_y==-1)s_y=_texture.getHeight(null);
+		System.out.println(s_x+" "+s_y);
 		AffineTransform trans=new AffineTransform();
 		trans.setToIdentity();
 		trans.concatenate(AffineTransform.getRotateInstance(Math.toRadians(_angle),Pos_X+s_x/2,Pos_Y+s_y/2));
@@ -166,16 +168,22 @@ public class Sprite{
 		Offset_Y=OffY;
 	}
 	public double getWidth(){
-		return Size_X;
+		return _texture.getWidth();
+		//return Size_X;
 	}
 	public double getHeight(){
-		return Size_Y;
+		return _texture.getHeight();
+		//return Size_Y;
 	}
 	public int getTileWidth(){
-		return Size_X/Utilities.TILE_SIZE_X;
+		int s_x=Size_X;
+		if (s_x==-1)s_x=_texture.getWidth(null);
+		return s_x/Utilities.TILE_SIZE_X;
 	}
 	public int getTileHeight(){
-		return Size_Y/Utilities.TILE_SIZE_Y;
+		int s_y=Size_Y;
+		if (s_y==-1)s_y=_texture.getHeight(null);
+		return s_y/Utilities.TILE_SIZE_Y;
 	}
 	public Rectangle getBounds(){
 		Rectangle r=new Rectangle();

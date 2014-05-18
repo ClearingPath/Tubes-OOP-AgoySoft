@@ -42,22 +42,28 @@ public abstract class VisibleGameObject
 	
 	public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
-			_sprite.Draw(g, IO);
+			if (((Utilities.VIEW_TILE_X<=tile_posx)/*
+			*/&&(tile_posx<=Utilities.VIEW_TILE_X+Utilities.MAP_COL_COUNT))/*
+			*/&&((Utilities.VIEW_TILE_Y<=tile_posy)/*
+			*/&&(tile_posy<=Utilities.VIEW_TILE_Y+Utilities.MAP_ROW_COUNT))){
+				//cek keliatan ato tidak
+				_sprite.Draw(g, IO);
+			}
 		}
 	}
 
 	public static Point TiletoReal(Point p){
 		Point p2=new Point();
-		p2.x=Game.VIEW_POS_X+p.x*Game.TILE_SIZE_X;
-		p2.y=Game.VIEW_POS_Y+p.y*Game.TILE_SIZE_Y;
+		p2.x=(int)Utilities.VIEW_POS_X+p.x*Utilities.TILE_SIZE_X;
+		p2.y=(int)Utilities.VIEW_POS_Y+p.y*Utilities.TILE_SIZE_Y;
 		return p2;
 	}
 	public static Point RealToTile(Point p){
 		Point p2=new Point();
-		p2.x=p.x-Game.VIEW_POS_X;
-		p2.y=p.y-Game.VIEW_POS_Y;
-		p2.x=(int) Math.floor(p2.x/Game.TILE_SIZE_X);
-		p2.y=(int) Math.floor(p2.y/Game.TILE_SIZE_Y);
+		p2.x=p.x-(int)(Utilities.VIEW_POS_X);
+		p2.y=p.y-(int)(Utilities.VIEW_POS_Y);
+		p2.x=(int) Math.floor(p2.x/Utilities.TILE_SIZE_X);
+		p2.y=(int) Math.floor(p2.y/Utilities.TILE_SIZE_Y);
 		return p2;
 	}
 	public void SetPosition(int tile_x, int tile_y){

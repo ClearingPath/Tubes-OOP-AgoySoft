@@ -18,22 +18,6 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	//delay antar tiap pergerakan
 	private static final long BUTTON_DELAY_TIME = 1000;
 	
-	//ukuran asli peta
-	public static int MAP_ROW_COUNT=15;
-	public static int MAP_COL_COUNT=12;
-	
-	//ukuran peta yang dikasih lihat
-	public static final int VIEW_ROW_COUNT=12;
-	public static final int VIEW_COL_COUNT=12;
-	
-	//posisi ujung kiri atas peta
-	public static final int VIEW_POS_X=0;
-	public static final int VIEW_POS_Y=0;
-	
-	//ukuran tile
-	public static final int TILE_SIZE_X=32;
-	public static final int TILE_SIZE_Y=32;
-	
 	// TODO ubah jadi array of tile
 	public VisibleGameObject[][] peta;
 
@@ -163,6 +147,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 				tmpTime=-1;
 			}
 		}
+		Utilities.VIEW_TILE_X=P.GetPosition().x-(int)(Utilities.VIEW_COL_COUNT/2);
+		if (Utilities.VIEW_TILE_X<0)Utilities.VIEW_TILE_X=0;
+		Utilities.VIEW_TILE_Y=P.GetPosition().y-(int)(Utilities.VIEW_ROW_COUNT/2);
+		if (Utilities.VIEW_TILE_Y<0)Utilities.VIEW_TILE_Y=0;
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
 	

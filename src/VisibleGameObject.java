@@ -1,11 +1,15 @@
 
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
+
+/**
+*
+* @author M. Ilmi
+*/
 
 public abstract class VisibleGameObject
 {
@@ -42,22 +46,38 @@ public abstract class VisibleGameObject
 	
 	public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
-			_sprite.Draw(g, IO);
+			// TODO handle item with width more than one tile
+			// rectangle untuk peta yang kelihatan
+			Rectangle a=new Rectangle();
+			a.x=Utilities.VIEW_TILE_X;
+			a.y=Utilities.VIEW_TILE_Y;
+			a.height=Utilities.VIEW_ROW_COUNT;
+			a.width=Utilities.VIEW_COL_COUNT;
+			// rectangle untuk object bersangkutan
+			Rectangle b=new Rectangle();
+			b.x=tile_posx;
+			b.y=tile_posy;
+			b.height=_sprite.getTileHeight();
+			b.width=_sprite.getTileWidth();
+			if (a.intersects(b)){
+				//cek keliatan ato tidak
+				_sprite.Draw(g, IO);
+			}
 		}
 	}
 
 	public static Point TiletoReal(Point p){
 		Point p2=new Point();
-		p2.x=Game.VIEW_POS_X+p.x*Game.TILE_SIZE_X;
-		p2.y=Game.VIEW_POS_Y+p.y*Game.TILE_SIZE_Y;
+		p2.x=(int)Utilities.VIEW_POS_X+p.x*Utilities.TILE_SIZE_X;
+		p2.y=(int)Utilities.VIEW_POS_Y+p.y*Utilities.TILE_SIZE_Y;
 		return p2;
 	}
 	public static Point RealToTile(Point p){
 		Point p2=new Point();
-		p2.x=p.x-Game.VIEW_POS_X;
-		p2.y=p.y-Game.VIEW_POS_Y;
-		p2.x=(int) Math.floor(p2.x/Game.TILE_SIZE_X);
-		p2.y=(int) Math.floor(p2.y/Game.TILE_SIZE_Y);
+		p2.x=p.x-(int)(Utilities.VIEW_POS_X);
+		p2.y=p.y-(int)(Utilities.VIEW_POS_Y);
+		p2.x=(int) Math.floor(p2.x/Utilities.TILE_SIZE_X);
+		p2.y=(int) Math.floor(p2.y/Utilities.TILE_SIZE_Y);
 		return p2;
 	}
 	public void SetPosition(int tile_x, int tile_y){

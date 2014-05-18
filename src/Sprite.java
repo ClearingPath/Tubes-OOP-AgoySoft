@@ -61,6 +61,10 @@ public class Sprite{
 		transscl.setToIdentity();
 	}
 	
+	/** 
+     * Load texture untuk sprite dari file external
+     * @param filename path tempat image yang akan di load
+    */
 	public void Load(String filename) throws IOException{
 		try {
 			_texture = ImageIO.read(new File(filename));
@@ -68,7 +72,11 @@ public class Sprite{
 			throw e;
 		}
 	}
-	
+	/** 
+     * Load texture untuk sprite dengan meng-copy 
+     * BufferedImage yang di-input
+     * @param i BufferedImage yang akan di-copy
+    */
 	public void Load (BufferedImage i) throws IOException{
 		// TODO cari cara cek image udah di load/belum
 		if (i.getHeight(null)<=0){

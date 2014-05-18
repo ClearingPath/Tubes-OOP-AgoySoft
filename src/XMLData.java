@@ -86,10 +86,11 @@ public class XMLData {
                         System.out.println(date);
                         System.out.println(formatter.format(date));
                         temp.time = date;
-                        flag++;
+                        
                 } catch (ParseException e) {
                         e.printStackTrace();
                 }
+                flag++;
             }
             if (flag == 3)
             {
@@ -112,7 +113,8 @@ public class XMLData {
         ArrayList<Data> temp = new ArrayList<>();
         while(!Stream.isEmpty())
         {
-            temp.add(Stream.poll());
+            Data sementara = Stream.poll();
+            temp.add(sementara);
         }
         return temp;
     }

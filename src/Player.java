@@ -41,7 +41,7 @@ public class Player extends VisibleGameObject {
         GetSprite().AddAnimType(8,3,0,3,2,100); //atas
         try {
             GetSprite().ChangeAnimType(0);
-        } catch (IOException e) {
+        } catch (AnimTypeNotFoundException e) {
             e.printStackTrace();
         }
         
@@ -85,7 +85,7 @@ public class Player extends VisibleGameObject {
             //Update(1000);
             SetPosition(GetPosition().x, GetPosition().y-1);
             GetSprite().ChangeAnimType(4);
-        } catch (IOException ex) {
+        } catch (AnimTypeNotFoundException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -95,7 +95,7 @@ public class Player extends VisibleGameObject {
             //Update(1000);
             SetPosition(GetPosition().x, GetPosition().y+1);
             GetSprite().ChangeAnimType(1);
-        } catch (IOException ex) {
+        } catch (AnimTypeNotFoundException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -105,7 +105,7 @@ public class Player extends VisibleGameObject {
             //Update(1000);
             SetPosition(GetPosition().x+1, GetPosition().y);
             GetSprite().ChangeAnimType(3);
-        } catch (IOException ex) {
+        } catch (AnimTypeNotFoundException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -115,7 +115,7 @@ public class Player extends VisibleGameObject {
             //Update(1000);
             SetPosition(GetPosition().x-1, GetPosition().y);
             GetSprite().ChangeAnimType(2);
-        } catch (IOException ex) {
+        } catch (AnimTypeNotFoundException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -136,7 +136,7 @@ public class Player extends VisibleGameObject {
                 try {
                     GetSprite().ChangeAnimType(5);
                     SetPosition(GetPosition().x, GetPosition().y+1);
-                } catch (IOException ex) {
+                } catch (AnimTypeNotFoundException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
@@ -144,7 +144,7 @@ public class Player extends VisibleGameObject {
                 try {
                     GetSprite().ChangeAnimType(6);
                     SetPosition(GetPosition().x-1, GetPosition().y);
-                } catch (IOException ex) {
+                } catch (AnimTypeNotFoundException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
@@ -152,7 +152,7 @@ public class Player extends VisibleGameObject {
                 try {
                     GetSprite().ChangeAnimType(7);
                     SetPosition(GetPosition().x+1, GetPosition().y);
-                } catch (IOException ex) {
+                } catch (AnimTypeNotFoundException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
@@ -160,7 +160,7 @@ public class Player extends VisibleGameObject {
                 try {
                     GetSprite().ChangeAnimType(8);
                     SetPosition(GetPosition().x, GetPosition().y-1);
-                } catch (IOException ex) {
+                } catch (AnimTypeNotFoundException ex) {
                     Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;

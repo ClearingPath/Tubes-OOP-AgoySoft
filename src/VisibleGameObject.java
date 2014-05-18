@@ -1,11 +1,15 @@
 
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
+
+/**
+*
+* @author M. Ilmi
+*/
 
 public abstract class VisibleGameObject
 {
@@ -42,10 +46,20 @@ public abstract class VisibleGameObject
 	
 	public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
-			if (((Utilities.VIEW_TILE_X<=tile_posx)/*
-			*/&&(tile_posx<=Utilities.VIEW_TILE_X+Utilities.MAP_COL_COUNT))/*
-			*/&&((Utilities.VIEW_TILE_Y<=tile_posy)/*
-			*/&&(tile_posy<=Utilities.VIEW_TILE_Y+Utilities.MAP_ROW_COUNT))){
+			// TODO handle item with width more than one tile
+			// rectangle untuk peta yang kelihatan
+			Rectangle a=new Rectangle();
+			a.x=Utilities.VIEW_TILE_X;
+			a.y=Utilities.VIEW_TILE_Y;
+			a.height=Utilities.VIEW_ROW_COUNT;
+			a.width=Utilities.VIEW_COL_COUNT;
+			// rectangle untuk object bersangkutan
+			Rectangle b=new Rectangle();
+			b.x=tile_posx;
+			b.y=tile_posy;
+			b.height=_sprite.getTileHeight();
+			b.width=_sprite.getTileWidth();
+			if (a.intersects(b)){
 				//cek keliatan ato tidak
 				_sprite.Draw(g, IO);
 			}

@@ -105,3 +105,11 @@ public class Utilities {
 		return q;
     }
 }
+
+class AnimTypeNotFoundException extends Exception{
+	
+}
+
+class ObjectNameNotFoundException extends Exception{
+	
+}

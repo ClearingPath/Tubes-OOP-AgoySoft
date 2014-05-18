@@ -1,5 +1,4 @@
 
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -11,6 +10,11 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+
+/**
+*
+* @author M. Ilmi
+*/
 
 public class Sprite{
 	private BufferedImage _texture;
@@ -84,14 +88,14 @@ public class Sprite{
 		_anim_array.put(Code,a);
 	}
 	
-	public void ChangeAnimType(int Code) throws IOException{
+	public void ChangeAnimType(int Code) throws AnimTypeNotFoundException{
 		if (_anim_array.containsKey(Code)){
 			CurAnim=_anim_array.get(Code);
 			CurTime=0;
 			CurRow=CurAnim.StartRow;
 			CurCol=CurAnim.StartCol;
 		} else {
-			throw new IOException();
+			throw new AnimTypeNotFoundException();
 		}
 	}
 	
@@ -158,6 +162,12 @@ public class Sprite{
 	}
 	public double getHeight(){
 		return Size_Y;
+	}
+	public int getTileWidth(){
+		return Size_X/Utilities.TILE_SIZE_X;
+	}
+	public int getTileHeight(){
+		return Size_Y/Utilities.TILE_SIZE_Y;
 	}
 	public Rectangle getBounds(){
 		Rectangle r=new Rectangle();

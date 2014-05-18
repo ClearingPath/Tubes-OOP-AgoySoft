@@ -36,7 +36,7 @@ public class Owner extends VisibleGameObject{
         GetSprite().AddAnimType(4,3,0,3,2,500); //atas
         try {
                 GetSprite().ChangeAnimType(1);
-        } catch (IOException e) {
+        } catch (AnimTypeNotFoundException e) {
                 // AnimType not found
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -85,7 +85,7 @@ public class Owner extends VisibleGameObject{
                     SetPosition(posTemp.x, posTemp.y);
                     
                 }
-                catch(IOException e) {
+                catch(AnimTypeNotFoundException e) {
                     // AnimType not found
                     e.printStackTrace();
                 }

@@ -1,9 +1,14 @@
+
 import java.awt.Graphics2D;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 
+/**
+*
+* @author M. Ilmi
+*/
 
 public class GameObjectManager {
 	
@@ -24,11 +29,12 @@ public class GameObjectManager {
 	public int GetObjectCount() {
 		return _gameObjects.size();
 	}
-	public VisibleGameObject Get(String name){
+	public VisibleGameObject Get(String name) throws ObjectNameNotFoundException{
 		if (_gameObjects.containsKey(name)){
 			return _gameObjects.get(name);
+		} else {
+			throw new ObjectNameNotFoundException();
 		}
-		return null;
 	}
 
 	public void DrawAll(Graphics2D g, ImageObserver IO){

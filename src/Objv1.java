@@ -15,7 +15,7 @@ public class Objv1 extends VisibleGameObject {
 		GetSprite().AddAnimType(0, 0,0,8,0,500);
 		try {
 			GetSprite().ChangeAnimType(0);
-		} catch (IOException e) {
+		} catch (AnimTypeNotFoundException e) {
 			// AnimType not found
 			// TODO Auto-generated catch block
 			e.printStackTrace();

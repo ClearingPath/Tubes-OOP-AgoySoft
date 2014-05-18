@@ -24,6 +24,12 @@ public class Utilities {
         DoorClosed, Spidol;
     }
     
+    public enum StateType{
+    	WelcomeScreen, StartScreen, Playing, HighScore, Help, Credits, Quit;
+    }
+    
+    public static String mediator_string;
+    
     public Queue<Point> CariPath(Point from, Point to) throws Exception{
         int Row_C=10;
         int Col_C=10;

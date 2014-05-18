@@ -1,6 +1,8 @@
-import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Rakhmatullah Yoga Sutrisna - 13512053
@@ -9,27 +11,52 @@ public class Player extends VisibleGameObject {
     private boolean Attaching;
     private boolean SilentWalk;
     private boolean Hide;
-    //private int x,y;
     private int TimeRemaining;
     private ArrayList<item> Inventory;
     private static enum Hadap {
         Atas, Bawah, Kiri, Kanan
     }
+    //atribut buat highscore
     public Date scoredate;
     public String name;
     public int score;
+    
+    public int arah;
 
-    public Player(String Pname) {
+    public Player() {
         super();
+        Load("player.png");
+        GetSprite().SetRotation(0);
+        SetPosition(5,5);
+        GetSprite().SetImageSize(32, 32);
+        GetSprite().AddAnimType(0,0,1,0,2,-1); //inisiasi
+        GetSprite().AddAnimType(1,0,1,0,1,-1); //bawah
+        GetSprite().AddAnimType(2,1,1,1,1,-1); //kiri
+        GetSprite().AddAnimType(3,2,1,2,1,-1); //kanan
+        GetSprite().AddAnimType(4,3,1,3,1,-1); //atas
+        
+        GetSprite().AddAnimType(5,0,0,0,2,100); //bawah
+        GetSprite().AddAnimType(6,1,0,1,2,100); //kiri
+        GetSprite().AddAnimType(7,2,0,2,2,100); //kanan
+        GetSprite().AddAnimType(8,3,0,3,2,100); //atas
+        try {
+            GetSprite().ChangeAnimType(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         Attaching = false;
         SilentWalk = false;
         Hide = false;
         TimeRemaining = 60;
         Inventory = new ArrayList<>();
         scoredate = new Date();
-        name = Pname;
+        //name = Pname;
+        arah = 0;
         score = 0;
-        //super.Load("gambar");
+    }
+    public void setName(String Pname){
+    	name=Pname;
     }
     public boolean isAttaching() {
         return Attaching;
@@ -53,21 +80,44 @@ public class Player extends VisibleGameObject {
         Hide = !Hide;
     }
     public void MoveUp() {
-        //set hadap dulu
-        //y--;
-        SetPosition(GetPosition().x, GetPosition().y-1);
+        arah = 4;
+        try {
+            //Update(1000);
+            SetPosition(GetPosition().x, GetPosition().y-1);
+            GetSprite().ChangeAnimType(4);
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveDown() {
-        //y++;
-        SetPosition(GetPosition().x, GetPosition().y+1);
+        arah = 1;
+        try {
+            //Update(1000);
+            SetPosition(GetPosition().x, GetPosition().y+1);
+            GetSprite().ChangeAnimType(1);
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveRight() {
-        //x++;
-        SetPosition(GetPosition().x+1, GetPosition().y);
+        arah = 3;
+        try {
+            //Update(1000);
+            SetPosition(GetPosition().x+1, GetPosition().y);
+            GetSprite().ChangeAnimType(3);
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveLeft() {
-        //x--;
-        SetPosition(GetPosition().x-1, GetPosition().y);
+        arah = 2;
+        try {
+            //Update(1000);
+            SetPosition(GetPosition().x-1, GetPosition().y);
+            GetSprite().ChangeAnimType(2);
+        } catch (IOException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void PickItem(item i) {
         Inventory.add(i);
@@ -81,13 +131,39 @@ public class Player extends VisibleGameObject {
     }
     @Override
     public void Update(long elapsedTime) {
-        //To change body of generated methods, choose Tools | Templates.
-        System.out.println("Posisi = ["+GetPosition().x+","+GetPosition().y+"]");
-        System.out.println("Silent mode = "+SilentWalk);
-        System.out.println("List inventory = "+Inventory);
-        System.out.println("Attaching trap = "+Attaching);
-        System.out.println("Hide = "+Hide);
-        System.out.println("\n\n");
+        switch(arah) {
+            case 1:
+                try {
+                    GetSprite().ChangeAnimType(5);
+                    SetPosition(GetPosition().x, GetPosition().y+1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case 2:
+                try {
+                    GetSprite().ChangeAnimType(6);
+                    SetPosition(GetPosition().x-1, GetPosition().y);
+                } catch (IOException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case 3:
+                try {
+                    GetSprite().ChangeAnimType(7);
+                    SetPosition(GetPosition().x+1, GetPosition().y);
+                } catch (IOException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case 4:
+                try {
+                    GetSprite().ChangeAnimType(8);
+                    SetPosition(GetPosition().x, GetPosition().y-1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+        }
     }
-    
 }

@@ -36,10 +36,17 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	
 	// TODO ubah jadi array of tile
 	public VisibleGameObject[][] peta;
-	
-	private long lastUpdate, elapsedTime;
+
+	// panel-panel mode persiapan
+    public WelcomeScreen start;
+    public PlayScreen play;
+    public HighScore topplayer;
+    public HowToPlay help;
+    public Credits credits;
+
+    private long lastUpdate, elapsedTime;
 	private long tmpTime;
-	private static JFrame frame;
+	public static JFrame frame;
 	private Graphics g;
 	public GameObjectManager _gameObjectManager;
     public Player P;
@@ -51,6 +58,38 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     	return _game._gameObjectManager;
     }
     
+    public JPanel active_panel;
+    public Utilities.StateType state_now;
+    public static void ChangeState(Utilities.StateType in){
+    	if (_game.state_now!=in){
+    		_game.active_panel.setVisible(false);
+            frame.remove(_game.active_panel);
+            if (in==Utilities.StateType.WelcomeScreen){
+                _game.start.setVisible(true);
+                frame.add(_game.start);
+            } else if (in==Utilities.StateType.StartScreen){
+                _game.play.setVisible(true);
+                frame.add(_game.play);
+            } else if (in==Utilities.StateType.HighScore){
+                _game.topplayer.setVisible(true);
+                frame.add(_game.topplayer);
+            } else if (in==Utilities.StateType.Help){
+                _game.help.setVisible(true);
+                frame.add(_game.help);
+            } else if (in==Utilities.StateType.Credits){
+                _game.credits.setVisible(true);
+                frame.add(_game.credits);
+            } else if (in==Utilities.StateType.Playing){
+            	_game.P.setName(Utilities.mediator_string);
+            	_game.setVisible(true);
+                frame.addKeyListener(_game);
+                frame.add(_game);
+            } else if (in==Utilities.StateType.Quit){
+            	frame.dispose();
+            }
+    	}
+    }
+    
 	private Game() {
 		init();
 		Thread thread = new Thread(this);
@@ -59,8 +98,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 
 	private void init(){
 		_gameObjectManager=new GameObjectManager();
-                P = new Player("Agoy");
-                O = new Owner();
+        P = new Player();
+        O = new Owner();
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
@@ -74,12 +113,22 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		// ObjTest turunan dari VisibleGameObject
 		//ObjTest obj=new ObjTest(5);
 		//_gameObjectManager.Add("nama", obj);
-		Objv1 obj=new Objv1();
-                _gameObjectManager.Add("owner", O);
+		//Objv1 obj=new Objv1();
+        _gameObjectManager.Add("player", P);
 		// contoh panggil Object
 		// kalo salah kelas, exception keluar
 		//ObjTest bcd;
 		//bcd=(ObjTest)g.Get("nama");
+
+        // deklarasi user ketika permainan dijalankan
+        //P = new Player();
+        
+        // panel construction
+        start = new WelcomeScreen();
+        play = new PlayScreen();
+        topplayer = new HighScore();
+        help = new HowToPlay();
+        credits = new Credits();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
@@ -87,12 +136,12 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		Game game = new Game();
 		_game=game;
 		frame.add(game);
+        frame.setVisible(true);
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);
-        frame.setVisible(true);
 	}
 	
 	public void update(Graphics g){
@@ -205,6 +254,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
                         tmpTime=-1;
                         P.setSilent(false);
                 }
+                P.arah = 0;
 	}
 
 	@Override

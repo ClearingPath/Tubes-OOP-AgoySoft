@@ -31,6 +31,13 @@ public class XMLData {
         public String Name;
         public int Score;
         public Date time;
+        public Data(){}
+        public Data(String nama,int nilai,Date waktu)
+        {
+            Name = nama;
+            Score = nilai;
+            time = waktu;
+        }
     }/* data player di sini */
     private ArrayList<String> Buffer;
     private Queue<Data> Stream;
@@ -105,6 +112,9 @@ public class XMLData {
         }
         System.out.println(Stream.size());
     }
+    public void AddData(String Name,int Score,Date time){
+        Stream.add(new Data(Name,Score,time));
+    }
     public void WriteData(String FileName){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(FileName));
@@ -112,24 +122,27 @@ public class XMLData {
             bw.newLine();
             bw.write("<highscore>");
             bw.newLine();
-            bw.write("<player>");
-            bw.newLine();
-            bw.write("<nama>jonny");
-            bw.newLine();
-            bw.write("</nama>");
-            bw.newLine();
-            bw.write("<score>100");
-            bw.newLine();
-            bw.write("</score>");
-            bw.newLine();
-            Date time = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("EEEE MMM dd HH:mm:ss yyyy");
-            bw.write("<date>" + formatter.format(time));
-            bw.newLine();
-            bw.write("</date>");
-            bw.newLine();
-            bw.write("</player>");
-            bw.newLine();
+            while (!Stream.isEmpty())
+            {
+                Data temp = Stream.poll();
+                bw.write("<player>");
+                bw.newLine();
+                bw.write("<nama>"+temp.Name);
+                bw.newLine();
+                bw.write("</nama>");
+                bw.newLine();
+                bw.write("<score>"+temp.Score);
+                bw.newLine();
+                bw.write("</score>");
+                bw.newLine();
+                SimpleDateFormat formatter = new SimpleDateFormat("EEEE MMM dd HH:mm:ss yyyy");
+                bw.write("<date>" + formatter.format(temp.time));
+                bw.newLine();
+                bw.write("</date>");
+                bw.newLine();
+                bw.write("</player>");
+                bw.newLine();
+            } 
             bw.write("</highscore>");
             bw.close();
         } catch (IOException ex) {

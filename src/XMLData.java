@@ -82,7 +82,7 @@ public class XMLData {
                 SimpleDateFormat formatter = new SimpleDateFormat("EEEE MMM dd HH:mm:ss yyyy");		
 
                 try {
-                        Date date = formatter.parse(coba.substring(6,35));
+                        Date date = formatter.parse(coba.substring(6,33));
                         System.out.println(date);
                         System.out.println(formatter.format(date));
                         temp.time = date;

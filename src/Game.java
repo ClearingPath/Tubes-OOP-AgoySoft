@@ -64,23 +64,30 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     	if (_game.state_now!=in){
     		_game.active_panel.setVisible(false);
             frame.remove(_game.active_panel);
-            if (in==Utilities.StateType.WelcomeScreen){
+            _game.state_now=in;
+    		if (in==Utilities.StateType.WelcomeScreen){
+            	_game.active_panel=_game.start;
                 _game.start.setVisible(true);
                 frame.add(_game.start);
             } else if (in==Utilities.StateType.StartScreen){
+            	_game.active_panel=_game.play;
                 _game.play.setVisible(true);
                 frame.add(_game.play);
             } else if (in==Utilities.StateType.HighScore){
+            	_game.active_panel=_game.topplayer;
                 _game.topplayer.setVisible(true);
                 frame.add(_game.topplayer);
             } else if (in==Utilities.StateType.Help){
+            	_game.active_panel=_game.help;
                 _game.help.setVisible(true);
                 frame.add(_game.help);
             } else if (in==Utilities.StateType.Credits){
+            	_game.active_panel=_game.credits;
                 _game.credits.setVisible(true);
                 frame.add(_game.credits);
             } else if (in==Utilities.StateType.Playing){
-            	_game.P.setName(Utilities.mediator_string);
+            	_game.active_panel=_game;
+                _game.P.setName(Utilities.mediator_string);
             	_game.setVisible(true);
                 frame.addKeyListener(_game);
                 frame.add(_game);
@@ -135,8 +142,11 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		frame = new JFrame("Agoy Soft");
 		Game game = new Game();
 		_game=game;
-		frame.add(game);
-        frame.setVisible(true);
+		//frame.add(game);
+        frame.add(_game.start);
+		frame.setVisible(true);
+		_game.active_panel=_game.start;
+		_game.state_now=Utilities.StateType.WelcomeScreen;
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);

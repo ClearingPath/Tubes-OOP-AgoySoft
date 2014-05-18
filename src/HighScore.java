@@ -126,10 +126,6 @@ public class HighScore extends javax.swing.JPanel {
     
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
     	Game.ChangeState(Utilities.StateType.WelcomeScreen);
-    	//setVisible(false);
-        //Game.frame.remove(this);
-        //Game.start.setVisible(true);
-        //Game.frame.add(Game.start);
     }//GEN-LAST:event_jButton1MouseClicked
 
 

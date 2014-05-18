@@ -96,10 +96,6 @@ public class PlayScreen extends JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         Game.ChangeState(Utilities.StateType.WelcomeScreen);
-    	//setVisible(false);
-        //Game.frame.remove(this);
-        //Game.start.setVisible(true);
-        //Game.frame.add(Game.start);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
@@ -112,18 +108,9 @@ public class PlayScreen extends JPanel {
 
     private void PlayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlayButtonMouseClicked
         if(readyplay) {
-            //Game.P.name = jTextField1.getText();
-            //setVisible(false);
-            //Game.frame.remove(this);
-            //Game game = new Game(jTextField1.getText());
             Utilities.mediator_string=jTextField1.getText();
             Game.ChangeState(Utilities.StateType.Playing);
-            //game.setVisible(true);
-            //Game.frame.addKeyListener(game);
-            //Game.frame.add(game);
         }
-        
-        
     }//GEN-LAST:event_PlayButtonMouseClicked
 
 

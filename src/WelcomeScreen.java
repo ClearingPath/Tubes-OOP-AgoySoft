@@ -41,7 +41,7 @@ public class WelcomeScreen extends JPanel {
         initComponents();
         a=new SimplePic();
         a.Load("img/mainmenu.png");
-        a.SetPosition(1, 1);
+        a.SetPosition(50, 50);
         setSize(700, 700);
 	setBackground(Color.white);
     }
@@ -129,40 +129,22 @@ public class WelcomeScreen extends JPanel {
 
     private void StartButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StartButtonMouseClicked
     	Game.ChangeState(Utilities.StateType.StartScreen);
-    	//Game.ChangeState(Utilities.StateType.Playing);
-        //setVisible(false);
-        //Game.frame.remove(this);
-        //Game.play.setVisible(true);
-        //Game.frame.add(Game.play);
     }//GEN-LAST:event_StartButtonMouseClicked
 
     private void QuitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QuitButtonMouseClicked
         Game.ChangeState(Utilities.StateType.Quit);
-    	//Game.frame.dispose();
     }//GEN-LAST:event_QuitButtonMouseClicked
 
     private void HighScoreButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HighScoreButtonMouseClicked
         Game.ChangeState(Utilities.StateType.HighScore);
-        //setVisible(false);
-        //Game.frame.remove(this);
-        //Game.topplayer.setVisible(true);
-        //Game.frame.add(Game.topplayer);
     }//GEN-LAST:event_HighScoreButtonMouseClicked
 
     private void HelpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HelpButtonMouseClicked
         Game.ChangeState(Utilities.StateType.Help);
-        //setVisible(false);
-        //Game.frame.remove(this);
-        //Game.help.setVisible(true);
-        //Game.frame.add(Game.help);
     }//GEN-LAST:event_HelpButtonMouseClicked
 
     private void CreditsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreditsButtonMouseClicked
         Game.ChangeState(Utilities.StateType.Credits);
-        //setVisible(false);
-        //Game.frame.remove(this);
-        //Game.credits.setVisible(true);
-        //Game.frame.add(Game.credits);
     }//GEN-LAST:event_CreditsButtonMouseClicked
 
 

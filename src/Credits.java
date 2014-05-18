@@ -49,11 +49,6 @@ public class Credits extends javax.swing.JPanel {
 
     private void BackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButtonMouseClicked
         Game.ChangeState(Utilities.StateType.WelcomeScreen);
-    	//WelcomeScreen W1 = new WelcomeScreen();
-        //setVisible(false);
-        //Game.frame.remove(this);
-        //Game.start.setVisible(true);
-        //Game.frame.add(Game.start);
     }//GEN-LAST:event_BackButtonMouseClicked
 
 

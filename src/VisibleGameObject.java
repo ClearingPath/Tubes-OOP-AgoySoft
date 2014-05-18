@@ -18,16 +18,29 @@ public abstract class VisibleGameObject
 	private int tile_posx;
 	private int tile_posy;
 	
-	protected Sprite GetSprite(){
+	/** 
+     * Mendapatkan Sprite untuk objek
+     * @return Sprite sprite
+    */
+    protected Sprite GetSprite(){
 		return _sprite;
 	}
 	public VisibleGameObject(){
 		_isLoaded=false;
 		_sprite=new Sprite();
 	}
-	public abstract void Update(long elapsedTime);
+	/** 
+     * Mendapatkan Method abstract yang akan dijalankan otomatis
+     * pada interval tertentu (60 fps)
+     * @param elapsedTime waktu yang lewat sejak update terakhir. Dalam milisecond
+    */
+    public abstract void Update(long elapsedTime);
 	
-	public void Load(String filename){
+    /** 
+     * Me-load gambar ke Sprite
+     * @param filename path gambar yang akan di-load
+    */
+    public void Load(String filename){
 		try{
 			_sprite.Load(filename);
 			_isLoaded = true;
@@ -35,7 +48,11 @@ public abstract class VisibleGameObject
 			_isLoaded=false;
 		}
 	}
-	public void Load(BufferedImage i){
+    /** 
+     * Meng-copy BufferedImage ke Sprite
+     * @param i BufferedImage yang akan dipakai sebagai gambar
+    */
+    public void Load(BufferedImage i){
 		try{
 			_sprite.Load(i);
 			_isLoaded = true;
@@ -44,7 +61,12 @@ public abstract class VisibleGameObject
 		}
 	}
 	
-	public void Draw(Graphics2D g, ImageObserver IO){
+    /** 
+     * Menggambar Sprite ke Screen
+     * @param g Grafik tempat tujuan digambar
+     * @param IO ImageObserver yang akan di-notify
+    */
+    public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
 			// TODO handle item with width more than one tile
 			// rectangle untuk peta yang kelihatan
@@ -66,13 +88,25 @@ public abstract class VisibleGameObject
 		}
 	}
 
-	public static Point TiletoReal(Point p){
+    /** 
+     * Mengubah dari posisi berdasar tile menjadi 
+     * posisi sesungguhnya relatif terhadap window
+     * @param p posisi berdasar tile yang akan diubah
+     * @return Point posisi relatif terhadap window
+    */
+    public static Point TiletoReal(Point p){
 		Point p2=new Point();
 		p2.x=(int)Utilities.VIEW_POS_X+p.x*Utilities.TILE_SIZE_X;
 		p2.y=(int)Utilities.VIEW_POS_Y+p.y*Utilities.TILE_SIZE_Y;
 		return p2;
 	}
-	public static Point RealToTile(Point p){
+    /** 
+     * Mengubah dari posisi relatif terhadap window menjadi 
+     * posisi berdasar tile
+     * @param p posisi relatif terhadap window yang akan diubah
+     * @return Point posisi berdasar tile
+    */
+    public static Point RealToTile(Point p){
 		Point p2=new Point();
 		p2.x=p.x-(int)(Utilities.VIEW_POS_X);
 		p2.y=p.y-(int)(Utilities.VIEW_POS_Y);
@@ -80,32 +114,64 @@ public abstract class VisibleGameObject
 		p2.y=(int) Math.floor(p2.y/Utilities.TILE_SIZE_Y);
 		return p2;
 	}
-	public void SetPosition(int tile_x, int tile_y){
+    /** 
+     * Mengubah posisi Objek. Posisi input berdasar tile
+     * @param tile_x posisi x tujuan berdasar tile
+     * @param tile_y posisi y tujuan berdasar tile
+    */
+    public void SetPosition(int tile_x, int tile_y){
 		if(_isLoaded){
 			tile_posx=tile_x;
 			tile_posy=tile_y;
 			_sprite.SetPosition(TiletoReal(new Point(tile_x, tile_y)));
 		}
 	}
-	public Point GetPosition() {
+    /** 
+     * Mendapatkan posisi Objek. Posisi yang dihasilkan berdasar tile
+     * @return Point posisi letak objek berdasar tile
+    */
+    public Point GetPosition() {
 		if(_isLoaded) {
 			return new Point(tile_posx, tile_posy);
 		}
 		return new Point(0,0);
 	}
-	public void UpdateSprite(long elapsedTime){
+    /** 
+     * Method khusus untuk animasi sprite.
+     * Dijalankan otomatis setiap interval (60 fps)
+     * @param elapsedTime waktu sejak method ini dijalankan terakhir
+    */
+    public void UpdateSprite(long elapsedTime){
 		_sprite.UpdateDraw(elapsedTime);
 	}
-	public double GetWidth(){
+    /** 
+     * Mendapatkan ukuran lebar objek
+     * Lebar yang didapat relatif terhadap window
+     * @return double lebar objek
+    */
+    public double GetWidth(){
 		return _sprite.getWidth();
 	}
-	public double GetHeight(){
+    /** 
+     * Mendapatkan ukuran tinggi objek
+     * Tinggi yang didapat relatif terhadap window
+     * @return double tinggi objek
+    */
+    public double GetHeight(){
 		return _sprite.getHeight();
 	}
-
+    /** 
+     * Mendapatkan Rectangle yang melingkupi objek
+     * Rectangle yang didapat relatif terhadap window
+     * @return Rectangle Rectangle yang melingkupi objek
+    */
 	public Rectangle GetBoundingRect(){
 		return _sprite.getBounds();
 	}
+	/** 
+     * Mengecek apakah Objek sudah melakukan Load gambar ke Sprite-nya
+     * @return boolean status objek sudah di-load atau belum
+    */
 	public boolean IsLoaded(){
 		return _isLoaded;
 	}

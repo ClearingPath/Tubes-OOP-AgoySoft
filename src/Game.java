@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable,MouseListener, MouseMotionListener,KeyListener{
 	//delay antar tiap pergerakan
-	private static final long BUTTON_DELAY_TIME = 1000;
+	private static final long BUTTON_DELAY_TIME = 500;
 	
 	// TODO ubah jadi array of tile
 	public static Tile[][] peta;

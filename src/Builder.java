@@ -34,13 +34,14 @@ public class Builder {
         }
        int baris = input.nextInt();
        int kolom = input.nextInt();
+       Utilities.MAP_ROW_COUNT = kolom;
+       Utilities.MAP_COL_COUNT = baris;
        int TileKode;
        Tile arr[][];
        arr = new Tile[baris][kolom];
        for (int i=0; i<baris; i++) {
            for (int j=0; j<kolom; j++) {
                arr[j][i] = new Tile();
-               System.out.println(i + " " + j);
                TileKode = input.nextInt();
                if (TileKode==0)
                    arr[j][i].setJenis(Utilities.TileType.UnWalkable);
@@ -67,8 +68,9 @@ public class Builder {
             _item.setBroken(false);
             _item.setPosisi(poss);
             _item.setUkuran(uk);
-            System.out.println(type);
             Game.GetGameObjectManager().Add(type, _item);
+            _item.SetPosition(x,y);
+            _item.Load("img/Level1/" + _item.getJenis().getPic() +".png");
             arr[poss.x][poss.y].putItem(_item);
             while(pjg>1) {
                 arr[x+1][y].putItem(_item);
@@ -83,7 +85,6 @@ public class Builder {
        }
        Deque<Owner.act> OwnAct = new LinkedList<Owner.act>();
        int NAct = input.nextInt();
-       System.out.println("============ Masuk Owner =========");
        for (int i = 0; i<NAct; i++) {
            Owner.act keg = new Owner.act();
            String IType = input.next();
@@ -92,7 +93,6 @@ public class Builder {
            long time = input.nextLong();
            
            try {
-               System.out.println(IType);
                 if (IType == "ItemKosong")
                     keg.ItemTerlibat = (item)Game.GetGameObjectManager().Get(IType);
                 else

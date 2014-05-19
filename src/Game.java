@@ -205,18 +205,6 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		layer1.SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		layer1.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_X);
 		
-		item gh=null;
-		try {
-			gh = (item)_gameObjectManager.Get("Manekin");
-		} catch (ObjectNameNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(VisibleGameObject.TiletoReal(new Point(Utilities.VIEW_TILE_X,Utilities.VIEW_TILE_Y)));
-		System.out.println(gh.GetPosition());
-		System.out.println();
-		
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
     /** 

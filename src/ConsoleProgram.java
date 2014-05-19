@@ -1,16 +1,9 @@
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Scanner;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author Rakhmatullah
+ * @author Rakhmatullah Yoga Sutrisna
  */
 public class ConsoleProgram {
 
@@ -18,9 +11,26 @@ public class ConsoleProgram {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainMenu();
+        ConsoleProgram console = new ConsoleProgram();
+        console.MainMenu();
     }
-    public static void MainMenu() {
+    /**
+     * Constructor kelas ConsoleProgram
+     */
+    public ConsoleProgram() {
+        P = new Player();
+        O = new Owner();
+        _gameObjectManager = new GameObjectManager();
+        _gameObjectManager.Add("Owner", O);
+        _gameObjectManager.Add("Player", P);
+        Builder.BuildLevel1(_gameObjectManager);
+    }
+    /**
+     * Menu utama dari game
+     * Agoy the naughty neighbour
+     * versi text-based
+     */
+    public void MainMenu() {
         int option;
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
@@ -49,7 +59,11 @@ public class ConsoleProgram {
             }
         } while(option!=5);
     }
-    public static void PlayScreen() {
+    /**
+     * Tampilan persiapan sebelum
+     * menjalankan permainan
+     */
+    public void PlayScreen() {
         System.out.println("------------- Agoy the Naughty Neighbour -------------");
         String Pname;
         input.nextLine();
@@ -57,34 +71,66 @@ public class ConsoleProgram {
         System.out.println("Input 0 to back...");
         Pname = input.nextLine();
         if(!Pname.equals("0")) {
-            System.out.println("Playing...");
+            System.out.println("yuk main..");
+            //P = new Player();
+            P.setName(Pname);
+            GamePlay();
         }
     }
-    public static void HighScore() {
+    /**
+     * Tampilan permainan
+     */
+    public void GamePlay() {
+        playingstate = true;
+        // game start
+        
+        playingstate = false;
+    }
+    /**
+     * Tampilan HighScore
+     * menampilkan 20 pemain dengan
+     * skor tertinggi
+     */
+    public void HighScore() {
         XMLData temp = new XMLData();
         Queue<Data> Stream;
         temp.ReadFile("highscore.xml");
         temp.ImportData();
-        Data player = new Data();
+        Data playerlist = new Data();
         Stream = temp.ExportData();
         System.out.println("------------- Agoy the Naughty Neighbour -------------");
             // Show highscore
             for (int i = 0;i < 20;i++){
-                player = Stream.poll();
-                System.out.println((i+1)+"."+player.Name+"\t\t"+player.Score+"\t\t"+player.time);
+                playerlist = Stream.poll();
+                System.out.println((i+1)+"."+playerlist.Name+"\t\t"+playerlist.Score+"\t\t"+playerlist.time);
         }
         do {    
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
-    public static void Help() {
+    /**
+     * Tampilan bantuan
+     */
+    public void Help() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
-            System.out.println("how to play...");
+            System.out.println("How to play...");
+            System.out.println("Agoy adalah seorang anak yang sangat jahil!\n"
+                    + "dalam game ini anda akan berperan sebagai Agoy\n"
+                    + "yang akan menjahili tetangganya. Sang pemilik rumah\n"
+                    + "sedang asyik menikmati hari liburnya. Anda dapat\n"
+                    + "mengganggunya dengan memasuki rumahnya dan memasang\n"
+                    + "berbagai jebakan dengan mengambil alat yang terletak\n"
+                    + "di sudut rumah. Hati-hati jangan sampai anda diketahui\n"
+                    + "oleh pemilik rumah!"
+                    + "Controller :\n"
+                    + "1. arah: ketik atas/bawah/kiri/kanan\n"
+                    + "2. sembunyi: ketik hide\n"
+                    + "3. ambil alat: ketik ambil\n");
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
-    public static void Credits() {
+    public void Credits() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
             System.out.println("Permainan \"Agoy the Naughty Neighbour\" ini\n"
@@ -102,4 +148,10 @@ public class ConsoleProgram {
     }
 
     public static Scanner input = new Scanner(System.in);
+    public static boolean playingstate = false;
+    public Player P;
+    public Owner O;
+    public GameObjectManager _gameObjectManager;
+    public static Tile[][] peta;
+
 }

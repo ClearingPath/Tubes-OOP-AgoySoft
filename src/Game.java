@@ -103,7 +103,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     /** 
      * Constructor
     */
-    private Game() {
+    Game() {
             _game=this;
             _gameObjectManager=new GameObjectManager();
 	    setSize(700, 700);
@@ -129,7 +129,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         O = new Owner();
         _gameObjectManager.Add("player", P);
         _gameObjectManager.Add("owner", O);
-        Builder.BuildLevel1();
+        Builder.BuildLevel1(_gameObjectManager);
         // contoh panggil Object
         // kalo salah kelas, exception keluar
         //ObjTest bcd;
@@ -222,7 +222,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		
 		bg.Draw(g2d, this);
 		_gameObjectManager.DrawAll(g2d,this);
-		//layer1.Draw(g2d, this);
+		layer1.Draw(g2d, this);
 		
 		g2d.setColor(Color.white);
 	}
@@ -265,6 +265,9 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 			} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
 				tmpTime=0;
 				P.setSilent(true);
+			} else if (key.getKeyCode() == KeyEvent.VK_SPACE){
+				//tmpTime=0;
+				P.PickItem();
 			}
 		}
 	}

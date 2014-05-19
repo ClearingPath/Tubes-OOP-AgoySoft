@@ -53,7 +53,7 @@ public class Player extends VisibleGameObject {
         SilentWalk = false;
         Hide = false;
         TimeRemaining = 60;
-        Inventory = new ArrayList<>();
+        Inventory = new ArrayList<>(5);
         scoredate = new Date();
         //name = Pname;
         arah = 0;
@@ -83,6 +83,9 @@ public class Player extends VisibleGameObject {
     }
     public void setHiding() {
         Hide = !Hide;
+    }
+    public void PickItem() {
+        
     }
     public void MoveUp() {
         if(Game.peta[GetPosition().x][GetPosition().y-1].IsWalkable()) {

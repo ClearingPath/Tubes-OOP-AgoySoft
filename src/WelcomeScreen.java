@@ -61,41 +61,44 @@ public class WelcomeScreen extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox();
         QuitButton = new javax.swing.JButton();
         CreditsButton = new javax.swing.JButton();
         HelpButton = new javax.swing.JButton();
         HighScoreButton = new javax.swing.JButton();
         StartButton = new javax.swing.JButton();
 
-        QuitButton.setText("Quit");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        QuitButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Exit.png")); // NOI18N
         QuitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 QuitButtonMouseClicked(evt);
             }
         });
 
-        CreditsButton.setText("Credits");
+        CreditsButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Credits.png")); // NOI18N
         CreditsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CreditsButtonMouseClicked(evt);
             }
         });
 
-        HelpButton.setText("How to Play?");
+        HelpButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Help.png")); // NOI18N
         HelpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HelpButtonMouseClicked(evt);
             }
         });
 
-        HighScoreButton.setText("High Score");
+        HighScoreButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\highscore.png")); // NOI18N
         HighScoreButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HighScoreButtonMouseClicked(evt);
             }
         });
 
-        StartButton.setText("Start Game");
+        StartButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\New Game.png")); // NOI18N
         StartButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 StartButtonMouseClicked(evt);
@@ -107,28 +110,28 @@ public class WelcomeScreen extends JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(278, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(HelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(HighScoreButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(StartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CreditsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(QuitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(QuitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(CreditsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HighScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HelpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
-                .addComponent(StartButton)
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(HighScoreButton)
+                .addComponent(HighScoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(HelpButton)
+                .addComponent(HelpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CreditsButton)
+                .addComponent(CreditsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(QuitButton)
+                .addComponent(QuitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -160,6 +163,7 @@ public class WelcomeScreen extends JPanel {
     private javax.swing.JButton HighScoreButton;
     private javax.swing.JButton QuitButton;
     private javax.swing.JButton StartButton;
+    private javax.swing.JComboBox jComboBox1;
     // End of variables declaration//GEN-END:variables
     /*
     String path="/img/mainmenu.png";

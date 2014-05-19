@@ -6,7 +6,6 @@
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -97,14 +96,22 @@ public class Builder {
                     keg.ItemTerlibat = (item)GOM.Get(IType);
                 else
                     keg.ItemTerlibat = item.ItemKosong;
-                } catch (ObjectNameNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            } catch (ObjectNameNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
            keg.actPos = new Point(kx, ky);
            keg.actTime = time;
            OwnAct.add(keg);
        }
+       Owner ow=null;
+       try {
+    	   ow=(Owner) Game.GetGameObjectManager().Get("owner");
+       } catch (ObjectNameNotFoundException e) {
+    	   // TODO Auto-generated catch block
+    	   e.printStackTrace();
+       }
+       ow.setActivities(OwnAct);
        Game.peta=arr;
        ConsoleProgram.ArrItem = ArrItem;
     }

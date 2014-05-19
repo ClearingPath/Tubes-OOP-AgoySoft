@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -83,7 +84,28 @@ public class ConsoleProgram {
     public void GamePlay() {
         playingstate = true;
         // game start
-        
+        String command;
+        do {
+            System.out.println("Player state:               Owner state:\n"
+                    + "posisi : " + P.GetPosition() + "     posisi : " + O.GetPosition() + "\n");
+            for(item it : ArrItem) {
+                System.out.println(it.getJenis().getPic() + " " + it.GetPosition());
+            }
+            command = input.nextLine();
+            if(command.equals("atas")) {
+                System.out.println("yey");
+                P.MoveUp();
+            } else if(command.equals("bawah")) {
+                System.out.println("yey");
+                P.MoveDown();
+            } else if(command.equals("kiri")) {
+                System.out.println("yey");
+                P.MoveLeft();
+            } else if(command.equals("kanan")) {
+                System.out.println("yey");
+                P.MoveRight();
+            }
+        }while(!command.equals("exit"));
         playingstate = false;
     }
     /**
@@ -110,6 +132,7 @@ public class ConsoleProgram {
     }
     /**
      * Tampilan bantuan
+     * menampilkan petunjuk permainan
      */
     public void Help() {
         do {
@@ -125,11 +148,15 @@ public class ConsoleProgram {
                     + "oleh pemilik rumah!"
                     + "Controller :\n"
                     + "1. arah: ketik atas/bawah/kiri/kanan\n"
-                    + "2. sembunyi: ketik hide\n"
-                    + "3. ambil alat: ketik ambil\n");
+                    + "2. ambil alat: ketik ambil\n");
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
+    /**
+     * Tampilan credits
+     * menampilkan halaman yang berisi
+     * tentang kelompok
+     */
     public void Credits() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
@@ -147,11 +174,13 @@ public class ConsoleProgram {
         } while(input.nextInt()!=0);
     }
 
+    // Atribut kelas ConsoleProgram
     public static Scanner input = new Scanner(System.in);
     public static boolean playingstate = false;
     public Player P;
     public Owner O;
     public GameObjectManager _gameObjectManager;
     public static Tile[][] peta;
+    public static ArrayList<item> ArrItem = new ArrayList<>();
 
 }

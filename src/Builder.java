@@ -54,6 +54,7 @@ public class Builder {
        }
        int NItem = input.nextInt();
        String type;
+       ArrayList<item> ArrItem = new ArrayList<>();
        int x, y, pjg, lbr;
        for (int i = 0; i<NItem; i++) {
            item _item = new item();
@@ -80,6 +81,7 @@ public class Builder {
                 lbr--;
                 y++;
             }
+            ArrItem.add(_item);
        }
        Deque<Owner.act> OwnAct = new LinkedList<Owner.act>();
        int NAct = input.nextInt();
@@ -104,5 +106,6 @@ public class Builder {
            OwnAct.add(keg);
        }
        Game.peta=arr;
+       ConsoleProgram.ArrItem = ArrItem;
     }
 }

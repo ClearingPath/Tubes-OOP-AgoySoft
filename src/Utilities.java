@@ -35,25 +35,31 @@ public class Utilities {
     }
     
     public enum ItemType {
-        Tissue(true, "tisu"), WC(false, "WC awal"), Key(true, "kunci"), Knife(true, "knife"), 
-        Painting(false, "lukisan awal"), Manekin(false, "manekin awal"), ManekinR(false, "manekin akhir"),
-        PaintingR(false, "lukisan akhir"), WCR(false, "WC akhir"),
-        DoorClosed(false, "pintu"), Spidol(true, "marker"), ItemKosong(false, "kosong");
+        Tissue(true, true, "Tissue", "kosong"), WC(false, false, "WC", "Tissue"), Key(true, true, "Key", "kosong"), Knife(true, true, "Knife", "kosong"), 
+        Painting(false, false, "Painting", "Spidol"), Manekin(false, false, "Manekin","Knife"), ManekinR(false, false, "ManekinR", "kosong"),
+        PaintingR(false, false, "PaintingR", "kosong"), WCR(false, false, "WCR", "kosong"),
+        DoorClosed(false, false, "DoorClosed", "Key"), Spidol(true, true, "Spidol", "kosong"), ItemKosong(false, false, "kosong", "kosong");
         
         public boolean walkable;
         public String pic;
+        public String it;
+        public boolean getable;
         
-        private ItemType(boolean walk, String pic) {
+        private ItemType(boolean walk, boolean ga, String pic, String itm) {
             walkable = walk;
             this.pic = pic;
+            it = itm;
+            getable = ga;
         }
         
         public boolean IsWalkable() {
             return walkable;
         }
         
+        public boolean IsGetable() { return getable; }
         public String getPic() {return pic;}
         
+        public String getIt() {return it;}
     }
 	
     public enum StateType{

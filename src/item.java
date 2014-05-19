@@ -22,7 +22,6 @@ public class item extends VisibleGameObject{
     
     public static item initKosong() {
         item i = new item();
-        Game.GetGameObjectManager().Add("ItemKosong", ItemKosong);
         i.setJenis(Utilities.ItemType.ItemKosong);
         return i;
     }

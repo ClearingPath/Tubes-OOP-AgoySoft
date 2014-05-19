@@ -18,10 +18,10 @@ public class Utilities {
     public static final int VIEW_ROW_COUNT=12;
     public static final int VIEW_COL_COUNT=12;
 
-	//posisi tile peta yang ada di kiri atas peta yang dikasih lihat
-	public static int VIEW_TILE_X=0;
-	public static int VIEW_TILE_Y=0;
-	
+    //posisi tile peta yang ada di kiri atas peta yang dikasih lihat
+    public static int VIEW_TILE_X=0;
+    public static int VIEW_TILE_Y=0;
+
     //posisi ujung kiri atas peta
     public static final int VIEW_POS_X=0;
     public static final int VIEW_POS_Y=0;
@@ -35,18 +35,23 @@ public class Utilities {
     }
     
     public enum ItemType {
-        Tissue(true), WC(false), Key(true), Knife(true), Painting(false), Manekin(false),
-        DoorClosed(false), Spidol(true);
+        Tissue(true, "tisu"), WC(false, "WC awal 1"), Key(true, "kunci"), Knife(true, "knife"), 
+        Painting(false, "lukisan awal"), Manekin(false, "manekin"),
+        DoorClosed(false, "pintu"), Spidol(true, "marker");
         
         public boolean walkable;
+        public String pic;
         
-        private ItemType(boolean walk) {
+        private ItemType(boolean walk, String pic) {
             walkable = walk;
+            this.pic = pic;
         }
         
         public boolean IsWalkable() {
             return walkable;
         }
+        
+        public String getPic() {return pic;}
         
     }
 	

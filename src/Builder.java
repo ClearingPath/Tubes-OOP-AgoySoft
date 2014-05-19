@@ -69,6 +69,7 @@ public class Builder {
             _item.setUkuran(uk);
             System.out.println(type);
             Game.GetGameObjectManager().Add(type, _item);
+            _item.SetPosition(x,y);
             arr[poss.x][poss.y].putItem(_item);
             while(pjg>1) {
                 arr[x+1][y].putItem(_item);

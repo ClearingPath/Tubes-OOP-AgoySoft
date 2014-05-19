@@ -229,6 +229,14 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 				tmpTime=0;
 				P.setSilent(true);
 			}
+			/*System.out.println(P.GetPosition().x+" "+P.GetPosition().y);
+			for (int i=-2;i<2;i++){
+				for (int j=-2;j<2;j++){
+					int b=(Game.peta[j+P.GetPosition().x][i+P.GetPosition().y].IsWalkable()?0:1);
+					System.out.print(b+" ");
+				}
+				System.out.println();
+			}*/
 		}
 	}
 

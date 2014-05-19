@@ -42,7 +42,7 @@ public class WelcomeScreen extends JPanel {
         initComponents();
         a=new Sprite();
         try {
-			a.Load("img/mainmenu.png");
+			a.Load("mainmenu.png");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

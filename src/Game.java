@@ -265,6 +265,9 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 			} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
 				tmpTime=0;
 				P.setSilent(true);
+			} else if (key.getKeyCode() == KeyEvent.VK_SPACE){
+				//tmpTime=0;
+				P.PickItem();
 			}
 		}
 	}

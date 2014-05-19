@@ -14,6 +14,7 @@ public class Player extends VisibleGameObject {
     private boolean Hide;
     private int TimeRemaining;
     private ArrayList<item> Inventory;
+    private final int MaxInventory;
     private static enum Hadap {
         Atas, Bawah, Kiri, Kanan
     }
@@ -53,7 +54,8 @@ public class Player extends VisibleGameObject {
         SilentWalk = false;
         Hide = false;
         TimeRemaining = 60;
-        Inventory = new ArrayList<>(5);
+        MaxInventory = 5;
+        Inventory = new ArrayList<>(MaxInventory);
         scoredate = new Date();
         //name = Pname;
         arah = 0;
@@ -85,25 +87,35 @@ public class Player extends VisibleGameObject {
         Hide = !Hide;
     }
     public void PickItem() {
-        switch(arah) {
-            case 1:
-                Inventory.add(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop());
-                Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
-                break;
-            case 2:
-                Inventory.add(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop());
-                Game.peta[GetPosition().x-1][GetPosition().y].putItem(item.ItemKosong);
-                break;
-            case 3:
-                Inventory.add(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop());
-                Game.peta[GetPosition().x+1][GetPosition().y].putItem(item.ItemKosong);
-                break;
-            case 4:
-                Inventory.add(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop());
-                Game.peta[GetPosition().x][GetPosition().y-1].putItem(item.ItemKosong);
-                break;
-            default:
-                break;
+        if(Inventory.size()<MaxInventory) {
+            switch(arah) {
+                case 1:
+                    if(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                        Inventory.add(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop());
+                        Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
+                    }
+                    break;
+                case 2:
+                    if(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                        Inventory.add(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop());
+                        Game.peta[GetPosition().x-1][GetPosition().y].putItem(item.ItemKosong);
+                    }
+                    break;
+                case 3:
+                    if(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                        Inventory.add(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop());
+                        Game.peta[GetPosition().x+1][GetPosition().y].putItem(item.ItemKosong);
+                    }
+                    break;
+                case 4:
+                    if(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                        Inventory.add(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop());
+                        Game.peta[GetPosition().x][GetPosition().y-1].putItem(item.ItemKosong);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
     public void MoveUp() {
@@ -186,16 +198,13 @@ public class Player extends VisibleGameObject {
             }
         }
     }
-    public void PickItem(item i) {
-        Inventory.add(i);
-    }
     public item AttachItem(item i) {
         Inventory.remove(i);
         return i;
     }
     @Override
     public void Update(long elapsedTime) {
-        //System.out.println(GetPosition());
+        System.out.println(Inventory);
     	if (tmpTime!=-1){
     		int dx[]={0,-1,1,0};
     		int dy[]={1,0,0,-1};

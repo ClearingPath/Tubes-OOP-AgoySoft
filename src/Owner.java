@@ -64,11 +64,11 @@ public class Owner extends VisibleGameObject{
     public void Update(long elapsedTime){
     	Player p=null;
     	try {
-			p=(Player)Game.GetGameObjectManager().Get("player");
-		} catch (ObjectNameNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+            p=(Player)Game.GetGameObjectManager().Get("player");
+        } catch (ObjectNameNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         if ((GetPosition().x - p.GetPosition().x <= 3) ||
             (p.GetPosition().x - GetPosition().x <= 3) ||
             (GetPosition().y - p.GetPosition().y <= 3) ||
@@ -172,6 +172,7 @@ public class Owner extends VisibleGameObject{
     	cur=new Point(to.x,to.y);
     	Stack<Point> s_tp=new Stack<>();
     	while((cur.x!=from.x)&&(cur.y!=from.y)){
+                System.out.println("path owner: " + cur.x + " " + cur.y);
     		s_tp.add(new Point(cur.x,cur.y));
     		cur.x+=dx[arah[cur.x][cur.y]];
     		cur.y+=dy[arah[cur.x][cur.y]];

@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Rakhmatullah
  */
-public class ConsoleProgram {
+public class ConsoleProgram implements KeyListener {
 
     /**
      * @param args the command line arguments
@@ -57,21 +58,28 @@ public class ConsoleProgram {
         System.out.println("Input 0 to back...");
         Pname = input.nextLine();
         if(!Pname.equals("0")) {
-            System.out.println("Playing...");
+            P = new Player();
+            P.setName(Pname);
+            GamePlay();
         }
+    }
+    public static void GamePlay() {
+        playingstate = true;
+        // game start
+        playingstate = false;
     }
     public static void HighScore() {
         XMLData temp = new XMLData();
         Queue<Data> Stream;
         temp.ReadFile("highscore.xml");
         temp.ImportData();
-        Data player = new Data();
+        Data playerlist = new Data();
         Stream = temp.ExportData();
         System.out.println("------------- Agoy the Naughty Neighbour -------------");
             // Show highscore
             for (int i = 0;i < 20;i++){
-                player = Stream.poll();
-                System.out.println((i+1)+"."+player.Name+"\t\t"+player.Score+"\t\t"+player.time);
+                playerlist = Stream.poll();
+                System.out.println((i+1)+"."+playerlist.Name+"\t\t"+playerlist.Score+"\t\t"+playerlist.time);
         }
         do {    
             System.out.println("Input 0 to back...");
@@ -80,7 +88,19 @@ public class ConsoleProgram {
     public static void Help() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
-            System.out.println("how to play...");
+            System.out.println("How to play...");
+            System.out.println("Agoy adalah seorang anak yang sangat jahil!\n"
+                    + "dalam game ini anda akan berperan sebagai Agoy\n"
+                    + "yang akan menjahili tetangganya. Sang pemilik rumah\n"
+                    + "sedang asyik menikmati hari liburnya. Anda dapat\n"
+                    + "mengganggunya dengan memasuki rumahnya dan memasang\n"
+                    + "berbagai jebakan dengan mengambil alat yang terletak\n"
+                    + "di sudut rumah. Hati-hati jangan sampai anda diketahui\n"
+                    + "oleh pemilik rumah!"
+                    + "Controller :\n"
+                    + "1. arah: ketik atas/bawah/kiri/kanan\n"
+                    + "2. sembunyi: ketik hide\n"
+                    + "3. ambil alat: ketik ambil\n");
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
@@ -102,4 +122,21 @@ public class ConsoleProgram {
     }
 
     public static Scanner input = new Scanner(System.in);
+    public static boolean playingstate = false;
+    private static Player P;
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -36,5 +36,5 @@ Manekin 16 3 4 2
 ItemKosong 3 7 7500
 WC 3 13 5000
 ItemKosong 6 18 6000
-Manekin 17 5 8000
-Painting 14 11
+Manekin 17 5 5000
+Painting 14 11 5000

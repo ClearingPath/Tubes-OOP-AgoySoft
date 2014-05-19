@@ -65,12 +65,15 @@ public class ConsoleProgram {
         Queue<Data> Stream;
         temp.ReadFile("highscore.xml");
         temp.ImportData();
+        Data player = new Data();
         Stream = temp.ExportData();
-        
-        do {
-            System.out.println("------------- Agoy the Naughty Neighbour -------------");
+        System.out.println("------------- Agoy the Naughty Neighbour -------------");
             // Show highscore
-            System.out.println(Stream);
+            for (int i = 0;i < 20;i++){
+                player = Stream.poll();
+                System.out.println((i+1)+"."+player.Name+"\t\t"+player.Score+"\t\t"+player.time);
+        }
+        do {    
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }

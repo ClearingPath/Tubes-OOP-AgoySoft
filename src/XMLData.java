@@ -64,7 +64,6 @@ public class XMLData {
     
     /* import data from buffer*/
     public void ImportData(){
-        //Stream = new PriorityQueue<Data>(11,ScoreComparator);
         Data temp = new Data();
         int flag = 0;
         for (String coba:Buffer)
@@ -100,7 +99,6 @@ public class XMLData {
                 temp = new Data();
             }
         }
-        System.out.println(Stream.size());
     }
     public void AddData(String Name,int Score,Date time){
         Stream.add(new Data(Name,Score,time));

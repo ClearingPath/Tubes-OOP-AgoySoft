@@ -83,6 +83,10 @@ public class item extends VisibleGameObject{
 				b.height=GetSprite().getTileHeight()*Utilities.TILE_SIZE_X;
 				b.width=GetSprite().getTileWidth()*Utilities.TILE_SIZE_Y;
 				if (a.intersects(b)){
+					Rectangle c=a.intersection(b);
+					c.x=c.x-b.x;
+					c.y=c.y-b.y;
+					GetSprite().SetCrop(c);
 					GetSprite().Draw(g, IO);
 				}
 			}

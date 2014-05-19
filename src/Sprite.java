@@ -1,4 +1,5 @@
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -26,6 +27,9 @@ public class Sprite{
 	private AffineTransform transscl;
 	private int Offset_X;
 	private int Offset_Y;
+	
+	private Rectangle crop_rect;
+	private boolean isCrop;
 	
 	private static class AnimType{
 		public int StartRow;
@@ -65,6 +69,7 @@ public class Sprite{
 		_anim_array=new HashMap<>();
 		transscl=new AffineTransform();
 		transscl.setToIdentity();
+		isCrop=false;
 	}
 	
 	/** 
@@ -166,6 +171,14 @@ public class Sprite{
 		trans.concatenate(AffineTransform.getTranslateInstance(Pos_X, Pos_Y));
 		trans.concatenate(transscl);
 		BufferedImage tp=_texture.getSubimage(CurCol*s_x+Offset_X,CurRow*s_y+Offset_Y,s_x,s_y);
+		if (isCrop){
+			BufferedImage tp2 = new BufferedImage(s_x,s_y,BufferedImage.TYPE_INT_ARGB);
+			Graphics gh=tp2.getGraphics();
+			gh.drawImage(tp.getSubimage(crop_rect.x, crop_rect.y,/*
+			 						*/ crop_rect.width, crop_rect.height)/*
+			 						**/,crop_rect.x,crop_rect.y,null);
+			tp=tp2;
+		}
 		g.drawImage(tp, trans, IO);
 	}
 
@@ -296,4 +309,13 @@ public class Sprite{
 		r.y=(int) (Pos_Y);
 		return r;
 	}
+    /** 
+     * Memotong gambar, menyisakan hanya area di dalam rectangle. 
+     * Rectangle relatif terhadap gambar.
+     * @param in Rectangle yang akan dipakai untuk crop
+    */
+    public void SetCrop(Rectangle in){
+    	crop_rect=in;
+    	isCrop=true;
+    }
 }

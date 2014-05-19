@@ -21,6 +21,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
+import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
@@ -36,14 +37,19 @@ public class WelcomeScreen extends JPanel {
     /**
      * Creates new form WelcomeScreen
      */
-	SimplePic a;
+	Sprite a;
     public WelcomeScreen() {
         initComponents();
-        a=new SimplePic();
-        a.Load("img/mainmenu.png");
+        a=new Sprite();
+        try {
+			a.Load("img/mainmenu.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         a.SetPosition(50, 50);
         setSize(700, 700);
-	setBackground(Color.white);
+        setBackground(Color.white);
     }
 
     /**

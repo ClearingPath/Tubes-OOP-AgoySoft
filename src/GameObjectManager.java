@@ -14,7 +14,10 @@ public class GameObjectManager {
 	//Container yang menyimpan objek yang di-manage
 	private Map<String, VisibleGameObject> _gameObjects;
 	
-	public GameObjectManager(){
+	/** 
+     * Constructor
+    */
+    public GameObjectManager(){
 		_gameObjects=new HashMap<>();
 	}
 

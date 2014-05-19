@@ -1,5 +1,5 @@
 
-import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  *
@@ -15,12 +15,14 @@ public class HighScore extends javax.swing.JPanel {
         XMLData temp = new XMLData();
         temp.ReadFile("highscore.xml");
         temp.ImportData();
+        Data player = new Data();
         Stream = temp.ExportData();
         for (int i = 0;i < 20;i++){
+            player = Stream.poll();
             jTable1.getModel().setValueAt(i+1, i, 0);
-            jTable1.getModel().setValueAt(Stream.get(i).Name, i, 1);
-            jTable1.getModel().setValueAt(Stream.get(i).Score, i, 2);
-            jTable1.getModel().setValueAt(Stream.get(i).time, i, 3);
+            jTable1.getModel().setValueAt(player.Name, i, 1);
+            jTable1.getModel().setValueAt(player.Score, i, 2);
+            jTable1.getModel().setValueAt(player.time, i, 3);
         }
     }
 
@@ -122,7 +124,7 @@ public class HighScore extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    private ArrayList<Data> Stream;
+    private Queue<Data> Stream;
     
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
     	Game.ChangeState(Utilities.StateType.WelcomeScreen);

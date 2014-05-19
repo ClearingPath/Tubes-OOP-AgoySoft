@@ -118,10 +118,12 @@ public class Player extends VisibleGameObject {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            GetSprite().ChangeAnimType(arah);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        else {
+            try {
+                GetSprite().ChangeAnimType(arah);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveDown() {
@@ -136,10 +138,12 @@ public class Player extends VisibleGameObject {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            GetSprite().ChangeAnimType(arah);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        else {
+            try {
+                GetSprite().ChangeAnimType(arah);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveRight() {
@@ -154,10 +158,12 @@ public class Player extends VisibleGameObject {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            GetSprite().ChangeAnimType(arah);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        else {
+            try {
+                GetSprite().ChangeAnimType(arah);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveLeft() {
@@ -172,10 +178,12 @@ public class Player extends VisibleGameObject {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            GetSprite().ChangeAnimType(arah);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        else {
+            try {
+                GetSprite().ChangeAnimType(arah);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void PickItem(item i) {
@@ -201,12 +209,12 @@ public class Player extends VisibleGameObject {
     		tmpTime+=elapsedTime;
     		if (tmpTime>walkTime){
     			tmpTime=-1;
-    			/*try {
+    			try {
 					GetSprite().ChangeAnimType(arah);
 				} catch (AnimTypeNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}
     		}
     	}
     	/*try{

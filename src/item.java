@@ -2,7 +2,6 @@
 /*Author : 13512093 - Jonathan Sudibya */
 
 import java.awt.Point;
-import java.util.Vector;
 
 public class item extends VisibleGameObject{
     public static item ItemKosong = initKosong();
@@ -11,17 +10,16 @@ public class item extends VisibleGameObject{
     public boolean Broken; /* udah dirusak / belum */
     private long waktu;
     private Utilities.ItemType jenis;
-    public Point posisi; 
     public Point ukuran;
 
     /* Constructor */
-    item()
-    {
+    public item(){
         waktu = 1000;
     }
     
     public static item initKosong() {
         item i = new item();
+        //Game.GetGameObjectManager().Add("ItemKosong", i);
         i.setJenis(Utilities.ItemType.ItemKosong);
         return i;
     }
@@ -37,10 +35,6 @@ public class item extends VisibleGameObject{
 
     public void setJenis(Utilities.ItemType jenis) {
         this.jenis = jenis;
-    }
-
-    public void setPosisi(Point posisi) {
-        this.posisi = posisi;
     }
 
     public void setUkuran(Point ukuran) {
@@ -59,10 +53,6 @@ public class item extends VisibleGameObject{
         return jenis;
     }
 
-    public Point getPosisi() {
-        return posisi;
-    }
-
     public Point getUkuran() {
         return ukuran;
     }
@@ -72,7 +62,6 @@ public class item extends VisibleGameObject{
     }
 
     public void Update(long elapsedTime) {
-        
+        SetPosition(GetPosition().x, GetPosition().y);
     }
 }
-

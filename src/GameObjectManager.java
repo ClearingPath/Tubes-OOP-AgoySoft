@@ -3,7 +3,6 @@ import java.awt.Graphics2D;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Iterator;
 
 /**
 *
@@ -62,7 +61,7 @@ public class GameObjectManager {
      * @param elapsedTime waktu sejak update terakhir dilakukan
     */
     public void UpdateAll(long elapsedTime){
-		for (VisibleGameObject in : _gameObjects.values()){
+    	for (VisibleGameObject in : _gameObjects.values()){
 			in.Update(elapsedTime);
 			in.UpdateSprite(elapsedTime);
 		}
@@ -74,9 +73,8 @@ public class GameObjectManager {
      * @param IO ImageObserver yang akan di notifikasi
     */
     public void DrawAll(Graphics2D g, ImageObserver IO){
-		Iterator<VisibleGameObject> i=_gameObjects.values().iterator();
-		while (i.hasNext()){
-			i.next().Draw(g, IO);
+    	for (VisibleGameObject in : _gameObjects.values()){
+			in.Draw(g,IO);
 		}
-	}
+    }
 }

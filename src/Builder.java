@@ -60,18 +60,16 @@ public class Builder {
             type = input.next();
             x = input.nextInt();
             y = input.nextInt();
-            Point poss = new Point(x,y);
             pjg = input.nextInt();
             lbr = input.nextInt();
             Point uk = new Point(pjg, lbr);
             _item.setJenis(ITMap.get(type));
+            _item.Load("img/Level1/" + _item.getJenis().getPic() +".png");
             _item.setBroken(false);
-            _item.setPosisi(poss);
+            _item.SetPosition(x, y);
             _item.setUkuran(uk);
             Game.GetGameObjectManager().Add(type, _item);
-            _item.SetPosition(x,y);
-            _item.Load("img/Level1/" + _item.getJenis().getPic() +".png");
-            arr[poss.x][poss.y].putItem(_item);
+            arr[x][y].putItem(_item);
             while(pjg>1) {
                 arr[x+1][y].putItem(_item);
                 pjg--;

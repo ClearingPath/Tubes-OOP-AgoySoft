@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -164,7 +165,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         frame.setVisible(true);
         _game.active_panel=_game.start;
         _game.state_now=Utilities.StateType.WelcomeScreen;
-        //Game.ChangeState(Utilities.StateType.Playing);
+        Game.ChangeState(Utilities.StateType.Playing);
         frame.setSize(700, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);
@@ -203,6 +204,18 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		
 		layer1.SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		layer1.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_X);
+		
+		item gh=null;
+		try {
+			gh = (item)_gameObjectManager.Get("Manekin");
+		} catch (ObjectNameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(VisibleGameObject.TiletoReal(new Point(Utilities.VIEW_TILE_X,Utilities.VIEW_TILE_Y)));
+		System.out.println(gh.GetPosition());
+		System.out.println();
 		
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}

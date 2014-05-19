@@ -1,5 +1,3 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -11,17 +9,26 @@ import java.util.Scanner;
 
 /**
  *
- * @author Rakhmatullah
+ * @author Rakhmatullah Yoga Sutrisna
  */
-public class ConsoleProgram implements KeyListener {
+public class ConsoleProgram {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainMenu();
+        ConsoleProgram console = new ConsoleProgram();
+        console.MainMenu();
     }
-    public static void MainMenu() {
+    public ConsoleProgram() {
+        P = new Player();
+        O = new Owner();
+        /*_gameObjectManager = new GameObjectManager();
+        _gameObjectManager.Add("Owner", O);
+        _gameObjectManager.Add("Player", P);
+        Builder.BuildLevel1();*/
+    }
+    public void MainMenu() {
         int option;
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
@@ -50,7 +57,7 @@ public class ConsoleProgram implements KeyListener {
             }
         } while(option!=5);
     }
-    public static void PlayScreen() {
+    public void PlayScreen() {
         System.out.println("------------- Agoy the Naughty Neighbour -------------");
         String Pname;
         input.nextLine();
@@ -58,17 +65,19 @@ public class ConsoleProgram implements KeyListener {
         System.out.println("Input 0 to back...");
         Pname = input.nextLine();
         if(!Pname.equals("0")) {
-            P = new Player();
+            System.out.println("yuk main..");
+            //P = new Player();
             P.setName(Pname);
             GamePlay();
         }
     }
-    public static void GamePlay() {
+    public void GamePlay() {
         playingstate = true;
         // game start
+        
         playingstate = false;
     }
-    public static void HighScore() {
+    public void HighScore() {
         XMLData temp = new XMLData();
         Queue<Data> Stream;
         temp.ReadFile("highscore.xml");
@@ -85,7 +94,7 @@ public class ConsoleProgram implements KeyListener {
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
-    public static void Help() {
+    public void Help() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
             System.out.println("How to play...");
@@ -104,7 +113,7 @@ public class ConsoleProgram implements KeyListener {
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
-    public static void Credits() {
+    public void Credits() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");
             System.out.println("Permainan \"Agoy the Naughty Neighbour\" ini\n"
@@ -123,20 +132,9 @@ public class ConsoleProgram implements KeyListener {
 
     public static Scanner input = new Scanner(System.in);
     public static boolean playingstate = false;
-    private static Player P;
+    public Player P;
+    public Owner O;
+    public GameObjectManager _gameObjectManager;
+    public static Tile[][] peta;
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

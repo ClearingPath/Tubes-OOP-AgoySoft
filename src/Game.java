@@ -103,7 +103,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     /** 
      * Constructor
     */
-    private Game() {
+    Game() {
             _game=this;
             _gameObjectManager=new GameObjectManager();
 	    setSize(700, 700);

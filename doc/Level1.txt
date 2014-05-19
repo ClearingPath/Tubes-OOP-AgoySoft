@@ -27,11 +27,11 @@
 Key 2 8 1 1
 WC 3 12 1 1
 Tissue 4 11 1 1
-Knife 9 19 1 1
+Knife 8 19 1 1
 Painting 13 9 1 2
 DoorClosed 10 5 1 1
 Spidol 14 3 1 1
-Manekin 16 3 4 2
+Manekin 16 2 4 2
 5
 ItemKosong 3 7 7500
 WC 3 13 5000

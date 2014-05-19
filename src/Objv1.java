@@ -1,7 +1,4 @@
 
-
-import java.io.IOException;
-
 public class Objv1 extends VisibleGameObject {
 	private double timepass;
 	private int lewat;

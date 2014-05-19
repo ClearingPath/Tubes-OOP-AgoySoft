@@ -90,35 +90,31 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     
 	private Game() {
 		_game=this;
-        init();
+		_gameObjectManager=new GameObjectManager();
+	    setSize(700, 700);
+		setBackground(Color.white);
+		tmpTime = -1;
+	    init();
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
 	private void init(){
-		_gameObjectManager=new GameObjectManager();
-        P = new Player();
-            O = new Owner();
-		setSize(700, 700);
-		setBackground(Color.white);
-		tmpTime = -1;
-		// TODO create all object here
+	    // TODO create all object here
 		// contoh init
 		// ObjTest turunan dari VisibleGameObject
 		//ObjTest obj=new ObjTest(5);
 		//_gameObjectManager.Add("nama", obj);
 		//Objv1 obj=new Objv1();
-        _gameObjectManager.Add("player", P);
+		P = new Player();
+        O = new Owner();
+		_gameObjectManager.Add("player", P);
         Builder.BuildLevel1();
-
-		// contoh panggil Object
+        // contoh panggil Object
 		// kalo salah kelas, exception keluar
 		//ObjTest bcd;
 		//bcd=(ObjTest)g.Get("nama");
 
-        // deklarasi user ketika permainan dijalankan
-        //P = new Player();
-        
         // panel construction
         start = new WelcomeScreen();
         play = new PlayScreen();
@@ -129,22 +125,18 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         bg=new SimpleTiledPic();
         bg.Load("img/Level1/level1_back+furniture.png");
         bg.SetPosition(0, 0);
-        //bg.GetSprite().SetOffset(1, 1);
         bg.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
-        //bg.GetSprite().SetScale(32/30, 32/30);
         layer1=new SimpleTiledPic();
         layer1.Load("img/Level1/level1_hideable.png");
         layer1.SetPosition(0, 0);
-        //layer1.GetSprite().SetOffset(1, 1);
         layer1.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
-        //layer1.GetSprite().SetScale(32/30, 32/30);
     }
 	
 	public static void main(String[] args) throws InterruptedException {
         frame = new JFrame("Agoy Soft");
-        Game game = new Game();
+        new Game();
         //frame.add(game);
         frame.add(_game.start);
         frame.setVisible(true);
@@ -172,15 +164,15 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		Utilities.VIEW_TILE_X=P.GetPosition().x-tp2;
 		if (Utilities.VIEW_TILE_X<0)Utilities.VIEW_TILE_X=0;
 		tmp=Utilities.VIEW_TILE_X+Utilities.VIEW_COL_COUNT;
-		if (tmp>=Utilities.MAP_COL_COUNT)Utilities.VIEW_TILE_X=Utilities.MAP_COL_COUNT-Utilities.VIEW_COL_COUNT-1;
-		//if (Utilities.VIEW_TILE_X>=((Utilities.VIEW_COL_COUNT)/2))Utilities.VIEW_TILE_X=(Utilities.VIEW_COL_COUNT)/2;
+		if (tmp>=Utilities.MAP_COL_COUNT)Utilities.VIEW_TILE_X=Utilities.MAP_COL_COUNT-Utilities.VIEW_COL_COUNT;
 		Utilities.VIEW_TILE_Y=P.GetPosition().y-(int)(Utilities.VIEW_ROW_COUNT/2);
 		if (Utilities.VIEW_TILE_Y<0)Utilities.VIEW_TILE_Y=0;
 		tmp=Utilities.VIEW_TILE_Y+Utilities.VIEW_ROW_COUNT;
-		if (tmp>=Utilities.MAP_ROW_COUNT)Utilities.VIEW_TILE_Y=Utilities.MAP_ROW_COUNT-Utilities.VIEW_ROW_COUNT-1;
-		//if (Utilities.VIEW_TILE_Y>=((Utilities.VIEW_ROW_COUNT)/2))Utilities.VIEW_TILE_Y=(Utilities.VIEW_ROW_COUNT)/2;
+		if (tmp>=Utilities.MAP_ROW_COUNT)Utilities.VIEW_TILE_Y=Utilities.MAP_ROW_COUNT-Utilities.VIEW_ROW_COUNT;
 		bg.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		layer1.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
+		bg.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
+		layer1.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
 	

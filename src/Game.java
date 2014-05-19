@@ -16,18 +16,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Game extends JPanel implements Runnable,MouseListener, MouseMotionListener,KeyListener{
-	private static final long serialVersionUID = 7921782677990497038L;
-	public static JFrame frame;
+    private static final long serialVersionUID = 7921782677990497038L;
+    public static JFrame frame;
     private static Game _game;
-	private long lastUpdate, elapsedTime;
-	private long tmpTime;
-	private Graphics g;
-	public GameObjectManager _gameObjectManager;
-	
-	//delay antar tiap pergerakan
-	private static final long BUTTON_DELAY_TIME = 500;
-	
-	// panel-panel mode persiapan
+    private long lastUpdate, elapsedTime;
+    private long tmpTime;
+    private Graphics g;
+    public GameObjectManager _gameObjectManager;
+
+    //delay antar tiap pergerakan
+    private static final long BUTTON_DELAY_TIME = 500;
+
+    // panel-panel mode persiapan
     public WelcomeScreen start;
     public PlayScreen play;
     public HighScore topplayer;
@@ -42,11 +42,11 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     public Player P;
     public Owner O;
    // TODO ubah jadi array of tile
-	public static Tile[][] peta;
+    public static Tile[][] peta;
     
     //Background
-	private Sprite bg;
-	//Layer background yang ada di atas sebagian besar objek
+    private Sprite bg;
+    //Layer background yang ada di atas sebagian besar objek
     private Sprite layer1;
     
     /** 
@@ -105,34 +105,35 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
      * Constructor
     */
     private Game() {
-		_game=this;
-		_gameObjectManager=new GameObjectManager();
+            _game=this;
+            _gameObjectManager=new GameObjectManager();
 	    setSize(700, 700);
-		setBackground(Color.white);
-		tmpTime = -1;
+            setBackground(Color.white);
+            tmpTime = -1;
 	    init();
-		Thread thread = new Thread(this);
-		thread.start();
+            Thread thread = new Thread(this);
+            thread.start();
 	}
 
-	/** 
+    /** 
      * Inisialisasi semua objek yang ada di game
     */
     private void init(){
-	    // TODO create all object here
-		// contoh init
-		// ObjTest turunan dari VisibleGameObject
-		//ObjTest obj=new ObjTest(5);
-		//_gameObjectManager.Add("nama", obj);
-		//Objv1 obj=new Objv1();
-		P = new Player();
+        // TODO create all object here
+        // contoh init
+        // ObjTest turunan dari VisibleGameObject
+        //ObjTest obj=new ObjTest(5);
+        //_gameObjectManager.Add("nama", obj);
+        //Objv1 obj=new Objv1();
+        P = new Player();
         O = new Owner();
-		_gameObjectManager.Add("player", P);
+        _gameObjectManager.Add("player", P);
+        _gameObjectManager.Add("owner", O);
         Builder.BuildLevel1();
         // contoh panggil Object
-		// kalo salah kelas, exception keluar
-		//ObjTest bcd;
-		//bcd=(ObjTest)g.Get("nama");
+        // kalo salah kelas, exception keluar
+        //ObjTest bcd;
+        //bcd=(ObjTest)g.Get("nama");
 
         // panel construction
         start = new WelcomeScreen();
@@ -144,12 +145,12 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         bg=new Sprite();
         layer1=new Sprite();
         try {
-			bg.Load("img/Level1/level1_back+furniture.png");
-			layer1.Load("img/Level1/level1_hideable.png");
+                bg.Load("img/Level1/level1_back+furniture.png");
+                layer1.Load("img/Level1/level1_hideable.png");
 	    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         bg.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_Y);
         bg.SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);

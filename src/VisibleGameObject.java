@@ -68,21 +68,19 @@ public abstract class VisibleGameObject
     */
     public void Draw(Graphics2D g, ImageObserver IO){
 		if(_isLoaded) {
-			// TODO handle item with width more than one tile
 			// rectangle untuk peta yang kelihatan
 			Rectangle a=new Rectangle();
-			a.x=Utilities.VIEW_TILE_X;
-			a.y=Utilities.VIEW_TILE_Y;
-			a.height=Utilities.VIEW_ROW_COUNT;
-			a.width=Utilities.VIEW_COL_COUNT;
+			a.x=Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X;
+			a.y=Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y;
+			a.height=Utilities.VIEW_ROW_COUNT*Utilities.TILE_SIZE_X;
+			a.width=Utilities.VIEW_COL_COUNT*Utilities.TILE_SIZE_Y;
 			// rectangle untuk object bersangkutan
 			Rectangle b=new Rectangle();
-			b.x=tile_posx;
-			b.y=tile_posy;
-			b.height=_sprite.getTileHeight();
-			b.width=_sprite.getTileWidth();
+			b.x=tile_posx*Utilities.TILE_SIZE_X;
+			b.y=tile_posy*Utilities.TILE_SIZE_Y;
+			b.height=_sprite.getTileHeight()*Utilities.TILE_SIZE_X;
+			b.width=_sprite.getTileWidth()*Utilities.TILE_SIZE_Y;
 			if (a.intersects(b)){
-				
 				//cek keliatan ato tidak
 				_sprite.Draw(g, IO);
 			}
@@ -97,8 +95,8 @@ public abstract class VisibleGameObject
     */
     public static Point TiletoReal(Point p){
 		Point p2=new Point();
-		p2.x=(int)Utilities.VIEW_POS_X+p.x*Utilities.TILE_SIZE_X;
-		p2.y=(int)Utilities.VIEW_POS_Y+p.y*Utilities.TILE_SIZE_Y;
+		p2.x=(int)Utilities.VIEW_POS_X+(p.x-Utilities.VIEW_TILE_X)*Utilities.TILE_SIZE_X;
+		p2.y=(int)Utilities.VIEW_POS_Y+(p.y-Utilities.VIEW_TILE_Y)*Utilities.TILE_SIZE_Y;
 		return p2;
 	}
     /** 
@@ -111,8 +109,8 @@ public abstract class VisibleGameObject
 		Point p2=new Point();
 		p2.x=p.x-(int)(Utilities.VIEW_POS_X);
 		p2.y=p.y-(int)(Utilities.VIEW_POS_Y);
-		p2.x=(int) Math.floor(p2.x/Utilities.TILE_SIZE_X);
-		p2.y=(int) Math.floor(p2.y/Utilities.TILE_SIZE_Y);
+		p2.x=(int) Math.floor((p2.x+Utilities.VIEW_TILE_X)/Utilities.TILE_SIZE_X);
+		p2.y=(int) Math.floor((p2.y+Utilities.VIEW_TILE_Y)/Utilities.TILE_SIZE_Y);
 		return p2;
 	}
     /** 

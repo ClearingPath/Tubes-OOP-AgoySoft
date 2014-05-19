@@ -68,6 +68,8 @@ public class Sprite{
 	public void Load(String filename) throws IOException{
 		try {
 			_texture = ImageIO.read(new File(filename));
+			System.out.println("tes");
+			System.out.println(_texture.getHeight()+","+_texture.getWidth());
 		} catch (Exception e) {
 			throw e;
 		}
@@ -122,10 +124,8 @@ public class Sprite{
 	public void Draw(Graphics2D g, ImageObserver IO){
 		int s_x=Size_X;
 		int s_y=Size_Y;
-		System.out.println("qwertyuio");
 		if (s_x==-1)s_x=_texture.getWidth(null);
 		if (s_y==-1)s_y=_texture.getHeight(null);
-		System.out.println(s_x+" "+s_y);
 		AffineTransform trans=new AffineTransform();
 		trans.setToIdentity();
 		trans.concatenate(AffineTransform.getRotateInstance(Math.toRadians(_angle),Pos_X+s_x/2,Pos_Y+s_y/2));
@@ -168,27 +168,27 @@ public class Sprite{
 		Offset_Y=OffY;
 	}
 	public double getWidth(){
-		return _texture.getWidth();
+		int s_x=Size_X;
+		if (s_x==-1)s_x=_texture.getWidth(null);
+		return s_x;
 		//return Size_X;
 	}
 	public double getHeight(){
-		return _texture.getHeight();
+		int s_y=Size_Y;
+		if (s_y==-1)s_y=_texture.getHeight(null);
+		return s_y;
 		//return Size_Y;
 	}
 	public int getTileWidth(){
-		int s_x=Size_X;
-		if (s_x==-1)s_x=_texture.getWidth(null);
-		return s_x/Utilities.TILE_SIZE_X;
+		return (int) (getWidth()/Utilities.TILE_SIZE_X);
 	}
 	public int getTileHeight(){
-		int s_y=Size_Y;
-		if (s_y==-1)s_y=_texture.getHeight(null);
-		return s_y/Utilities.TILE_SIZE_Y;
+		return (int) (getHeight()/Utilities.TILE_SIZE_Y);
 	}
 	public Rectangle getBounds(){
 		Rectangle r=new Rectangle();
-		r.height=Size_X;
-		r.width=Size_Y;
+		r.height=(int) getHeight();
+		r.width=(int) getWidth();
 		r.x=(int) (Pos_X);
 		r.y=(int) (Pos_Y);
 		return r;

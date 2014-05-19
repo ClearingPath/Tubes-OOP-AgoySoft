@@ -41,6 +41,9 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     public static GameObjectManager GetGameObjectManager(){
     	return _game._gameObjectManager;
     }
+
+    private SimpleTiledPic bg;
+    private SimpleTiledPic layer1;
     
     public JPanel active_panel;
     public Utilities.StateType state_now;
@@ -119,7 +122,22 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         topplayer = new HighScore();
         help = new HowToPlay();
         credits = new Credits();
-	}
+
+        bg=new SimpleTiledPic();
+        bg.Load("img/Level1/level1_back+furniture.png");
+        bg.SetPosition(0, 0);
+        //bg.GetSprite().SetOffset(1, 1);
+        bg.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
+         						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
+        //bg.GetSprite().SetScale(32/30, 32/30);
+        layer1=new SimpleTiledPic();
+        layer1.Load("img/Level1/level1_hideable.png");
+        layer1.SetPosition(0, 0);
+        //layer1.GetSprite().SetOffset(1, 1);
+        layer1.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
+         						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
+        //layer1.GetSprite().SetScale(32/30, 32/30);
+    }
 	
 	public static void main(String[] args) throws InterruptedException {
 		frame = new JFrame("Agoy Soft");
@@ -130,6 +148,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		frame.setVisible(true);
 		_game.active_panel=_game.start;
 		_game.state_now=Utilities.StateType.WelcomeScreen;
+		Game.ChangeState(Utilities.StateType.Playing);
 		frame.setSize(700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);
@@ -146,10 +165,20 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 				tmpTime=-1;
 			}
 		}
-		Utilities.VIEW_TILE_X=P.GetPosition().x-(int)(Utilities.VIEW_COL_COUNT/2);
+		int tmp,tp2;
+		tp2=(int)(Utilities.VIEW_COL_COUNT/2);
+		Utilities.VIEW_TILE_X=P.GetPosition().x-tp2;
 		if (Utilities.VIEW_TILE_X<0)Utilities.VIEW_TILE_X=0;
+		tmp=Utilities.VIEW_TILE_X+Utilities.VIEW_COL_COUNT;
+		if (tmp>=Utilities.MAP_COL_COUNT)Utilities.VIEW_TILE_X=Utilities.MAP_COL_COUNT-Utilities.VIEW_COL_COUNT-1;
+		//if (Utilities.VIEW_TILE_X>=((Utilities.VIEW_COL_COUNT)/2))Utilities.VIEW_TILE_X=(Utilities.VIEW_COL_COUNT)/2;
 		Utilities.VIEW_TILE_Y=P.GetPosition().y-(int)(Utilities.VIEW_ROW_COUNT/2);
 		if (Utilities.VIEW_TILE_Y<0)Utilities.VIEW_TILE_Y=0;
+		tmp=Utilities.VIEW_TILE_Y+Utilities.VIEW_ROW_COUNT;
+		if (tmp>=Utilities.MAP_ROW_COUNT)Utilities.VIEW_TILE_Y=Utilities.MAP_ROW_COUNT-Utilities.VIEW_ROW_COUNT-1;
+		//if (Utilities.VIEW_TILE_Y>=((Utilities.VIEW_ROW_COUNT)/2))Utilities.VIEW_TILE_Y=(Utilities.VIEW_ROW_COUNT)/2;
+		bg.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
+		layer1.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
 	
@@ -159,10 +188,68 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		this.g = g;
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		bg.Draw(g2d, this);
 		_gameObjectManager.DrawAll(g2d,this);
+		layer1.Draw(g2d, this);
 		g2d.setColor(Color.white);
 	}
 
+	@Override
+	public void run() {
+		while(state_now!=Utilities.StateType.Quit){
+			update(g);
+			repaint();
+			try {
+				Thread.sleep(17);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	@Override
+	public void keyPressed(KeyEvent key) {
+		if (tmpTime==-1){
+			if (key.getKeyCode() == KeyEvent.VK_LEFT){
+				tmpTime=0;
+				P.MoveLeft();
+			} else if (key.getKeyCode() == KeyEvent.VK_UP){
+				tmpTime=0;
+				P.MoveUp();
+			} else if (key.getKeyCode() == KeyEvent.VK_RIGHT){
+				tmpTime=0;
+				P.MoveRight();
+			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
+				tmpTime=0;
+				P.MoveDown();
+			} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
+				tmpTime=0;
+				P.setSilent(true);
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent key) {
+		if ((key.getKeyCode() == KeyEvent.VK_LEFT)/*
+		*/||(key.getKeyCode() == KeyEvent.VK_UP)/*
+		*/||(key.getKeyCode() == KeyEvent.VK_RIGHT)/*
+		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
+			tmpTime=-1;
+		} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
+			tmpTime=-1;
+			P.setSilent(false);
+        }
+        //P.arah = 0;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent key) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -202,61 +289,6 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void run() {
-		while(state_now!=Utilities.StateType.Quit){
-			update(g);
-			repaint();
-			try {
-				Thread.sleep(17);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent key) {
-		if (tmpTime==-1){
-			System.out.println("asdfghhgfds");
-			if (key.getKeyCode() == KeyEvent.VK_LEFT){
-				tmpTime=0;
-				P.MoveLeft();
-			} else if (key.getKeyCode() == KeyEvent.VK_UP){
-				tmpTime=0;
-				P.MoveUp();
-			} else if (key.getKeyCode() == KeyEvent.VK_RIGHT){
-				tmpTime=0;
-				P.MoveRight();
-			} else if (key.getKeyCode() == KeyEvent.VK_DOWN){
-				tmpTime=0;
-				P.MoveDown();
-			} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
-				tmpTime=0;
-				P.setSilent(true);
-			}
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent key) {
-		if ((key.getKeyCode() == KeyEvent.VK_LEFT)/*
-		*/||(key.getKeyCode() == KeyEvent.VK_UP)/*
-		*/||(key.getKeyCode() == KeyEvent.VK_RIGHT)/*
-		*/||(key.getKeyCode() == KeyEvent.VK_DOWN)){
-			tmpTime=-1;
-		} else if (key.getKeyCode() == KeyEvent.VK_CONTROL){
-			tmpTime=-1;
-			P.setSilent(false);
-        }
-        P.arah = 0;
-	}
-
-	@Override
-	public void keyTyped(KeyEvent key) {
 		
 	}
 }

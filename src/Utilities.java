@@ -35,8 +35,9 @@ public class Utilities {
     }
     
     public enum ItemType {
-        Tissue(true, "tisu"), WC(false, "WC awal 1"), Key(true, "kunci"), Knife(true, "knife"), 
-        Painting(false, "lukisan awal"), Manekin(false, "manekin awal"),
+        Tissue(true, "tisu"), WC(false, "WC awal"), Key(true, "kunci"), Knife(true, "knife"), 
+        Painting(false, "lukisan awal"), Manekin(false, "manekin awal"), ManekinR(false, "manekin akhir"),
+        PaintingR(false, "lukisan akhir"), WCR(false, "WC akhir"),
         DoorClosed(false, "pintu"), Spidol(true, "marker"), ItemKosong(false, "kosong");
         
         public boolean walkable;

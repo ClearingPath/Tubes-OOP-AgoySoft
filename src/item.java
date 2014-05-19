@@ -1,7 +1,10 @@
 /*File : item.java */
 /*Author : 13512093 - Jonathan Sudibya */
 
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.image.ImageObserver;
 
 public class item extends VisibleGameObject{
     public static item ItemKosong = initKosong();
@@ -64,4 +67,25 @@ public class item extends VisibleGameObject{
     public void Update(long elapsedTime) {
         SetPosition(GetPosition().x, GetPosition().y);
     }
+    public void Draw(Graphics2D g, ImageObserver IO){
+    	if (getJenis()!=Utilities.ItemType.ItemKosong){
+			if(IsLoaded()) {
+				// rectangle untuk peta yang kelihatan
+				Rectangle a=new Rectangle();
+				a.x=Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X;
+				a.y=Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y;
+				a.height=Utilities.VIEW_ROW_COUNT*Utilities.TILE_SIZE_X;
+				a.width=Utilities.VIEW_COL_COUNT*Utilities.TILE_SIZE_Y;
+				// rectangle untuk object bersangkutan
+				Rectangle b=new Rectangle();
+				b.x=GetPosition().x*Utilities.TILE_SIZE_X;
+				b.y=GetPosition().y*Utilities.TILE_SIZE_Y;
+				b.height=GetSprite().getTileHeight()*Utilities.TILE_SIZE_X;
+				b.width=GetSprite().getTileWidth()*Utilities.TILE_SIZE_Y;
+				if (a.intersects(b)){
+					GetSprite().Draw(g, IO);
+				}
+			}
+		}
+	}
 }

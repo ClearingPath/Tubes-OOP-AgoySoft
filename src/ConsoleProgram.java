@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Scanner;
 
 /*
@@ -61,7 +62,7 @@ public class ConsoleProgram {
     }
     public static void HighScore() {
         XMLData temp = new XMLData();
-        ArrayList<Data> Stream;
+        Queue<Data> Stream;
         temp.ReadFile("highscore.xml");
         temp.ImportData();
         Stream = temp.ExportData();

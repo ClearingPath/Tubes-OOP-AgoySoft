@@ -63,9 +63,9 @@ public class Utilities {
 }
 
 class AnimTypeNotFoundException extends Exception{
-	
+	private static final long serialVersionUID = 1897174443650738740L;
 }
 
 class ObjectNameNotFoundException extends Exception{
-	
+	private static final long serialVersionUID = 8872217230896936215L;
 }

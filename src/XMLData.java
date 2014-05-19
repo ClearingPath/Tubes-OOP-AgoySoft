@@ -35,7 +35,7 @@ public class XMLData {
                 return (int) (d1.time.compareTo(d2.time));
             }
             else{
-                return (int) (d1.Score - d2.Score);
+                return (int) -(d1.Score - d2.Score);
             }
         }
     };
@@ -44,6 +44,7 @@ public class XMLData {
         Buffer = new ArrayList<String>();
     }
     public void ReadFile(String FileName){
+        Buffer = new ArrayList<String>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(FileName));
             String line = br.readLine();
@@ -63,6 +64,7 @@ public class XMLData {
     
     /* import data from buffer*/
     public void ImportData(){
+        //Stream = new PriorityQueue<Data>(11,ScoreComparator);
         Data temp = new Data();
         int flag = 0;
         for (String coba:Buffer)
@@ -83,19 +85,19 @@ public class XMLData {
 
                 try {
                         Date date = formatter.parse(coba.substring(6,33));
-                        System.out.println(date);
-                        System.out.println(formatter.format(date));
+                        //System.out.println(date);
+                        //System.out.println(formatter.format(date));
                         temp.time = date;
-                        
+                        flag++;
                 } catch (ParseException e) {
                         e.printStackTrace();
                 }
-                flag++;
             }
             if (flag == 3)
             {
                 flag = 0;
                 Stream.add(temp);
+                temp = new Data();
             }
         }
         System.out.println(Stream.size());
@@ -103,20 +105,12 @@ public class XMLData {
     public void AddData(String Name,int Score,Date time){
         Stream.add(new Data(Name,Score,time));
     }
-    public void AddData(ArrayList<Data> input){
-        while (!input.isEmpty()){
-            Stream.add(input.remove(0));
-        }
+    public void AddData(Queue<Data> input){
+        Stream = input;
     }
     /* top data */
-    public ArrayList<Data> ExportData(){
-        ArrayList<Data> temp = new ArrayList<>();
-        while(!Stream.isEmpty())
-        {
-            Data sementara = Stream.poll();
-            temp.add(sementara);
-        }
-        return temp;
+    public Queue<Data> ExportData(){
+        return Stream;
     }
     public void WriteData(String FileName){
         try {

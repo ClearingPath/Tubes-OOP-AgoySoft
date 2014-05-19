@@ -18,25 +18,33 @@ public abstract class VisibleGameObject
 	private int tile_posx;
 	private int tile_posy;
 	
+	public VisibleGameObject(){
+		_isLoaded=false;
+		_sprite=new Sprite();
+	}
 	/** 
+     * Method abstract yang akan dijalankan otomatis
+     * pada interval tertentu (60 fps)
+     * Gunakan untuk mengubah state seiring waktu dengan mulus
+     * @param elapsedTime waktu yang lewat sejak update terakhir. Dalam milisecond
+    */
+    public abstract void Update(long elapsedTime);
+	
+    /** 
      * Mendapatkan Sprite untuk objek
      * @return Sprite sprite
     */
     protected Sprite GetSprite(){
 		return _sprite;
 	}
-	public VisibleGameObject(){
-		_isLoaded=false;
-		_sprite=new Sprite();
+	/** 
+     * Mengecek apakah Objek sudah melakukan Load gambar ke Sprite-nya
+     * @return boolean status objek sudah di-load atau belum
+    */
+	public boolean IsLoaded(){
+		return _isLoaded;
 	}
 	/** 
-     * Mendapatkan Method abstract yang akan dijalankan otomatis
-     * pada interval tertentu (60 fps)
-     * @param elapsedTime waktu yang lewat sejak update terakhir. Dalam milisecond
-    */
-    public abstract void Update(long elapsedTime);
-	
-    /** 
      * Me-load gambar ke Sprite
      * @param filename path gambar yang akan di-load
     */
@@ -60,9 +68,10 @@ public abstract class VisibleGameObject
 			_isLoaded=false;
 		}
 	}
-	
+    
     /** 
-     * Menggambar Sprite ke Screen
+     * Menggambar Sprite ke Screen.
+     * Dilakukan dulu pengecekan apakah di luar kamera atau tidak
      * @param g Grafik tempat tujuan digambar
      * @param IO ImageObserver yang akan di-notify
     */
@@ -81,16 +90,19 @@ public abstract class VisibleGameObject
 			b.height=_sprite.getTileHeight()*Utilities.TILE_SIZE_X;
 			b.width=_sprite.getTileWidth()*Utilities.TILE_SIZE_Y;
 			if (a.intersects(b)){
-			//if (true){
-				//cek keliatan ato tidak
 				_sprite.Draw(g, IO);
-			} else {
-				System.out.println(a.x+","+a.y+";"+a.height+","+a.width);
-				System.out.println(b.x+","+b.y+";"+b.height+","+b.width);
 			}
 		}
 	}
 
+    /** 
+     * Method khusus untuk animasi sprite.
+     * Dijalankan otomatis setiap interval (60 fps)
+     * @param elapsedTime waktu sejak method ini dijalankan terakhir
+    */
+    public void UpdateSprite(long elapsedTime){
+		_sprite.UpdateDraw(elapsedTime);
+	}
     /** 
      * Mengubah dari posisi berdasar tile menjadi 
      * posisi sesungguhnya relatif terhadap window
@@ -140,14 +152,6 @@ public abstract class VisibleGameObject
 		return new Point(0,0);
 	}
     /** 
-     * Method khusus untuk animasi sprite.
-     * Dijalankan otomatis setiap interval (60 fps)
-     * @param elapsedTime waktu sejak method ini dijalankan terakhir
-    */
-    public void UpdateSprite(long elapsedTime){
-		_sprite.UpdateDraw(elapsedTime);
-	}
-    /** 
      * Mendapatkan ukuran lebar objek
      * Lebar yang didapat relatif terhadap window
      * @return double lebar objek
@@ -170,12 +174,5 @@ public abstract class VisibleGameObject
     */
 	public Rectangle GetBoundingRect(){
 		return _sprite.getBounds();
-	}
-	/** 
-     * Mengecek apakah Objek sudah melakukan Load gambar ke Sprite-nya
-     * @return boolean status objek sudah di-load atau belum
-    */
-	public boolean IsLoaded(){
-		return _isLoaded;
 	}
 }

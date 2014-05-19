@@ -18,7 +18,10 @@ public abstract class VisibleGameObject
 	private int tile_posx;
 	private int tile_posy;
 	
-	public VisibleGameObject(){
+	/** 
+     * Constructor
+    */
+    public VisibleGameObject(){
 		_isLoaded=false;
 		_sprite=new Sprite();
 	}

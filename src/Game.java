@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,9 +44,9 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public static Tile[][] peta;
     
     //Background
-	private SimpleTiledPic bg;
+	private Sprite bg;
 	//Layer background yang ada di atas sebagian besar objek
-    private SimpleTiledPic layer1;
+    private Sprite layer1;
     
     /** 
      * Mendapatkan GameObjectManager milik singleton game
@@ -99,7 +100,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     	}
     }
     
-	private Game() {
+    /** 
+     * Constructor
+    */
+    private Game() {
 		_game=this;
 		_gameObjectManager=new GameObjectManager();
 	    setSize(700, 700);
@@ -136,15 +140,20 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         help = new HowToPlay();
         credits = new Credits();
 
-        bg=new SimpleTiledPic();
-        bg.Load("img/Level1/level1_back+furniture.png");
-        bg.SetPosition(0, 0);
-        bg.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
+        bg=new Sprite();
+        layer1=new Sprite();
+        try {
+			bg.Load("img/Level1/level1_back+furniture.png");
+			layer1.Load("img/Level1/level1_hideable.png");
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        bg.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_Y);
+        bg.SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
-        layer1=new SimpleTiledPic();
-        layer1.Load("img/Level1/level1_hideable.png");
-        layer1.SetPosition(0, 0);
-        layer1.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
+        layer1.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_Y);
+        layer1.SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
     }
     
@@ -155,7 +164,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         frame.setVisible(true);
         _game.active_panel=_game.start;
         _game.state_now=Utilities.StateType.WelcomeScreen;
-        Game.ChangeState(Utilities.StateType.Playing);
+        //Game.ChangeState(Utilities.StateType.Playing);
         frame.setSize(700, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);
@@ -189,10 +198,11 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		tmp=Utilities.VIEW_TILE_Y+Utilities.VIEW_ROW_COUNT;
 		if (tmp>=Utilities.MAP_ROW_COUNT)Utilities.VIEW_TILE_Y=Utilities.MAP_ROW_COUNT-Utilities.VIEW_ROW_COUNT;
 		
-		bg.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
-		layer1.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
-		bg.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
-		layer1.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
+		bg.SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
+		bg.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_X);
+		
+		layer1.SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
+		layer1.SetPosition(Utilities.VIEW_POS_X, Utilities.VIEW_POS_X);
 		
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
@@ -282,7 +292,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	public void keyTyped(KeyEvent key) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
     /** 
      * Method Listener yang dijalankan ketika mouse digerakkan
      * @param event Informasi tentang mouse saat ini

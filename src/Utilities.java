@@ -23,8 +23,8 @@ public class Utilities {
     public static int VIEW_TILE_Y=0;
 
     //posisi ujung kiri atas peta
-    public static final int VIEW_POS_X=0;
-    public static final int VIEW_POS_Y=0;
+    public static final int VIEW_POS_X=50;
+    public static final int VIEW_POS_Y=50;
 
     //ukuran tile
     public static final int TILE_SIZE_X=32;

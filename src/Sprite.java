@@ -51,7 +51,10 @@ public class Sprite{
 		return a;
 	}
 	
-	public Sprite(){
+	/** 
+     * Constructor
+    */
+    public Sprite(){
 		_angle=0;
 		Size_X=-1;
 		Size_Y=-1;
@@ -71,9 +74,7 @@ public class Sprite{
 	public void Load(String filename) throws IOException{
 		try {
 			_texture = ImageIO.read(new File(filename));
-			System.out.println("tes");
-			System.out.println(_texture.getHeight()+","+_texture.getWidth());
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw e;
 		}
 	}

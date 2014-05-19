@@ -27,8 +27,8 @@ public class Utilities {
     public static final int VIEW_POS_Y=0;
 
     //ukuran tile
-    public static final int TILE_SIZE_X=30;
-    public static final int TILE_SIZE_Y=30; 
+    public static final int TILE_SIZE_X=32;
+    public static final int TILE_SIZE_Y=32; 
         
     public enum TileType {
        Walkable, UnWalkable,  Hideable;

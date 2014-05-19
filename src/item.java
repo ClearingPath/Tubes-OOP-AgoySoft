@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.util.Vector;
 
 public class item extends VisibleGameObject{
-    public static item ItemKosong;
+    public static item ItemKosong = initKosong();
     
     /* Attribute */
     public boolean Broken; /* udah dirusak / belum */
@@ -20,8 +20,11 @@ public class item extends VisibleGameObject{
         waktu = 1000;
     }
     
-    public static void initItemKosong() {
+    public static item initKosong() {
+        item i = new item();
         Game.GetGameObjectManager().Add("ItemKosong", ItemKosong);
+        i.setJenis(Utilities.ItemType.ItemKosong);
+        return i;
     }
     /* method */
     

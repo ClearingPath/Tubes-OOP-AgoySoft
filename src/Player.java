@@ -85,47 +85,55 @@ public class Player extends VisibleGameObject {
         Hide = !Hide;
     }
     public void MoveUp() {
-    	tmpTime=0;
-        arah = 4;
-        try {
-            //Update(1000);
-            SetPosition(GetPosition().x, GetPosition().y-1);
-            GetSprite().ChangeAnimType(8);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        if(Game.peta[GetPosition().x][GetPosition().y-1].IsWalkable()) {
+            tmpTime=0;
+            arah = 4;
+            try {
+                //Update(1000);
+                SetPosition(GetPosition().x, GetPosition().y-1);
+                GetSprite().ChangeAnimType(8);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveDown() {
-    	tmpTime=0;
-        arah = 1;
-        try {
-            //Update(1000);
-            SetPosition(GetPosition().x, GetPosition().y+1);
-            GetSprite().ChangeAnimType(5);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        if(Game.peta[GetPosition().x][GetPosition().y+1].IsWalkable()) {
+            tmpTime=0;
+            arah = 1;
+            try {
+                //Update(1000);
+                SetPosition(GetPosition().x, GetPosition().y+1);
+                GetSprite().ChangeAnimType(5);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveRight() {
-    	tmpTime=0;
-        arah = 3;
-        try {
-            //Update(1000);
-            SetPosition(GetPosition().x+1, GetPosition().y);
-            GetSprite().ChangeAnimType(7);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        if(Game.peta[this.GetPosition().x+1][this.GetPosition().y].IsWalkable()) {
+            tmpTime=0;
+            arah = 3;
+            try {
+                //Update(1000);
+                SetPosition(GetPosition().x+1, GetPosition().y);
+                GetSprite().ChangeAnimType(7);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void MoveLeft() {
-    	tmpTime=0;
-        arah = 2;
-        try {
-            //Update(1000);
-            SetPosition(GetPosition().x-1, GetPosition().y);
-            GetSprite().ChangeAnimType(6);
-        } catch (AnimTypeNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        if(Game.peta[this.GetPosition().x-1][this.GetPosition().y].IsWalkable()) {
+            tmpTime=0;
+            arah = 2;
+            try {
+                //Update(1000);
+                SetPosition(GetPosition().x-1, GetPosition().y);
+                GetSprite().ChangeAnimType(6);
+            } catch (AnimTypeNotFoundException ex) {
+                Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     public void PickItem(item i) {

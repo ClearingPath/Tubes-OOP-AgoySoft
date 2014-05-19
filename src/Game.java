@@ -89,7 +89,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     }
     
 	private Game() {
-		init();
+		_game=this;
+        init();
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -97,7 +98,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	private void init(){
 		_gameObjectManager=new GameObjectManager();
         P = new Player();
-        O = new Owner();
+            O = new Owner();
 		setSize(700, 700);
 		setBackground(Color.white);
 		tmpTime = -1;
@@ -108,6 +109,8 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		//_gameObjectManager.Add("nama", obj);
 		//Objv1 obj=new Objv1();
         _gameObjectManager.Add("player", P);
+                    Builder.BuildLevel1();
+
 		// contoh panggil Object
 		// kalo salah kelas, exception keluar
 		//ObjTest bcd;
@@ -140,17 +143,16 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     }
 	
 	public static void main(String[] args) throws InterruptedException {
-		frame = new JFrame("Agoy Soft");
-		Game game = new Game();
-		_game=game;
-		//frame.add(game);
-		frame.add(_game.start);
-		frame.setVisible(true);
-		_game.active_panel=_game.start;
-		_game.state_now=Utilities.StateType.WelcomeScreen;
-		Game.ChangeState(Utilities.StateType.Playing);
-		frame.setSize(700, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame("Agoy Soft");
+        Game game = new Game();
+        //frame.add(game);
+        frame.add(_game.start);
+        frame.setVisible(true);
+        _game.active_panel=_game.start;
+        _game.state_now=Utilities.StateType.WelcomeScreen;
+        Game.ChangeState(Utilities.StateType.Playing);
+        frame.setSize(700, 700);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);

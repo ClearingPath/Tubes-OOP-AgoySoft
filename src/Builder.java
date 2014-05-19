@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Builder {
-    public static void BuildLevel1() {
+    public static void BuildLevel1(GameObjectManager GOM) {
         Map<String, Utilities.ItemType> ITMap = new HashMap<>();
         ITMap.put("Key", Utilities.ItemType.Key);
         ITMap.put("WC", Utilities.ItemType.WC);
@@ -49,7 +49,7 @@ public class Builder {
                    arr[j][i].setJenis(Utilities.TileType.Walkable);
                else if (TileKode == 2)
                    arr[j][i].setJenis(Utilities.TileType.Hideable);               
-               Game.GetGameObjectManager().Add("Tile" + j + " " + i, arr[j][i]);
+               GOM.Add("Tile" + j + " " + i, arr[j][i]);
            }
        }
        int NItem = input.nextInt();
@@ -68,7 +68,7 @@ public class Builder {
             _item.setBroken(false);
             _item.SetPosition(x, y);
             _item.setUkuran(uk);
-            Game.GetGameObjectManager().Add(type, _item);
+            GOM.Add(type, _item);
             arr[x][y].putItem(_item);
             while(pjg>1) {
                 arr[x+1][y].putItem(_item);
@@ -92,7 +92,7 @@ public class Builder {
            
            try {
                 if (IType == "ItemKosong")
-                    keg.ItemTerlibat = (item)Game.GetGameObjectManager().Get(IType);
+                    keg.ItemTerlibat = (item)GOM.Get(IType);
                 else
                     keg.ItemTerlibat = item.ItemKosong;
                 } catch (ObjectNameNotFoundException e) {

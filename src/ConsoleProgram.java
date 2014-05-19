@@ -1,12 +1,6 @@
 import java.util.Queue;
 import java.util.Scanner;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Rakhmatullah Yoga Sutrisna
@@ -20,14 +14,22 @@ public class ConsoleProgram {
         ConsoleProgram console = new ConsoleProgram();
         console.MainMenu();
     }
+    /**
+     * Constructor kelas ConsoleProgram
+     */
     public ConsoleProgram() {
         P = new Player();
         O = new Owner();
-        /*_gameObjectManager = new GameObjectManager();
+        _gameObjectManager = new GameObjectManager();
         _gameObjectManager.Add("Owner", O);
         _gameObjectManager.Add("Player", P);
-        Builder.BuildLevel1();*/
+        Builder.BuildLevel1(_gameObjectManager);
     }
+    /**
+     * Menu utama dari game
+     * Agoy the naughty neighbour
+     * versi text-based
+     */
     public void MainMenu() {
         int option;
         do {
@@ -57,6 +59,10 @@ public class ConsoleProgram {
             }
         } while(option!=5);
     }
+    /**
+     * Tampilan persiapan sebelum
+     * menjalankan permainan
+     */
     public void PlayScreen() {
         System.out.println("------------- Agoy the Naughty Neighbour -------------");
         String Pname;
@@ -71,12 +77,20 @@ public class ConsoleProgram {
             GamePlay();
         }
     }
+    /**
+     * Tampilan permainan
+     */
     public void GamePlay() {
         playingstate = true;
         // game start
         
         playingstate = false;
     }
+    /**
+     * Tampilan HighScore
+     * menampilkan 20 pemain dengan
+     * skor tertinggi
+     */
     public void HighScore() {
         XMLData temp = new XMLData();
         Queue<Data> Stream;
@@ -94,6 +108,9 @@ public class ConsoleProgram {
             System.out.println("Input 0 to back...");
         } while(input.nextInt()!=0);
     }
+    /**
+     * Tampilan bantuan
+     */
     public void Help() {
         do {
             System.out.println("------------- Agoy the Naughty Neighbour -------------");

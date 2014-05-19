@@ -128,7 +128,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         O = new Owner();
         _gameObjectManager.Add("player", P);
         _gameObjectManager.Add("owner", O);
-        Builder.BuildLevel1();
+        Builder.BuildLevel1(_gameObjectManager);
         // contoh panggil Object
         // kalo salah kelas, exception keluar
         //ObjTest bcd;

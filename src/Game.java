@@ -13,14 +13,18 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class Game extends JPanel implements Runnable,MouseListener, MouseMotionListener,KeyListener{
+	private static final long serialVersionUID = 7921782677990497038L;
+	public static JFrame frame;
+    private static Game _game;
+	private long lastUpdate, elapsedTime;
+	private long tmpTime;
+	private Graphics g;
+	public GameObjectManager _gameObjectManager;
+	
 	//delay antar tiap pergerakan
 	private static final long BUTTON_DELAY_TIME = 500;
 	
-	// TODO ubah jadi array of tile
-	public static Tile[][] peta;
-
 	// panel-panel mode persiapan
     public WelcomeScreen start;
     public PlayScreen play;
@@ -28,25 +32,32 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
     public HowToPlay help;
     public Credits credits;
 
-    private long lastUpdate, elapsedTime;
-	private long tmpTime;
-	public static JFrame frame;
-	private Graphics g;
-	public GameObjectManager _gameObjectManager;
+    //panel yang aktif
+    public JPanel active_panel;
+    //Status game saat ini
+    public Utilities.StateType state_now;
+    
     public Player P;
     public Owner O;
+   // TODO ubah jadi array of tile
+	public static Tile[][] peta;
     
-    private static Game _game;
+    //Background
+	private SimpleTiledPic bg;
+	//Layer background yang ada di atas sebagian besar objek
+    private SimpleTiledPic layer1;
     
+    /** 
+     * Mendapatkan GameObjectManager milik singleton game
+     * @return GameObjectManager GameObjectManager milik singleton game
+    */
     public static GameObjectManager GetGameObjectManager(){
     	return _game._gameObjectManager;
     }
-
-    private SimpleTiledPic bg;
-    private SimpleTiledPic layer1;
-    
-    public JPanel active_panel;
-    public Utilities.StateType state_now;
+    /** 
+     * Mengubah state dari game
+     * @param in State tujuan dari pengubahan
+    */
     public static void ChangeState(Utilities.StateType in){
     	if (_game.state_now!=in){
     		_game.active_panel.setVisible(false);
@@ -99,7 +110,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		thread.start();
 	}
 
-	private void init(){
+	/** 
+     * Inisialisasi semua objek yang ada di game
+    */
+    private void init(){
 	    // TODO create all object here
 		// contoh init
 		// ObjTest turunan dari VisibleGameObject
@@ -133,11 +147,10 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         layer1.GetSprite().SetImageSize(Utilities.TILE_SIZE_X*Utilities.VIEW_COL_COUNT/*
          						*/, Utilities.TILE_SIZE_Y*Utilities.VIEW_ROW_COUNT);
     }
-	
+    
 	public static void main(String[] args) throws InterruptedException {
         frame = new JFrame("Agoy Soft");
         new Game();
-        //frame.add(game);
         frame.add(_game.start);
         frame.setVisible(true);
         _game.active_panel=_game.start;
@@ -149,16 +162,22 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2-20);
 	}
-	
-	public void update(Graphics g){
+	/** 
+     * Method update yang meng-update semua objek yang ada di game
+     * Dijalankan setiap interval tertentu (60 fps)
+     * @param g Screen yang mungkin akan diubah atau dilihat statusnya
+    */
+    public void update(Graphics g){
 		elapsedTime = System.currentTimeMillis() - lastUpdate;
 		lastUpdate = System.currentTimeMillis();
+		
 		if (tmpTime>=0){
 			tmpTime+=elapsedTime;
 			if (tmpTime>=BUTTON_DELAY_TIME){
 				tmpTime=-1;
 			}
 		}
+		
 		int tmp,tp2;
 		tp2=(int)(Utilities.VIEW_COL_COUNT/2);
 		Utilities.VIEW_TILE_X=P.GetPosition().x-tp2;
@@ -169,26 +188,37 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		if (Utilities.VIEW_TILE_Y<0)Utilities.VIEW_TILE_Y=0;
 		tmp=Utilities.VIEW_TILE_Y+Utilities.VIEW_ROW_COUNT;
 		if (tmp>=Utilities.MAP_ROW_COUNT)Utilities.VIEW_TILE_Y=Utilities.MAP_ROW_COUNT-Utilities.VIEW_ROW_COUNT;
+		
 		bg.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		layer1.GetSprite().SetOffset(Utilities.VIEW_TILE_X*Utilities.TILE_SIZE_X, Utilities.VIEW_TILE_Y*Utilities.TILE_SIZE_Y);
 		bg.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
 		layer1.SetPosition(Utilities.VIEW_TILE_X, Utilities.VIEW_TILE_Y);
+		
 		_gameObjectManager.UpdateAll(elapsedTime);
 	}
-	
-	@Override
+    /** 
+     * Method menggambar semua objek ke screen
+     * Dijalankan setiap interval tertentu (60 fps)
+     * @param g Screen yang akan digambar
+    */
+    @Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		this.g = g;
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		bg.Draw(g2d, this);
 		_gameObjectManager.DrawAll(g2d,this);
 		layer1.Draw(g2d, this);
+		
 		g2d.setColor(Color.white);
 	}
-
-	@Override
+    /** 
+     * Method inti dari game yang dijalankan pada thread berbeda
+     * Method ini menjalankan update dan paintComponent pada interval tertentu (60 fps)
+    */
+    @Override
 	public void run() {
 		while(state_now!=Utilities.StateType.Quit){
 			update(g);
@@ -201,8 +231,11 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		}
 	}
 	
-	
-	@Override
+    /** 
+     * Method Listener yang dijalankan ketika ada tombol yang ditekan
+     * @param key Informasi tentang tombol yang ditekan
+    */
+    @Override
 	public void keyPressed(KeyEvent key) {
 		if (tmpTime==-1){
 			if (key.getKeyCode() == KeyEvent.VK_LEFT){
@@ -221,18 +254,13 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 				tmpTime=0;
 				P.setSilent(true);
 			}
-			/*System.out.println(P.GetPosition().x+" "+P.GetPosition().y);
-			for (int i=-2;i<2;i++){
-				for (int j=-2;j<2;j++){
-					int b=(Game.peta[j+P.GetPosition().x][i+P.GetPosition().y].IsWalkable()?0:1);
-					System.out.print(b+" ");
-				}
-				System.out.println();
-			}*/
 		}
 	}
-
-	@Override
+    /** 
+     * Method Listener yang dijalankan ketika ada tombol yang dilepas
+     * @param key Informasi tentang tombol yang dilepas
+    */
+    @Override
 	public void keyReleased(KeyEvent key) {
 		if ((key.getKeyCode() == KeyEvent.VK_LEFT)/*
 		*/||(key.getKeyCode() == KeyEvent.VK_UP)/*
@@ -245,51 +273,78 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         }
         //P.arah = 0;
 	}
-
-	@Override
+    /** 
+     * Method Listener yang dijalankan ketika ada tombol yang diketik
+     * atau dalam kata lain, ditekan lalu dilepas
+     * @param key Informasi tentang tombol yang diketik
+    */
+    @Override
 	public void keyTyped(KeyEvent key) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	}	
+    /** 
+     * Method Listener yang dijalankan ketika mouse digerakkan
+     * @param event Informasi tentang mouse saat ini
+    */
+    @Override
 	public void mouseMoved(MouseEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent event) {
+    /** 
+     * Method Listener yang dijalankan ketika mouse di drag
+     * Di drag adalah ketika mouse digerakkan ketika tombol kiri mouse ditekan
+     * @param arg0 Informasi tentang mouse saat ini
+    */
+    @Override
+	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+    /** 
+     * Method Listener yang dijalankan ketika ada tombol mouse yang ditekan
+     * @param event Informasi tentang mouse saat ini
+    */
+    @Override
 	public void mousePressed(MouseEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
+    /** 
+     * Method Listener yang dijalankan ketika ada tombol mouse yang dilepas
+     * @param arg0 Informasi tentang mouse saat ini
+    */
+    @Override
 	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+    /** 
+     * Method Listener yang dijalankan ketika tombol mouse di-klik
+     * di-klik maksudnya adalah ditekan lalu dilepas
+     * @param event Informasi tentang mouse saat ini
+    */
+    @Override
+	public void mouseClicked(MouseEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+    /** 
+     * Method Listener yang dijalankan ketika pointer mouse masuk ke screen
+     * @param arg0 Informasi tentang mouse saat ini
+    */
+    @Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+    /** 
+     * Method Listener yang dijalankan ketika pointer mouse keluar ke screen
+     * @param arg0 Informasi tentang mouse saat ini
+    */
+    @Override
+	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

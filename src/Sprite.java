@@ -40,6 +40,9 @@ public class Sprite{
 	private int CurCol;
 	private double CurTime;
 	private static AnimType DefAnim=DefAnim();
+	/** 
+     * Inisialisasi untuk null object dari AnimType
+    */
 	private static AnimType DefAnim(){
 		AnimType a=new AnimType();
 		a.StartRow=0;
@@ -62,8 +65,8 @@ public class Sprite{
 	}
 	
 	/** 
-     * Load texture untuk sprite dari file external
-     * @param filename path tempat image yang akan di load
+     * Load source image untuk sprite dari file external
+     * @param filename path tempat source image yang akan di load
     */
 	public void Load(String filename) throws IOException{
 		try {
@@ -75,9 +78,8 @@ public class Sprite{
 		}
 	}
 	/** 
-     * Load texture untuk sprite dengan meng-copy 
-     * BufferedImage yang di-input
-     * @param i BufferedImage yang akan di-copy
+     * Load source image untuk sprite dari BufferedImage yang di-input
+     * @param i BufferedImage yang akan dijadikan source
     */
 	public void Load (BufferedImage i) throws IOException{
 		// TODO cari cara cek image udah di load/belum
@@ -88,7 +90,19 @@ public class Sprite{
 		_texture=i;
 	}
 	
-	public void AddAnimType(int Code, int StartRow, int StartCol, int EndRow, int EndCol, double rate){
+	/** 
+     * Menambahkan animasi pada Sprite.
+     * Baris dan kolom dihitung berdasarkan ukuran sprite yang ditentukan
+     * Animasi akan di loop otomatis dari gambar awal ke gambar akhir,
+     * lalu ganti ke gambar awal dan mengulangi lagi
+     * @param Code Kode animasi yang ditambahkan
+     * @param StartRow Nomor baris pada gambar yang dijadikan frame awal animasi
+     * @param StartCol Nomor kolom pada gambar yang dijadikan frame awal animasi
+     * @param EndRow Nomor kolom pada gambar yang dijadikan frame akhir animasi
+     * @param EndCol Nomor baris pada gambar yang dijadikan frame akhir animasi
+     * @param rate kecepatan animasi berpindah antar frame. -1 untuk tidak berubah dari frame awal
+    */
+    public void AddAnimType(int Code, int StartRow, int StartCol, int EndRow, int EndCol, double rate){
 		AnimType a=new AnimType();
 		a.StartRow=StartRow;
 		a.StartCol=StartCol;
@@ -98,18 +112,32 @@ public class Sprite{
 		_anim_array.put(Code,a);
 	}
 	
-	public void ChangeAnimType(int Code) throws AnimTypeNotFoundException{
+    /** 
+     * Mengubah animasi yang ditampilkan
+     * Kode animasi sesuai yang diisi pada saat AddAnimType
+     * @param Code Kode animasi yang ingin ditampilkan
+    */
+    public void ChangeAnimType(int Code) throws AnimTypeNotFoundException{
 		if (_anim_array.containsKey(Code)){
 			CurAnim=_anim_array.get(Code);
 			CurTime=0;
 			CurRow=CurAnim.StartRow;
 			CurCol=CurAnim.StartCol;
 		} else {
+			CurAnim=DefAnim;
+			CurTime=0;
+			CurRow=CurAnim.StartRow;
+			CurCol=CurAnim.StartCol;
 			throw new AnimTypeNotFoundException();
 		}
 	}
 	
-	public void UpdateDraw(long elapsedTime){
+    /** 
+     * Method untuk menjalankan animasi. 
+     * Dijalankan setiap interval bersama-sama update milik VisibleGameObject (60 fps)
+     * @param elapsedTime waktu sejak method ini terakhir dijalankan
+    */
+    public void UpdateDraw(long elapsedTime){
 		if (CurAnim.rate!=-1){
 			CurTime+=elapsedTime;
 			if (CurTime>CurAnim.rate){
@@ -121,7 +149,12 @@ public class Sprite{
 			}
 		}
 	}
-	public void Draw(Graphics2D g, ImageObserver IO){
+    /** 
+     * Menggambar Sprite ke Screen
+     * @param g Grafik tempat tujuan digambar
+     * @param IO ImageObserver yang akan di-notify
+    */
+    public void Draw(Graphics2D g, ImageObserver IO){
 		int s_x=Size_X;
 		int s_y=Size_Y;
 		if (s_x==-1)s_x=_texture.getWidth(null);
@@ -135,57 +168,126 @@ public class Sprite{
 		g.drawImage(tp, trans, IO);
 	}
 
-	public Point GetPosition(){
+    /** 
+     * Mendapatkan posisi Sprite.
+     * Posisi dalam bentuk integer
+    */
+    public Point GetPosition(){
 		Point ret=new Point();
 		ret.x=(int) Pos_X;
 		ret.y=(int) Pos_Y;
 		return ret;
 	}
-	public void SetPosition(double x, double y){
+    /** 
+     * Mengubah posisi Sprite.
+     * Posisi relatif terhadap Screen
+     * Posisi yang dimaksd adalah posisi kiri atas Sprite
+     * @param x Posisi x relatif terhadap screen
+     * @param y Posisi y relatif terhadap screen
+    */
+    public void SetPosition(double x, double y){
 		Pos_X=x;
 		Pos_Y=y;
 	}
-	public void SetPosition(Point p){
+    /** 
+     * Mengubah posisi Sprite.
+     * Posisi relatif terhadap Screen
+     * Posisi yang dimaksd adalah posisi kiri atas Sprite
+     * @param P Posisi relatif terhadap screen
+    */
+    public void SetPosition(Point p){
 		Pos_X=p.x;
 		Pos_Y=p.y;
 	}
-	public void SetImageSize(int SizeX, int SizeY){
+    /** 
+     * Mennentukan ukuran gambar yang diambil dari source image.
+     * input -1 untuk mengambil seukuran gambar source
+     * @param SizeX Ukuran x yang akan diambil.
+     * @param SizeY Ukuran y yang akan diambil.
+    */
+    public void SetImageSize(int SizeX, int SizeY){
 		Size_X=SizeX;
 		Size_Y=SizeY;
 	}
-	public double GetAngle(){
+    /** 
+     * Mengambil besar rotasi yang diaplikasikan ke Sprite.
+     * input -1 untuk mengambil seukuran gambar source
+     * @return double besar rotasi perputaran sprite dalam derajat
+    */
+    public double GetAngle(){
 		return _angle;
 	}
-	public void SetRotation(double angle){
+    /** 
+     * Memutar sprite sebesar input.
+     * Rotasi tidak ditambah dari rotasi sebelumnya,
+     * tetapi di-reset lalu dirotasi sebesar input
+     * @param angle Sudut perputaran gambar dalam derajat.
+    */
+    public void SetRotation(double angle){
 		_angle=angle;
 		if (_angle>=360)_angle=_angle%360;
 	}
-	public void SetScale(double ScaleX, double ScaleY){
+    /** 
+     * Mengubah skala perbesaran sprite sebesar input.
+     * Skala tidak diubah berdasarkan skala sebelumnya,
+     * tetapi di-reset lalu diskalakan sebesar input
+     * @param ScaleX Besar skala x perbesaran gambar.
+     * @param ScaleY Besar skala y perbesaran gambar.
+    */
+    public void SetScale(double ScaleX, double ScaleY){
 		transscl.setToScale(ScaleX, ScaleY);
 	}
-	public void SetOffset(int OffX, int OffY){
+    /** 
+     * Mengubah offset pergesaran ujung kiri atas source image
+     * dimana gambar akan diambil.
+     * Offset tidak diubah berdasarkan offset sebelumnya,
+     * tetapi di-reset lalu digeser ulang sebesar input
+     * @param OffX Besar pergeseran x dari source image.
+     * @param OffY Besar pergeseran y dari source image.
+    */
+    public void SetOffset(int OffX, int OffY){
 		Offset_X=OffX;
 		Offset_Y=OffY;
 	}
-	public double getWidth(){
+    /** 
+     * Mendapatkan ukuran lebar dari gambar yang diambil dari source image
+     * @return double lebar gambar yang diambil dari source image.
+    */
+    public double getWidth(){
 		int s_x=Size_X;
 		if (s_x==-1)s_x=_texture.getWidth(null);
 		return s_x;
-		//return Size_X;
 	}
-	public double getHeight(){
+    /** 
+     * Mendapatkan ukuran tinggi dari gambar yang diambil dari source image
+     * @return double tinggi gambar yang diambil dari source image.
+    */
+    public double getHeight(){
 		int s_y=Size_Y;
 		if (s_y==-1)s_y=_texture.getHeight(null);
 		return s_y;
-		//return Size_Y;
 	}
-	public int getTileWidth(){
+    /** 
+     * Mendapatkan ukuran lebar dari gambar yang diambil dari source image
+     * lebar dalam ukuran tile
+     * @return double lebar gambar yang diambil dari source image bedasar tile.
+    */
+    public int getTileWidth(){
 		return (int) (getWidth()/Utilities.TILE_SIZE_X);
 	}
-	public int getTileHeight(){
+    /** 
+     * Mendapatkan ukuran tinggi dari gambar yang diambil dari source image
+     * tinggi dalam ukuran tile
+     * @return double tinggi gambar yang diambil dari source image bedasar tile.
+    */
+    public int getTileHeight(){
 		return (int) (getHeight()/Utilities.TILE_SIZE_Y);
 	}
-	public Rectangle getBounds(){
+    /** 
+     * Mendapatkan Rectangle yang meliputi seluruh gambar
+     * @return Rectangle Rectangle yang meliputi seluruh gambar
+    */
+    public Rectangle getBounds(){
 		Rectangle r=new Rectangle();
 		r.height=(int) getHeight();
 		r.width=(int) getWidth();

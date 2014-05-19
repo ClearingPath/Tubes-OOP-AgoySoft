@@ -195,8 +195,7 @@ public class Player extends VisibleGameObject {
     }
     @Override
     public void Update(long elapsedTime) {
-        //System.out.println(GetPosition());
-    	if (tmpTime!=-1){
+        if (tmpTime!=-1){
     		int dx[]={0,-1,1,0};
     		int dy[]={1,0,0,-1};
     		Point n1=GetPosition();
@@ -217,27 +216,5 @@ public class Player extends VisibleGameObject {
 				}
     		}
     	}
-    	/*try{
-	        switch(arah) {
-	            case 1:
-	                GetSprite().ChangeAnimType(5);
-	                SetPosition(GetPosition().x, GetPosition().y+1);
-	                break;
-	            case 2:
-	                GetSprite().ChangeAnimType(6);
-	                SetPosition(GetPosition().x-1, GetPosition().y);
-	                break;
-	            case 3:
-	                GetSprite().ChangeAnimType(7);
-	                SetPosition(GetPosition().x+1, GetPosition().y);
-	                break;
-	            case 4:
-	                GetSprite().ChangeAnimType(8);
-	                SetPosition(GetPosition().x, GetPosition().y-1);
-	                break;
-	        }
-    	} catch (AnimTypeNotFoundException e){
-    		System.out.println(e.getStackTrace());
-    	}*/
     }
 }

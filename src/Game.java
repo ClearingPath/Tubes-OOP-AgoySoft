@@ -109,6 +109,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 	    setSize(700, 700);
             setBackground(Color.white);
             tmpTime = -1;
+            lastUpdate=System.currentTimeMillis();
 	    init();
             Thread thread = new Thread(this);
             thread.start();
@@ -221,7 +222,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
 		
 		bg.Draw(g2d, this);
 		_gameObjectManager.DrawAll(g2d,this);
-		layer1.Draw(g2d, this);
+		//layer1.Draw(g2d, this);
 		
 		g2d.setColor(Color.white);
 	}

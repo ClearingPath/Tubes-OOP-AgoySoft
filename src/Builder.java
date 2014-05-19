@@ -91,18 +91,28 @@ public class Builder {
            long time = input.nextLong();
            
            try {
-                if (IType == "ItemKosong")
-                    keg.ItemTerlibat = (item)Game.GetGameObjectManager().Get(IType);
-                else
-                    keg.ItemTerlibat = item.ItemKosong;
-                } catch (ObjectNameNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        	   if (IType == "ItemKosong")
+        		   keg.ItemTerlibat = (item)Game.GetGameObjectManager().Get(IType);
+        	   else
+        		   keg.ItemTerlibat = item.ItemKosong;
+           } catch (ObjectNameNotFoundException e) {
+        	   // TODO Auto-generated catch block
+        	   e.printStackTrace();
+           }
            keg.actPos = new Point(kx, ky);
            keg.actTime = time;
            OwnAct.add(keg);
        }
+       Owner ow=null;
+       try {
+    	   ow=(Owner) Game.GetGameObjectManager().Get("owner");
+       } catch (ObjectNameNotFoundException e) {
+    	   // TODO Auto-generated catch block
+    	   e.printStackTrace();
+       }
+       ow.setActivities(OwnAct);
+       ow.setSisaWaktu(OwnAct.peekFirst().actTime);
+       ow.SetPosition(OwnAct.peekFirst().actPos.x, OwnAct.peekFirst().actPos.y);
        Game.peta=arr;
     }
 }

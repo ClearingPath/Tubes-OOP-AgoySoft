@@ -31,7 +31,7 @@ public class Player extends VisibleGameObject {
         super();
         Load("player.png");
         GetSprite().SetRotation(0);
-        SetPosition(5,5);
+        SetPosition(16,22);
         GetSprite().SetImageSize(32, 32);
         GetSprite().AddAnimType(0,0,1,0,2,-1); //inisiasi
         GetSprite().AddAnimType(1,0,1,0,1,-1); //bawah
@@ -85,58 +85,97 @@ public class Player extends VisibleGameObject {
         Hide = !Hide;
     }
     public void PickItem() {
-        
+        switch(arah) {
+            case 1:
+                Inventory.add(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop());
+                Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
+                break;
+            case 2:
+                Inventory.add(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop());
+                Game.peta[GetPosition().x-1][GetPosition().y].putItem(item.ItemKosong);
+                break;
+            case 3:
+                Inventory.add(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop());
+                Game.peta[GetPosition().x+1][GetPosition().y].putItem(item.ItemKosong);
+                break;
+            case 4:
+                Inventory.add(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop());
+                Game.peta[GetPosition().x][GetPosition().y-1].putItem(item.ItemKosong);
+                break;
+            default:
+                break;
+        }
     }
     public void MoveUp() {
+        arah = 4;
         if(Game.peta[GetPosition().x][GetPosition().y-1].IsWalkable()) {
             tmpTime=0;
-            arah = 4;
             try {
                 //Update(1000);
-            	SetPosition(GetPosition().x, GetPosition().y-1);
+                SetPosition(GetPosition().x, GetPosition().y-1);
                 GetSprite().ChangeAnimType(8);
             } catch (AnimTypeNotFoundException ex) {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            GetSprite().ChangeAnimType(arah);
+        } catch (AnimTypeNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveDown() {
+        arah = 1;
         if(Game.peta[GetPosition().x][GetPosition().y+1].IsWalkable()) {
             tmpTime=0;
-            arah = 1;
             try {
                 //Update(1000);
-            	SetPosition(GetPosition().x, GetPosition().y+1);
+                SetPosition(GetPosition().x, GetPosition().y+1);
                 GetSprite().ChangeAnimType(5);
             } catch (AnimTypeNotFoundException ex) {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            GetSprite().ChangeAnimType(arah);
+        } catch (AnimTypeNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveRight() {
+        arah = 3;
         if(Game.peta[this.GetPosition().x+1][this.GetPosition().y].IsWalkable()) {
             tmpTime=0;
-            arah = 3;
             try {
                 //Update(1000);
-            	SetPosition(GetPosition().x+1, GetPosition().y);
+                SetPosition(GetPosition().x+1, GetPosition().y);
                 GetSprite().ChangeAnimType(7);
             } catch (AnimTypeNotFoundException ex) {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            GetSprite().ChangeAnimType(arah);
+        } catch (AnimTypeNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void MoveLeft() {
+        arah = 2;
         if(Game.peta[this.GetPosition().x-1][this.GetPosition().y].IsWalkable()) {
             tmpTime=0;
-            arah = 2;
             try {
                 //Update(1000);
-            	SetPosition(GetPosition().x-1, GetPosition().y);
+                SetPosition(GetPosition().x-1, GetPosition().y);
                 GetSprite().ChangeAnimType(6);
             } catch (AnimTypeNotFoundException ex) {
                 Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        try {
+            GetSprite().ChangeAnimType(arah);
+        } catch (AnimTypeNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void PickItem(item i) {
@@ -148,6 +187,7 @@ public class Player extends VisibleGameObject {
     }
     @Override
     public void Update(long elapsedTime) {
+        //System.out.println(GetPosition());
     	if (tmpTime!=-1){
     		int dx[]={0,-1,1,0};
     		int dy[]={1,0,0,-1};
@@ -161,12 +201,12 @@ public class Player extends VisibleGameObject {
     		tmpTime+=elapsedTime;
     		if (tmpTime>walkTime){
     			tmpTime=-1;
-    			try {
+    			/*try {
 					GetSprite().ChangeAnimType(arah);
 				} catch (AnimTypeNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
     		}
     	}
     	/*try{

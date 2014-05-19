@@ -39,16 +39,16 @@ public class Builder {
        arr = new Tile[baris][kolom];
        for (int i=0; i<baris; i++) {
            for (int j=0; j<kolom; j++) {
-               arr[i][j] = new Tile();
+               arr[j][i] = new Tile();
                System.out.println(i + " " + j);
                TileKode = input.nextInt();
                if (TileKode==0)
-                   arr[i][j].setJenis(Utilities.TileType.UnWalkable);
+                   arr[j][i].setJenis(Utilities.TileType.UnWalkable);
                else if (TileKode == 1)
-                   arr[i][j].setJenis(Utilities.TileType.Walkable);
+                   arr[j][i].setJenis(Utilities.TileType.Walkable);
                else if (TileKode == 2)
-                   arr[i][j].setJenis(Utilities.TileType.Hideable);               
-               Game.GetGameObjectManager().Add("Tile" + i + " " + j, arr[i][j]);
+                   arr[j][i].setJenis(Utilities.TileType.Hideable);               
+               Game.GetGameObjectManager().Add("Tile" + j + " " + i, arr[j][i]);
            }
        }
        int NItem = input.nextInt();

@@ -81,8 +81,12 @@ public abstract class VisibleGameObject
 			b.height=_sprite.getTileHeight()*Utilities.TILE_SIZE_X;
 			b.width=_sprite.getTileWidth()*Utilities.TILE_SIZE_Y;
 			if (a.intersects(b)){
+			//if (true){
 				//cek keliatan ato tidak
 				_sprite.Draw(g, IO);
+			} else {
+				System.out.println(a.x+","+a.y+";"+a.height+","+a.width);
+				System.out.println(b.x+","+b.y+";"+b.height+","+b.width);
 			}
 		}
 	}

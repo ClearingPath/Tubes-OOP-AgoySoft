@@ -107,7 +107,7 @@ public class Builder {
        }
        Owner ow=null;
        try {
-    	   ow=(Owner) Game.GetGameObjectManager().Get("owner");
+    	   ow=(Owner) GOM.Get("owner");
        } catch (ObjectNameNotFoundException e) {
     	   // TODO Auto-generated catch block
     	   e.printStackTrace();

@@ -22,8 +22,8 @@ public class ConsoleProgram {
         P = new Player();
         O = new Owner();
         _gameObjectManager = new GameObjectManager();
-        _gameObjectManager.Add("Owner", O);
-        _gameObjectManager.Add("Player", P);
+        _gameObjectManager.Add("owner", O);
+        _gameObjectManager.Add("player", P);
         Builder.BuildLevel1(_gameObjectManager);
     }
     /**

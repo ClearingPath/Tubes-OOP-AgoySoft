@@ -54,6 +54,7 @@ public class Builder {
        }
        int NItem = input.nextInt();
        String type;
+       ArrayList<item> ArrItem = new ArrayList<>();
        int x, y, pjg, lbr;
        for (int i = 0; i<NItem; i++) {
            item _item = new item();
@@ -80,6 +81,7 @@ public class Builder {
                 lbr--;
                 y++;
             }
+            ArrItem.add(_item);
        }
        Deque<Owner.act> OwnAct = new LinkedList<Owner.act>();
        int NAct = input.nextInt();
@@ -95,10 +97,10 @@ public class Builder {
                     keg.ItemTerlibat = (item)GOM.Get(IType);
                 else
                     keg.ItemTerlibat = item.ItemKosong;
-                } catch (ObjectNameNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            } catch (ObjectNameNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
            keg.actPos = new Point(kx, ky);
            keg.actTime = time;
            OwnAct.add(keg);
@@ -111,8 +113,7 @@ public class Builder {
     	   e.printStackTrace();
        }
        ow.setActivities(OwnAct);
-       ow.setSisaWaktu(OwnAct.peekFirst().actTime);
-       ow.SetPosition(OwnAct.peekFirst().actPos.x, OwnAct.peekFirst().actPos.y);
        Game.peta=arr;
+       ConsoleProgram.ArrItem = ArrItem;
     }
 }

@@ -5,9 +5,6 @@
 
 import java.util.*;
 import java.awt.Point;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Owner extends VisibleGameObject{
     public static class act {
@@ -43,7 +40,7 @@ public class Owner extends VisibleGameObject{
         GetSprite().AddAnimType(7,2,0,2,2,-1); //kanan
         GetSprite().AddAnimType(8,3,0,3,2,-1); //atas
         try {
-                GetSprite().ChangeAnimType(1);
+                GetSprite().ChangeAnimType(0);
         } catch (AnimTypeNotFoundException e) {
                 // AnimType not found
                 // TODO Auto-generated catch block
@@ -56,15 +53,18 @@ public class Owner extends VisibleGameObject{
         this.sisaWaktu = sisaWaktu;
     }
 
-    public void setActivities(Deque activities) {
+    public void setActivities(Deque<act> activities) {
         this.activities = activities;
+        _actNow=activities.peekFirst();
+        setSisaWaktu(activities.peekFirst().actTime);
+        SetPosition(activities.peekFirst().actPos.x, activities.peekFirst().actPos.y);
     }
 
     public long getSisaWaktu() {
         return sisaWaktu;
     }
 
-    public Deque getActivities() {
+    public Deque<act> getActivities() {
         return activities;
     }
     
@@ -138,7 +138,7 @@ public class Owner extends VisibleGameObject{
                     _actNow = activities.remove();
                     SetPosition(_actNow.actPos.x, _actNow.actPos.y);
                     sisaWaktu = _actNow.actTime;
-                    Point tuj = new Point();
+                    Point tuj;
                     tuj = activities.peekFirst().actPos;
                     CariPath(tuj);
                     if (_actNow.ItemTerlibat.Broken) {

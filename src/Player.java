@@ -1,9 +1,11 @@
 import java.awt.Point;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SpringLayout;
 
 /**
  * @author Rakhmatullah Yoga Sutrisna - 13512053
@@ -90,25 +92,25 @@ public class Player extends VisibleGameObject {
         if(Inventory.size()<MaxInventory) {
             switch(arah) {
                 case 1:
-                    if(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                    if(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis().IsGetable()) {
                         Inventory.add(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop());
                         Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
                     }
                     break;
                 case 2:
-                    if(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                    if(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis().IsGetable()) {
                         Inventory.add(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop());
                         Game.peta[GetPosition().x-1][GetPosition().y].putItem(item.ItemKosong);
                     }
                     break;
                 case 3:
-                    if(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                    if(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis().IsGetable()) {
                         Inventory.add(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop());
                         Game.peta[GetPosition().x+1][GetPosition().y].putItem(item.ItemKosong);
                     }
                     break;
                 case 4:
-                    if(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis()!=item.ItemKosong.getJenis()) {
+                    if(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis().IsGetable()) {
                         Inventory.add(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop());
                         Game.peta[GetPosition().x][GetPosition().y-1].putItem(item.ItemKosong);
                     }
@@ -116,6 +118,141 @@ public class Player extends VisibleGameObject {
                 default:
                     break;
             }
+        }
+    }
+    public void AttachItem() {
+        Map<String, Utilities.ItemType> ITMap = new HashMap<>();
+        ITMap.put("PaintingR", Utilities.ItemType.PaintingR);
+        ITMap.put("WCR", Utilities.ItemType.WCR);
+        ITMap.put("ManekinR", Utilities.ItemType.ManekinR);
+        System.out.println("tes1");
+                
+        boolean ketemu = false;
+        switch(arah) {
+            case 1:
+                for(item it : Inventory) {
+                    if(it.getJenis().getPic().equals(Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis().getIt())) {
+                        ketemu = true; 
+                    }
+                    break;
+                }
+                if(ketemu) {
+                    if (Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis()==Utilities.ItemType.DoorClosed) {
+                        for(item it : Inventory) {
+                            if (it.getJenis()==Utilities.ItemType.Key)
+                                Inventory.remove(it);
+                            break;
+                        }
+                        Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
+                        Game.GetGameObjectManager().Remove("DoorClosed");
+                    }
+                    else {
+                        for(item it : Inventory) {
+                            if (it.getJenis().getPic()==Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis().getIt())
+                                Inventory.remove(it);
+                            break;
+                        }
+                        String newType = Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().getJenis().getPic() + "R";
+                        Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().Load("img/Level1/" + newType + "png");
+                        Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().setJenis(ITMap.get(newType));
+                        Game.peta[GetPosition().x][GetPosition().y+1].getItemOnTop().setBroken(true);
+                    }
+                }
+                break;
+            case 2:
+                for(item it : Inventory) {
+                    if(it.getJenis().getPic().equals(Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis().getIt())) {
+                        ketemu = true; 
+                    }
+                    break;
+                }
+                if(ketemu) {
+                    if (Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis()==Utilities.ItemType.DoorClosed) {
+                        for(item it : Inventory) {
+                            if (it.getJenis()==Utilities.ItemType.Key)
+                                Inventory.remove(it);
+                            break;
+                        }
+                        Game.peta[GetPosition().x][GetPosition().y+1].putItem(item.ItemKosong);
+                        Game.GetGameObjectManager().Remove("DoorClosed");
+                    }
+                    else {
+                        for(item it : Inventory) {
+                            if (it.getJenis().getPic()==Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis().getIt())
+                                Inventory.remove(it);
+                            break;
+                        }
+                        String newType = Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().getJenis().getPic() + "R";
+                        Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().Load("img/Level1/" + newType + "png");
+                        Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().setJenis(ITMap.get(newType));
+                        Game.peta[GetPosition().x-1][GetPosition().y].getItemOnTop().setBroken(true);
+                    }
+                }
+                break;
+            case 3:
+                for(item it : Inventory) {
+                    if(it.getJenis().getPic().equals(Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis().getIt())) {
+                        ketemu = true; 
+                    }
+                    break;
+                }
+                if(ketemu) {
+                    if (Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis()==Utilities.ItemType.DoorClosed) {
+                        for(item it : Inventory) {
+                            if (it.getJenis()==Utilities.ItemType.Key)
+                                Inventory.remove(it);
+                            break;
+                        }
+                        Game.peta[GetPosition().x+1][GetPosition().y].putItem(item.ItemKosong);
+                        Game.GetGameObjectManager().Remove("DoorClosed");
+                    }
+                    else {
+                        for(item it : Inventory) {
+                            if (it.getJenis().getPic()==Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis().getIt())
+                                Inventory.remove(it);
+                            break;
+                        }
+                        String newType = Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().getJenis().getPic() + "R";
+                        Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().Load("img/Level1/" + newType + "png");
+                        Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().setJenis(ITMap.get(newType));
+                        Game.peta[GetPosition().x+1][GetPosition().y].getItemOnTop().setBroken(true);
+                    }
+                }
+
+                break;
+            case 4:
+                for(item it : Inventory) {
+                    if(it.getJenis().getPic().equals(Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis().getIt())) {
+                        ketemu = true; 
+                    }
+                    break;
+                }
+                if(ketemu) {
+                    if (Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis()==Utilities.ItemType.DoorClosed) {
+                        for(item it : Inventory) {
+                            if (it.getJenis()==Utilities.ItemType.Key)
+                                Inventory.remove(it);
+                            break;
+                        }
+                        Game.peta[GetPosition().x][GetPosition().y-1].putItem(item.ItemKosong);
+                        Game.GetGameObjectManager().Remove("DoorClosed");
+                    }
+                    else {
+                        for(item it : Inventory) {
+                            if (it.getJenis().getPic()==Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis().getIt())
+                                Inventory.remove(it);
+                            break;
+                        }
+                        String newType = Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().getJenis().getPic() + "R";
+                        Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().Load("img/Level1/" + newType + "png");
+                        Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().setJenis(ITMap.get(newType));
+                        Game.peta[GetPosition().x][GetPosition().y-1].getItemOnTop().setBroken(true);
+                    }
+                }
+               
+                break;
+            default:
+                break;
         }
     }
     public void MoveUp() {

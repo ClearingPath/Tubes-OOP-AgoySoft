@@ -166,7 +166,7 @@ public class Game extends JPanel implements Runnable,MouseListener, MouseMotionL
         frame.setVisible(true);
         _game.active_panel=_game.start;
         _game.state_now=Utilities.StateType.WelcomeScreen;
-        Game.ChangeState(Utilities.StateType.Playing);
+        //Game.ChangeState(Utilities.StateType.Playing);
         frame.setSize(700, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setUndecorated(true);

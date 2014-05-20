@@ -70,35 +70,35 @@ public class WelcomeScreen extends JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        QuitButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Exit.png")); // NOI18N
+        QuitButton.setIcon(new javax.swing.ImageIcon("img/Exit.png")); // NOI18N
         QuitButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 QuitButtonMouseClicked(evt);
             }
         });
 
-        CreditsButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Credits.png")); // NOI18N
+        CreditsButton.setIcon(new javax.swing.ImageIcon("img/Credits.png")); // NOI18N
         CreditsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CreditsButtonMouseClicked(evt);
             }
         });
 
-        HelpButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\Help.png")); // NOI18N
+        HelpButton.setIcon(new javax.swing.ImageIcon("img/Help.png")); // NOI18N
         HelpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HelpButtonMouseClicked(evt);
             }
         });
 
-        HighScoreButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\highscore.png")); // NOI18N
+        HighScoreButton.setIcon(new javax.swing.ImageIcon("img/highscore.png")); // NOI18N
         HighScoreButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HighScoreButtonMouseClicked(evt);
             }
         });
 
-        StartButton.setIcon(new javax.swing.ImageIcon("E:\\git repo\\Tubes-OOP-AgoySoft\\img\\New Game.png")); // NOI18N
+        StartButton.setIcon(new javax.swing.ImageIcon("img/New Game.png")); // NOI18N
         StartButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 StartButtonMouseClicked(evt);

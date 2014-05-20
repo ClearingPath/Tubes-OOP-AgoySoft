@@ -103,6 +103,16 @@ public class Builder {
            keg.actTime = time;
            OwnAct.add(keg);
        }
+       Owner ow=null;
+       try {
+    	   ow=(Owner) Game.GetGameObjectManager().Get("owner");
+       } catch (ObjectNameNotFoundException e) {
+    	   // TODO Auto-generated catch block
+    	   e.printStackTrace();
+       }
+       ow.setActivities(OwnAct);
+       ow.setSisaWaktu(OwnAct.peekFirst().actTime);
+       ow.SetPosition(OwnAct.peekFirst().actPos.x, OwnAct.peekFirst().actPos.y);
        Game.peta=arr;
     }
 }
